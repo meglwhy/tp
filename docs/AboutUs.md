@@ -13,7 +13,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Gabriel Lim
 
-<img src="images/mraspara00se.png" width="200px">
+<img src="images/mrasparag00se.png" width="200px">
 
 [[github](https://github.com/MrAsparag00se)]
 [[portfolio](team/johndoe.md)]
@@ -39,16 +39,6 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: Team Lead
-
-### Jean Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: Dev Ops + Threading
 
 ### Maliha Haque
 
