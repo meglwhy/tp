@@ -11,15 +11,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Gabriel Lim
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/mraspara00se.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
+[[github](https://github.com/MrAsparag00se)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Project Advisor
+* Role: Developer
+* Responsibilities: Code quality
 
 ### Megan Low
 
@@ -31,14 +31,14 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: UI
 
-### Johnny Doe
+### Ong Jing Chun Jerome
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/jingchun19.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](http://github.com/jingchun19)] [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-* Responsibilities: Data
+* Responsibilities: Team Lead
 
 ### Jean Doe
 
@@ -50,12 +50,12 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Dev Ops + Threading
 
-### James Doe
+### Maliha Haque
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/malihahaque.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/malihahaque)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-* Responsibilities: UI
+* Responsibilities: Documentation
