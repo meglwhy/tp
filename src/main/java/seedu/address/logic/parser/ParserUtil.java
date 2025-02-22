@@ -9,12 +9,14 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.household.Address;
+import seedu.address.model.household.Name;
+import seedu.address.model.household.Contact;
+import seedu.address.model.household.HouseholdId;
 import seedu.address.model.tag.Tag;
-
+import seedu.address.model.session.SessionDate;
+import seedu.address.model.session.SessionTime;
+import seedu.address.model.session.SessionNote;
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
  */
@@ -23,8 +25,8 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
 
     /**
-     * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
-     * trimmed.
+     * Parses {@code oneBasedIndex} into an {@code Index} and returns it.
+     * Leading and trailing whitespaces will be trimmed.
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws ParseException {
@@ -51,21 +53,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String phone} into a {@code Phone}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code phone} is invalid.
-     */
-    public static Phone parsePhone(String phone) throws ParseException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
-            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
-        }
-        return new Phone(trimmedPhone);
-    }
-
-    /**
      * Parses a {@code String address} into an {@code Address}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -81,18 +68,33 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String email} into an {@code Email}.
+     * Parses a {@code String contact} into a {@code Contact}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code email} is invalid.
+     * @throws ParseException if the given {@code contact} is invalid.
      */
-    public static Email parseEmail(String email) throws ParseException {
-        requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!Email.isValidEmail(trimmedEmail)) {
-            throw new ParseException(Email.MESSAGE_CONSTRAINTS);
+    public static Contact parseContact(String contact) throws ParseException {
+        requireNonNull(contact);
+        String trimmedContact = contact.trim();
+        if (!Contact.isValidContact(trimmedContact)) {
+            throw new ParseException(Contact.MESSAGE_CONSTRAINTS);
         }
-        return new Email(trimmedEmail);
+        return new Contact(trimmedContact);
+    }
+
+    /**
+     * Parses a {@code String householdId} into a {@code HouseholdId}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code householdId} is invalid.
+     */
+    public static HouseholdId parseHouseholdId(String householdId) throws ParseException {
+        requireNonNull(householdId);
+        String trimmedId = householdId.trim();
+        if (!HouseholdId.isValidId(trimmedId)) {
+            throw new ParseException(HouseholdId.MESSAGE_CONSTRAINTS);
+        }
+        return HouseholdId.parse(trimmedId);
     }
 
     /**
@@ -120,5 +122,50 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String date} into a {@code SessionDate}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code date} is invalid.
+     */
+    public static SessionDate parseDate(String date) throws ParseException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!SessionDate.isValidDate(trimmedDate)) {
+            throw new ParseException(SessionDate.MESSAGE_CONSTRAINTS);
+        }
+        return new SessionDate(trimmedDate);
+    }
+
+    /**
+     * Parses a {@code String time} into a {@code SessionTime}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code time} is invalid.
+     */
+    public static SessionTime parseTime(String time) throws ParseException {
+        requireNonNull(time);
+        String trimmedTime = time.trim();
+        if (!SessionTime.isValidTime(trimmedTime)) {
+            throw new ParseException(SessionTime.MESSAGE_CONSTRAINTS);
+        }
+        return new SessionTime(trimmedTime);
+    }
+
+    /**
+     * Parses a {@code String note} into a {@code SessionNote}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code note} is invalid.
+     */
+    public static SessionNote parseNote(String note) throws ParseException {
+        requireNonNull(note);
+        String trimmedNote = note.trim();
+        if (!SessionNote.isValidNote(trimmedNote)) {
+            throw new ParseException(SessionNote.MESSAGE_CONSTRAINTS);
+        }
+        return new SessionNote(trimmedNote);
     }
 }

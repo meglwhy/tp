@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,5 +75,12 @@ public class ArgumentMultimap {
         if (duplicatedPrefixes.length > 0) {
             throw new ParseException(Messages.getErrorMessageForDuplicatePrefixes(duplicatedPrefixes));
         }
+    }
+
+    /**
+     * Returns true if all the given prefixes exist in the argument list.
+     */
+    public boolean arePrefixesPresent(Prefix... prefixes) {
+        return Arrays.stream(prefixes).allMatch(prefix -> getValue(prefix).isPresent());
     }
 }
