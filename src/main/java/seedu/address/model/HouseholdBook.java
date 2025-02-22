@@ -186,6 +186,22 @@ public class HouseholdBook {
                 .findFirst();
     }
 
+    /**
+     * Replaces the given household with the updated household.
+     * The household must exist in the household book.
+     */
+    public void updateHousehold(Household target, Household editedHousehold) {
+        requireNonNull(target);
+        requireNonNull(editedHousehold);
+
+        int index = households.indexOf(target);
+        if (index == -1) {
+            throw new IllegalArgumentException("Household does not exist in the household book");
+        }
+
+        households.set(index, editedHousehold);
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
