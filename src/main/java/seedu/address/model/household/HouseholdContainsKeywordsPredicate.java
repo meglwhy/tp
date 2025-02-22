@@ -2,7 +2,6 @@ package seedu.address.model.household;
 
 import java.util.List;
 import java.util.function.Predicate;
-import seedu.address.model.Household.*;
 
 /**
  * Tests that a {@code Household}'s attributes matches any of the keywords given.
