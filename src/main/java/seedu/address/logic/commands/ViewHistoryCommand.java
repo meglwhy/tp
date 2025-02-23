@@ -11,6 +11,7 @@ import seedu.address.model.HouseholdBook;
 import seedu.address.model.household.Household;
 import seedu.address.model.household.HouseholdId;
 import seedu.address.model.session.Session;
+import seedu.address.model.Model;
 
 /**
  * Shows the session history of a specific household.
@@ -37,10 +38,10 @@ public class ViewHistoryCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(HouseholdBook householdBook) throws CommandException {
+    public CommandResult execute(Model householdBook) throws CommandException {
         requireNonNull(householdBook);
 
-        Optional<Household> optionalHousehold = householdBook.getHouseholdById(targetId);
+        Optional<Household> optionalHousehold = householdBook.getHouseholdBook().getHouseholdById(targetId);
         if (optionalHousehold.isEmpty()) {
             throw new CommandException(String.format(MESSAGE_HOUSEHOLD_NOT_FOUND, targetId));
         }

@@ -42,4 +42,8 @@ public class HouseholdListPanel extends UiPart<Region> {
             }
         }
     }
+
+    public ListView<Household> getListView() {
+        return householdListView;
+    }
 } 

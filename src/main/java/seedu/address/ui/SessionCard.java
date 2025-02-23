@@ -16,7 +16,7 @@ public class SessionCard extends UiPart<Region> {
     public final Session session;
 
     @FXML
-    private HBox cardPane;
+    private HBox cardPanel;
     @FXML
     private Label id;
     @FXML

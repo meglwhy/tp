@@ -11,27 +11,30 @@ import javafx.collections.ObservableList;
 import seedu.address.model.household.Household;
 import seedu.address.model.household.HouseholdId;
 import seedu.address.model.session.Session;
-import seedu.address.model.session.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.household.HouseholdContainsKeywordsPredicate;
+import seedu.address.commons.core.index.Index;
 
 /**
  * Wraps all data at the household-book level
  * Duplicates are not allowed (by household ID comparison)
  */
-public class HouseholdBook {
+public class HouseholdBook implements ReadOnlyHouseholdBook {
     private final ObservableList<Household> households = FXCollections.observableArrayList();
     private final ObservableList<Household> unmodifiableHouseholds = 
             FXCollections.unmodifiableObservableList(households);
 
+    private final ObservableList<Session> sessions = FXCollections.observableArrayList();
+
     public HouseholdBook() {}
 
     /**
-     * Creates a HouseholdBook using the Households in the {@code toBeCopied}
+     * Creates a HouseholdBook using the Households and Sessions in the {@code toBeCopied}
      */
-    public HouseholdBook(HouseholdBook toBeCopied) {
+    public HouseholdBook(ReadOnlyHouseholdBook toBeCopied) {
         requireNonNull(toBeCopied);
-        households.addAll(toBeCopied.households);
+        households.addAll(toBeCopied.getHouseholdList());
+        sessions.addAll(toBeCopied.getSessionList());
     }
 
     /**
@@ -114,6 +117,9 @@ public class HouseholdBook {
                 .filter(h -> h.getId().equals(householdId))
                 .findFirst()
                 .ifPresent(h -> h.addSession(session));
+        
+        // Add to main sessions list
+        sessions.add(session);
     }
 
     /**
@@ -200,6 +206,18 @@ public class HouseholdBook {
         }
 
         households.set(index, editedHousehold);
+    }
+
+    public ObservableList<Session> getSessionList() {
+        return FXCollections.unmodifiableObservableList(sessions);
+    }
+
+    /**
+     * Returns true if a session with the same identity as {@code session} exists in the household book.
+     */
+    public boolean hasSession(Session session) {
+        requireNonNull(session);
+        return sessions.contains(session);
     }
 
     @Override

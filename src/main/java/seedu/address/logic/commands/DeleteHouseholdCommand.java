@@ -7,6 +7,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.HouseholdBook;
 import seedu.address.model.household.Household;
 import seedu.address.model.household.HouseholdId;
+import seedu.address.model.Model;
 
 /**
  * Deletes a household identified using its household ID from the household book.
@@ -33,14 +34,14 @@ public class DeleteHouseholdCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(HouseholdBook householdBook) throws CommandException {
+    public CommandResult execute(Model householdBook) throws CommandException {
         requireNonNull(householdBook);
 
-        Household householdToDelete = householdBook.getHouseholdById(targetId)
+        Household householdToDelete = householdBook.getHouseholdBook().getHouseholdById(targetId)
                 .orElseThrow(() -> new CommandException(
                         String.format(MESSAGE_HOUSEHOLD_NOT_FOUND, targetId)));
 
-        householdBook.removeHousehold(householdToDelete);
+        householdBook.getHouseholdBook().removeHousehold(householdToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_HOUSEHOLD_SUCCESS, householdToDelete));
     }
 

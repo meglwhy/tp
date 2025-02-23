@@ -18,6 +18,7 @@ import seedu.address.model.session.Session;
 import seedu.address.model.session.SessionDate;
 import seedu.address.model.session.SessionTime;
 import seedu.address.model.household.HouseholdId;
+import seedu.address.model.Model;
 
 /**
  * Adds a session to a household in the household book.
@@ -55,14 +56,14 @@ public class AddSessionCommand extends Command {
         requireNonNull(time);
         
         this.householdId = householdId;
-        this.toAdd = new Session(date, time);
+        this.toAdd = new Session(householdId, date, time);
     }
 
     @Override
-    public CommandResult execute(HouseholdBook householdBook) throws CommandException {
-        requireNonNull(householdBook);
+    public CommandResult execute(Model model) throws CommandException {
+        requireNonNull(model);
 
-        if (!householdBook.hasHouseholdId(householdId)) {
+        if (!model.getHouseholdBook().hasHouseholdId(householdId)) {
             throw new CommandException(MESSAGE_HOUSEHOLD_NOT_FOUND);
         }
 
@@ -70,13 +71,13 @@ public class AddSessionCommand extends Command {
             throw new CommandException(MESSAGE_PAST_DATE);
         }
 
-        Optional<Session> conflict = householdBook.getConflictingSession(toAdd);
+        Optional<Session> conflict = model.getHouseholdBook().getConflictingSession(toAdd);
         if (conflict.isPresent()) {
             throw new CommandException(
                     String.format(MESSAGE_DUPLICATE_SESSION, conflict.get()));
         }
 
-        householdBook.addSessionToHousehold(householdId, toAdd);
+        model.getHouseholdBook().addSessionToHousehold(householdId, toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, householdId, toAdd));
     }
 

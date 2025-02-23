@@ -13,6 +13,7 @@ import seedu.address.model.session.Session;
 import seedu.address.model.session.SessionDate;
 import seedu.address.model.session.SessionTime;
 import seedu.address.model.session.SessionNote;
+import seedu.address.model.Model;
 
 /**
  * Edits the details of an existing session.
@@ -54,22 +55,22 @@ public class EditSessionCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(HouseholdBook householdBook) throws CommandException {
+    public CommandResult execute(Model householdBook) throws CommandException {
         requireNonNull(householdBook);
 
-        Session sessionToEdit = householdBook.getSession(index)
+        Session sessionToEdit = householdBook.getHouseholdBook().getSession(index)
                 .orElseThrow(() -> new CommandException(MESSAGE_SESSION_NOT_FOUND));
         Session editedSession = createEditedSession(sessionToEdit, editSessionDescriptor);
 
         if (!sessionToEdit.equals(editedSession)) {
-            Optional<Session> conflict = householdBook.getConflictingSession(editedSession, sessionToEdit);
+            Optional<Session> conflict = householdBook.getHouseholdBook().getConflictingSession(editedSession, sessionToEdit);
             if (conflict.isPresent()) {
                 throw new CommandException(
                         String.format(MESSAGE_DUPLICATE_SESSION, conflict.get()));
             }
         }
 
-        householdBook.updateSession(sessionToEdit, editedSession);
+        householdBook.getHouseholdBook().updateSession(sessionToEdit, editedSession);
         return new CommandResult(String.format(MESSAGE_EDIT_SESSION_SUCCESS, editedSession));
     }
 
@@ -84,7 +85,7 @@ public class EditSessionCommand extends Command {
         SessionTime updatedTime = editSessionDescriptor.getTime().orElse(sessionToEdit.getTime());
         SessionNote updatedNote = editSessionDescriptor.getNote().orElse(sessionToEdit.getNote());
 
-        Session newSession = new Session(updatedDate, updatedTime);
+        Session newSession = new Session(sessionToEdit.getHouseholdId(), updatedDate, updatedTime);
         if (updatedNote != null) {
             newSession.setNote(updatedNote);
         }

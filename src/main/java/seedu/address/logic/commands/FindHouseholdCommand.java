@@ -9,7 +9,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.HouseholdBook;
 import seedu.address.model.household.HouseholdContainsKeywordsPredicate;
 import seedu.address.model.household.Household;
-
+import seedu.address.model.Model;
 /**
  * Finds and lists all households in household book whose name, address, or tags contain any of the argument keywords.
  * Keyword matching is case insensitive.
@@ -43,10 +43,10 @@ public class FindHouseholdCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(HouseholdBook householdBook) {
+    public CommandResult execute(Model householdBook) {
         requireNonNull(householdBook);
         
-        List<Household> matchingHouseholds = householdBook.findHouseholds(predicate);
+        List<Household> matchingHouseholds = householdBook.getHouseholdBook().findHouseholds(predicate);
         
         if (matchingHouseholds.isEmpty()) {
             return new CommandResult(String.format(MESSAGE_NO_MATCHING_HOUSEHOLDS, keywords));

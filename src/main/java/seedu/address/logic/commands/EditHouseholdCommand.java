@@ -12,6 +12,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.HouseholdBook;
 import seedu.address.model.household.*;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.Model;
 
 /**
  * Edits the details of an existing household in the household book.
@@ -55,16 +56,16 @@ public class EditHouseholdCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(HouseholdBook householdBook) throws CommandException {
+    public CommandResult execute(Model householdBook) throws CommandException {
         requireNonNull(householdBook);
 
-        Household householdToEdit = householdBook.getHouseholdById(householdId)
+        Household householdToEdit = householdBook.getHouseholdBook().getHouseholdById(householdId)
                 .orElseThrow(() -> new CommandException(
                         String.format(MESSAGE_HOUSEHOLD_NOT_FOUND, householdId)));
 
         Household editedHousehold = createEditedHousehold(householdToEdit, editHouseholdDescriptor);
 
-        householdBook.updateHousehold(householdToEdit, editedHousehold);
+        householdBook.getHouseholdBook().updateHousehold(householdToEdit, editedHousehold);
         return new CommandResult(String.format(MESSAGE_EDIT_HOUSEHOLD_SUCCESS, editedHousehold));
     }
 

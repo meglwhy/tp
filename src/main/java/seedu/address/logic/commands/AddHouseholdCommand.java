@@ -6,7 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.HouseholdBook;
+import seedu.address.model.Model;
 import seedu.address.model.household.Household;
 
 /**
@@ -40,14 +40,14 @@ public class AddHouseholdCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(HouseholdBook model) throws CommandException {
+    public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if (model.hasHousehold(toAdd)) {
+        if (model.getHouseholdBook().hasHousehold(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_HOUSEHOLD);
         }
 
-        model.addHousehold(toAdd);
+        model.getHouseholdBook().addHousehold(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 

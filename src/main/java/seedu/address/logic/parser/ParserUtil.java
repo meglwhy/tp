@@ -94,7 +94,7 @@ public class ParserUtil {
         if (!HouseholdId.isValidId(trimmedId)) {
             throw new ParseException(HouseholdId.MESSAGE_CONSTRAINTS);
         }
-        return HouseholdId.parse(trimmedId);
+        return HouseholdId.fromString(trimmedId);
     }
 
     /**

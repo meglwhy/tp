@@ -20,6 +20,9 @@ public class SessionListPanel extends UiPart<Region> {
     @FXML
     private ListView<Session> sessionListView;
 
+    /**
+     * Creates a {@code SessionListPanel} with the given {@code ObservableList}.
+     */
     public SessionListPanel(ObservableList<Session> sessionList) {
         super(FXML);
         sessionListView.setItems(sessionList);
@@ -41,5 +44,12 @@ public class SessionListPanel extends UiPart<Region> {
                 setGraphic(new SessionCard(session, getIndex() + 1).getRoot());
             }
         }
+    }
+
+    /**
+     * Forces a refresh of the session list view
+     */
+    public void refresh() {
+        sessionListView.refresh();
     }
 } 
