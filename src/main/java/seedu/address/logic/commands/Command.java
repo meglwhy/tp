@@ -9,7 +9,7 @@ import seedu.address.model.Model;
 public abstract class Command {
 
     /**
-     * Executes the command and returns the result message.
+     * Executes the command and returns the result.
      *
      * @param model {@code Model} which the command should operate on.
      * @return feedback message of the operation result for display
