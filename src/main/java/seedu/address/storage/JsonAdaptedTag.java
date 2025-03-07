@@ -8,6 +8,7 @@ import seedu.address.model.tag.Tag;
 
 /**
  * Jackson-friendly version of {@link Tag}.
+ * Used for tagging households with categories or labels.
  */
 class JsonAdaptedTag {
 

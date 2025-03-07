@@ -11,41 +11,52 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.person.Person;
+import seedu.address.model.household.Household;
+import seedu.address.model.session.Session;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the household book data.
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
+    private final HouseholdBook householdBook;
     private final UserPrefs userPrefs;
-    private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Household> filteredHouseholds;
+    private final FilteredList<Session> filteredSessions;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given householdBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
-        requireAllNonNull(addressBook, userPrefs);
+    public ModelManager(ReadOnlyHouseholdBook householdBook, ReadOnlyUserPrefs userPrefs) {
+        requireAllNonNull(householdBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with household book: " + householdBook + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
+        this.householdBook = new HouseholdBook(householdBook);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredHouseholds = new FilteredList<>(this.householdBook.getHouseholdList());
+        filteredSessions = new FilteredList<>(this.householdBook.getSessionList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new HouseholdBook(), new UserPrefs());
     }
 
-    //=========== UserPrefs ==================================================================================
+    @Override
+    public HouseholdBook getHouseholdBook() {
+        return householdBook;
+    }
 
     @Override
-    public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
-        requireNonNull(userPrefs);
-        this.userPrefs.resetData(userPrefs);
+    public Path getHouseholdBookFilePath() {
+        return userPrefs.getHouseholdBookFilePath();
+    }
+
+    @Override
+    public void setHouseholdBookFilePath(Path householdBookFilePath) {
+        requireNonNull(householdBookFilePath);
+        userPrefs.setHouseholdBookFilePath(householdBookFilePath);
     }
 
     @Override
@@ -64,85 +75,46 @@ public class ModelManager implements Model {
         userPrefs.setGuiSettings(guiSettings);
     }
 
+    //=========== Filtered Household List Accessors =============================================================
+
     @Override
-    public Path getAddressBookFilePath() {
-        return userPrefs.getAddressBookFilePath();
+    public ObservableList<Household> getFilteredHouseholdList() {
+        return filteredHouseholds;
     }
 
     @Override
-    public void setAddressBookFilePath(Path addressBookFilePath) {
-        requireNonNull(addressBookFilePath);
-        userPrefs.setAddressBookFilePath(addressBookFilePath);
-    }
-
-    //=========== AddressBook ================================================================================
-
-    @Override
-    public void setAddressBook(ReadOnlyAddressBook addressBook) {
-        this.addressBook.resetData(addressBook);
-    }
-
-    @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
-    }
-
-    @Override
-    public boolean hasPerson(Person person) {
-        requireNonNull(person);
-        return addressBook.hasPerson(person);
-    }
-
-    @Override
-    public void deletePerson(Person target) {
-        addressBook.removePerson(target);
-    }
-
-    @Override
-    public void addPerson(Person person) {
-        addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-    }
-
-    @Override
-    public void setPerson(Person target, Person editedPerson) {
-        requireAllNonNull(target, editedPerson);
-
-        addressBook.setPerson(target, editedPerson);
-    }
-
-    //=========== Filtered Person List Accessors =============================================================
-
-    /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code versionedAddressBook}
-     */
-    @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return filteredPersons;
-    }
-
-    @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredHouseholdList(Predicate<Household> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredHouseholds.setPredicate(predicate);
+    }
+
+    //=========== Filtered Session List Accessors =============================================================
+
+    @Override
+    public ObservableList<Session> getFilteredSessionList() {
+        return filteredSessions;
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (other == this) {
+    public void updateFilteredSessionList(Predicate<Session> predicate) {
+        requireNonNull(predicate);
+        filteredSessions.setPredicate(predicate);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
             return true;
         }
 
-        // instanceof handles nulls
-        if (!(other instanceof ModelManager)) {
+        if (!(obj instanceof ModelManager)) {
             return false;
         }
 
-        ModelManager otherModelManager = (ModelManager) other;
-        return addressBook.equals(otherModelManager.addressBook)
-                && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredPersons.equals(otherModelManager.filteredPersons);
+        ModelManager other = (ModelManager) obj;
+        return householdBook.equals(other.householdBook)
+                && userPrefs.equals(other.userPrefs)
+                && filteredHouseholds.equals(other.filteredHouseholds)
+                && filteredSessions.equals(other.filteredSessions);
     }
-
 }
