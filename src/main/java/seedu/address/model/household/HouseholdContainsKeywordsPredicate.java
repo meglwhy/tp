@@ -2,28 +2,45 @@ package seedu.address.model.household;
 
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
+
+import seedu.address.model.household.Household;
 
 /**
- * Tests that a {@code Household}'s attributes matches any of the keywords given.
+ * Tests that a {@code Household}'s name, address, tags, household ID or phone number contains any of the keywords.
  */
 public class HouseholdContainsKeywordsPredicate implements Predicate<Household> {
     private final List<String> keywords;
+    private final boolean isNumberSearch; // Flag to indicate if we are doing a number-based search
 
-    public HouseholdContainsKeywordsPredicate(List<String> keywords) {
+    public HouseholdContainsKeywordsPredicate(List<String> keywords, boolean isNumberSearch) {
         this.keywords = keywords;
+        this.isNumberSearch = isNumberSearch;
     }
 
     @Override
     public boolean test(Household household) {
-        return keywords.stream()
-                .anyMatch(keyword -> 
-                    household.getName().fullName.toLowerCase().contains(keyword.toLowerCase())
-                    || household.getAddress().value.toLowerCase().contains(keyword.toLowerCase())
-                    || household.getTags().stream()
-                            .anyMatch(tag -> tag.tagName.toLowerCase()
-                                    .contains(keyword.toLowerCase())));
+        if (isNumberSearch) {
+            // Search by household ID or phone numbers
+            return testByNumber(household);
+        } else {
+            // Search by name, address, or tags
+            return keywords.stream()
+                    .anyMatch(keyword -> Stream.of(household.getName().toString(),
+                                    household.getAddress().toString(),
+                                    household.getTags().toString())
+                            .anyMatch(field -> field.toLowerCase().contains(keyword.toLowerCase())));
+        }
     }
-    
+
+    private boolean testByNumber(Household household) {
+        // Test if any of the numbers (household ID or phone numbers) match the keyword
+        String householdId = household.getId().toString();  // Assuming Household has a getId method
+        String phoneNumber = household.getContact().toString(); // Assuming Household has getPhoneNumber method
+
+        return keywords.stream()
+                .anyMatch(keyword -> householdId.contains(keyword) || phoneNumber.contains(keyword));
+    }
 
     @Override
     public boolean equals(Object other) {
@@ -31,4 +48,4 @@ public class HouseholdContainsKeywordsPredicate implements Predicate<Household> 
                 || (other instanceof HouseholdContainsKeywordsPredicate // instanceof handles nulls
                 && keywords.equals(((HouseholdContainsKeywordsPredicate) other).keywords)); // state check
     }
-} 
+}
