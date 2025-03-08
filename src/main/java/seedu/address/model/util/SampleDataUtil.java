@@ -17,24 +17,24 @@ public class SampleDataUtil {
     public static Household[] getSampleHouseholds() {
         return new Household[] {
             new Household(new Name("Tan Family"), new Address("Blk 30 Geylang Street 29, #06-40"),
-                new Contact("91234567"), HouseholdId.fromString("H000001"),
+                new Contact("91234567"), HouseholdId.fromString("1"),
                 getTagSet("elderly", "priority")),
             new Household(new Name("Lee Family"), new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                new Contact("92345678"), HouseholdId.fromString("H000002"),
+                new Contact("92345678"), HouseholdId.fromString("2"),
                 getTagSet("children", "needy")),
             new Household(new Name("Wong Family"), new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
-                new Contact("93456789"), HouseholdId.fromString("H000003"),
+                new Contact("93456789"), HouseholdId.fromString("3"),
                 getTagSet("elderly")),
         };
     }
 
     public static Session[] getSampleSessions() {
         return new Session[] {
-            new Session(HouseholdId.fromString("H000001"), new SessionDate("2024-03-15"), 
+            new Session(HouseholdId.fromString("1"), new SessionDate("2024-03-15"),
                 new SessionTime("14:00"), new SessionNote("First visit completed")),
-            new Session(HouseholdId.fromString("H000002"), new SessionDate("2024-03-16"), 
+            new Session(HouseholdId.fromString("2"), new SessionDate("2024-03-16"),
                 new SessionTime("10:00"), new SessionNote("Follow-up required")),
-            new Session(HouseholdId.fromString("H000003"), new SessionDate("2024-03-17"), 
+            new Session(HouseholdId.fromString("3"), new SessionDate("2024-03-17"),
                 new SessionTime("15:30"))
         };
     }

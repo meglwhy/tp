@@ -16,7 +16,29 @@ import seedu.address.commons.core.LogsCenter;
 public class HelpWindow extends UiPart<Stage> {
 
     public static final String USERGUIDE_URL = "https://se-education.org/addressbook-level3/UserGuide.html";
-    public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL;
+    public static final String HELP_MESSAGE =
+            "add-household: Adds a household to the household book. Parameters: n/NAME a/ADDRESS p/CONTACT\n"
+                    + "Example: add-household n/Smith Family a/123 Main St p/98765432\n\n"
+                    + "edit-household: Edits the details of the household identified by the household ID. Existing values will be overwritten by the input values.\n"
+                    + "Parameters: id/HOUSEHOLD_ID [n/NAME] [a/ADDRESS] [p/CONTACT] [t/TAG]...\n"
+                    + "Example: edit-household id/H000001 p/91234567 t/priority t/followup\n\n"
+                    + "add-session: Adds a session to a household. Parameters: id/HOUSEHOLD_ID d/DATE (in YYYY-MM-DD) tm/TIME (in HH:mm)\n"
+                    + "Example: add-session id/H000001 d/2025-03-15 tm/14:30\n\n"
+                    + "edit-session: Edits the details of the session identified by the index number. Existing values will be overwritten by the input values.\n"
+                    + "Parameters: INDEX (must be a positive integer) [d/DATE] [tm/TIME] [n/NOTE]\n"
+                    + "Example: edit-session 1 d/2025-03-16 tm/15:00\n\n"
+                    + "list-households: Lists all households\n\n"
+                    + "find-household: Finds all households whose names, addresses, or tags contain any of the specified keywords (case-insensitive) and displays them as a list.\n"
+                    + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+                    + "Example: find-household smith\n\n"
+                    + "<<REMOVE>> view-history: Shows the session history of the specified household.\n"
+                    + "Parameters: id/HOUSEHOLD_ID\n\n"
+                    + "delete-household: Deletes the household identified by the household ID.\n"
+                    + "Parameters: id/HOUSEHOLD_ID\n"
+                    + "Example: delete-household id/H000001\n\n"
+                    + "clear: Removes ALL data. Requires confirmation before proceeding.\n\n"
+                    + "exit: Exits the application gracefully.\n\n"
+                    + "For more information, refer to the User-Guide (link in dialog box) " + USERGUIDE_URL;
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
