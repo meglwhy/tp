@@ -43,17 +43,22 @@ public class FindHouseholdCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model householdBook) {
-        requireNonNull(householdBook);
-        
-        List<Household> matchingHouseholds = householdBook.getHouseholdBook().findHouseholds(predicate);
-        
-        if (matchingHouseholds.isEmpty()) {
+    public CommandResult execute(Model model) {
+        requireNonNull(model);
+
+        // Apply the filter to the filtered household list
+        model.updateFilteredHouseholdList(predicate);
+
+        // Get the number of households in the filtered list
+        int matchingCount = model.getFilteredHouseholdList().size();
+
+        if (matchingCount == 0) {
             return new CommandResult(String.format(MESSAGE_NO_MATCHING_HOUSEHOLDS, keywords));
         }
-        
+
+        // Return the result showing how many households match
         return new CommandResult(
-                String.format(MESSAGE_SUCCESS, matchingHouseholds.size(), keywords));
+                String.format(MESSAGE_SUCCESS, matchingCount, keywords));
     }
 
     @Override
