@@ -1,206 +1,250 @@
----
-  layout: default.md
-  title: "User Guide"
-  pageNav: 3
----
+# Em-Social User Guide
 
-# AB-3 User Guide
+## Introduction
+Welcome to Em-Social, a specialized management software designed for social workers. Em-Social streamlines household data management and session scheduling through an intuitive interface, allowing you to focus on what matters most – supporting the communities you serve.
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+Em-Social enables you to maintain detailed records of households, schedule and track visits, prevent scheduling conflicts, and efficiently organize your caseload through powerful filtering and search capabilities.
 
-<!-- * Table of Contents -->
-<page-nav-print />
-
---------------------------------------------------------------------------------------------------------------------
-
-## Quick start
-
-1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
-
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
-
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
-
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
-
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try:
-
-   * `list` : Lists all contacts.
-
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
-
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
-
-   * `clear` : Deletes all contacts.
-
-   * `exit` : Exits the app.
-
-1. Refer to the [Features](#features) below for details of each command.
-
---------------------------------------------------------------------------------------------------------------------
+- [Em-Social User Guide](#em-social-user-guide)
+  - [Introduction](#introduction)
+  - [Features](#features)
+  - [Usage](#usage)
+    - [Running Em-Social](#running-em-social)
+  - [Household Management](#household-management)
+    - [Add a household](#add-a-household)
+    - [Edit a household](#edit-a-household)
+    - [Delete a household](#delete-a-household)
+    - [List all households](#list-all-households)
+    - [Find households](#find-households)
+    - [Tag households](#tag-households)
+  - [Session Management](#session-management)
+    - [Add a session](#add-a-session)
+    - [Edit a session](#edit-a-session)
+    - [Delete a session](#delete-a-session)
+    - [Add a note to a session](#add-a-note-to-a-session)
+    - [List sessions](#list-sessions)
+  - [User Interface Navigation](#user-interface-navigation)
+    - [Household panel](#household-panel)
+    - [Session panel](#session-panel)
+    - [Command box](#command-box)
+    - [Result display](#result-display)
+  - [Help](#help)
+  - [Exiting the program](#exiting-the-program)
+  - [Saving the data](#saving-the-data)
+  - [Command summary](#command-summary)
 
 ## Features
+Em-Social offers the following key features:
 
-<box type="info" seamless>
+1. **Household Management**: Add, edit, and categorize household information including name, address, contact details, and tags.
+2. **Session Scheduling**: Schedule visits with households without double-booking.
+3. **Session Notes**: Add detailed notes for each session to track interactions and follow-up items.
+4. **Powerful Searching**: Find households based on tags or search criteria.
+5. **Duplicate Prevention**: System ensures no duplicate household entries exist.
+6. **Interactive UI**: View households and their sessions side by side.
 
-**Notes about the command format:**<br>
+## Usage
+### Running Em-Social
+1. Ensure you have Java 11 or above installed on your computer.
+2. Download the latest release of Em-Social from the releases page.
+3. Double-click the JAR file or run it from the command line using: `java -jar em-social.jar`
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+## Household Management
+Households are the core entities in Em-Social. Each household represents a family or living unit that you work with.
 
-* Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+### Add a household
+You can add a new household with the `add-household` command.
+add-household n/HOUSEHOLD_NAME a/ADDRESS p/PHONE_NUMBER [t/TAG]...
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+Example of usage:
+`add-household n/Tan Family a/Blk 30 Geylang Street 29, #06-40 p/91234567 t/elderly t/priority`
 
-* Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
-
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-</box>
-
-### Viewing help : `help`
-
-Shows a message explaning how to access the help page.
-
-![help message](images/helpMessage.png)
-
-Format: `help`
+Expected outcome:
+`New household added: Tan Family (ID: H000001)
+Address: Blk 30 Geylang Street 29, #06-40
+Contact: 91234567
+Tags: [elderly][priority]`
 
 
-### Adding a person: `add`
+### Edit a household
+You can modify household details with the `edit-household` command.
+edit-household ID [n/HOUSEHOLD_NAME] [a/ADDRESS] [p/PHONE_NUMBER] [t/TAG]...
 
-Adds a person to the address book.
+Example of usage:
+`edit-household H000001 n/Tan Family (Urgent) p/98765432`
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Expected outcome:
+`Edited household: Tan Family (Urgent) (ID: H000001)
+Address: Blk 30 Geylang Street 29, #06-40
+Contact: 98765432
+Tags: [elderly][priority]`
 
-<box type="tip" seamless>
 
-**Tip:** A person can have any number of tags (including 0)
-</box>
+### Delete a household
+You can remove a household with the `delete-household` command.
+delete-household ID
 
-Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+Example of usage:
+`delete-household H000001`
 
-### Listing all persons : `list`
+Expected outcome:
+`Deleted household: Tan Family (Urgent) (ID: H000001)`
 
-Shows a list of all persons in the address book.
 
-Format: `list`
+### List all households
+`You can view all households with the `list-households` command.
+list-households
 
-### Editing a person : `edit`
+Expected outcome:
+`Listed all households:
+1. Tan Family (ID: H000001)
+2. Lee Family (ID: H000002)
+3. Wong Family (ID: H000003)`
 
-Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+### Find households
+You can search for households by name or tag with the `find-households` command.
+find-households KEYWORD [MORE_KEYWORDS]...
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+Example of usage:
+`find-households Tan Lee`
 
-Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Expected outcome:
+`Found 2 households matching: Tan Lee
+1. Tan Family (ID: H000001)
+2. Lee Family (ID: H000002)`
 
-### Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords.
+### Tag households
+You can add tags to a household with the `tag-household` command.
+tag-household ID t/TAG [t/MORE_TAGS]...
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Example of usage:
+`tag-household H000003 t/elderly t/medical`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+Expected outcome:
+`Tagged household: Wong Family (ID: H000003)
+Tags: [elderly][medical]`
 
-Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting a person : `delete`
+## Session Management
+Sessions represent scheduled visits to households.
 
-Deletes the specified person from the address book.
 
-Format: `delete INDEX`
+### Add a session
+You can schedule a session with the `add-session` command.
+add-session id/HOUSEHOLD_ID d/DATE (YYYY-MM-DD) t/TIME (HH:MM)
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+Example of usage:
+`add-session id/H000003 d/2025-03-15 t/14:30`
 
-Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+Expected outcome:
+`New session added to household H000003:
+Date: 2025-03-15
+Time: 14:30`
 
-### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+### Edit a session
+You can modify a session with the `edit-session` command.
+edit-session INDEX d/DATE t/TIME
 
-Format: `clear`
+Example of usage:
+`edit-session 1 d/2025-03-16 t/15:00`
 
-### Exiting the program : `exit`
+Expected outcome:
+`Edited session:
+Date: 2025-03-16
+Time: 15:00`
 
-Exits the program.
 
-Format: `exit`
+### Delete a session
+You can remove a session with the `delete-session` command.
+delete-session INDEX
 
-### Saving the data
+Example of usage:
+`delete-session 1`
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+Expected outcome:
+`Deleted session:
+Date: 2025-03-16
+Time: 15:00`
 
-### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+### Add a note to a session
+You can add notes to a session with the `add-note` command.
+add-note INDEX n/NOTE
 
-<box type="warning" seamless>
+Example of usage:
+`add-note 1 n/Follow-up on medical assistance application`
 
-**Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
-</box>
+Expected outcome:
+`Added note to session:
+Date: 2025-03-15
+Time: 14:30
+Note: Follow-up on medical assistance application`
 
-### Archiving data files `[coming in v2.0]`
 
-_Details coming soon ..._
+### List sessions
+You can view all sessions with the `list-sessions` command.
+list-sessions [id/HOUSEHOLD_ID]
 
---------------------------------------------------------------------------------------------------------------------
+Example of usage:
+`list-sessions id/H000003`
 
-## FAQ
+Expected outcome:
+`Listed all sessions for household H000003:
+1. Date: 2025-03-15, Time: 14:30
+2. Date: 2025-04-01, Time: 10:00`
 
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
 
---------------------------------------------------------------------------------------------------------------------
+## User Interface Navigation
+Em-Social features a dual-panel interface for efficient case management.
 
-## Known issues
 
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+### Household panel
+The left panel displays all households. Click on a household to view its details and associated sessions.
 
---------------------------------------------------------------------------------------------------------------------
+
+### Session panel
+The right panel shows sessions for the selected household. This updates automatically when you select a different household.
+
+
+### Command box
+Enter commands at the bottom of the window.
+
+
+### Result display
+Above the command box, you'll see the results of your commands and any error messages.
+
+
+## Help
+You can view a summary of available commands with the `help` command.
+help
+
+
+## Exiting the program
+You can exit Em-Social with the `exit` command.
+exit
+
+
+## Saving the data
+Em-Social automatically saves data to a local file after each command. There is no need to save manually.
+
 
 ## Command summary
 
-Action     | Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear**  | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List**   | `list`
-**Help**   | `help`
+| Action | Format | Example |
+|--------|--------|---------|
+| Add household | `add-household n/HOUSEHOLD_NAME a/ADDRESS p/PHONE_NUMBER [t/TAG]...` | `add-household n/Tan Family a/Blk 30 Geylang Street 29, #06-40 p/91234567 t/elderly` |
+| Edit household | `edit-household ID [n/HOUSEHOLD_NAME] [a/ADDRESS] [p/PHONE_NUMBER] [t/TAG]...` | `edit-household H000001 n/Tan Family (Urgent) p/98765432` |
+| Delete household | `delete-household ID` | `delete-household H000001` |
+| List households | `list-households` | `list-households` |
+| Find households | `find-households KEYWORD [MORE_KEYWORDS]...` | `find-households Tan Lee` |
+| Tag household | `tag-household ID t/TAG [t/MORE_TAGS]...` | `tag-household H000003 t/elderly t/medical` |
+| Add session | `add-session id/HOUSEHOLD_ID d/DATE (YYYY-MM-DD) t/TIME (HH:MM)` | `add-session id/H000003 d/2025-03-15 t/14:30` |
+| Edit session | `edit-session INDEX d/DATE t/TIME` | `edit-session 1 d/2025-03-16 t/15:00` |
+| Delete session | `delete-session INDEX` | `delete-session 1` |
+| Add note to session | `add-note INDEX n/NOTE` | `add-note 1 n/Follow-up on medical assistance application` |
+| List sessions | `list-sessions [id/HOUSEHOLD_ID]` | `list-sessions id/H000003` |
+| Help | `help` | `help` |
+| Exit | `exit` | `exit` |
