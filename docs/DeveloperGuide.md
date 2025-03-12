@@ -270,33 +270,109 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ## **Appendix: Requirements**
 
-### Product scope
+## Product scope
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* Social service workers managing multiple households.
+* Users who need to track household details and engagement sessions efficiently.
+* Prefer a structured system for scheduling and managing household interactions.
+* Require features to prevent duplicate entries and session conflicts.
+* May work with a large number of records and require filtering/search options.
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: 
+
+Em-Social is a social worker management software designed to streamline household management and session scheduling. It allows users to:
+* Add, edit, and categorize household details while preventing duplicate entries.
+* Schedule engagement sessions with households while ensuring no double bookings.
+* Add notes for each session for accurate record-keeping.
+* Search and filter households based on tags or specific criteria.
+
+**Out of scope**:
+
+* Advanced case management with intervention plans.
+* Analytics, financial, and resource management.
+* Automated reminders beyond basic session notifications.
+* Legal compliance tracking.
+* Mobile app with offline support.
+
+Em-Social focuses on efficient household and session management, with potential future expansions based on user needs.
+
+## User stories
+
+Priorities: High (must have) - `* * *`, Medium (good to have) - `* *`, Low (unlikely to have) - `*`
+
+### Create & Store Household Records [`* * *`]
+**User Story:** As a social service worker, I can create a new household record (address, members, etc.) so that I can easily store and reference important household information.
+
+**Conditions of Satisfaction:**
+- I can fill in household address, contact details, and member names.
+- The record is saved in the system and is visible in a household list.
+
+### Update & Edit Household Information [`* *`]
+**User Story:** As a social service worker, I can update an existing household record so that I can keep the information current and accurate.
+
+**Conditions of Satisfaction:**
+- I can edit household details at any time.
+- The updated information is saved and immediately visible in the system.
+
+### Add Session Notes [`* *`]
+**User Story:** As a social service worker, I can add notes to a session so that I can document important details about household visits.
+
+**Conditions of Satisfaction:**
+- I can write session notes when creating or updating a session.
+- Notes are saved and linked to the session for future reference.
+
+### Search Household Records [`* *`]
+**User Story:** As a social service worker, I can search for households by name or address so that I can quickly find the relevant record.
+
+**Conditions of Satisfaction:**
+- I can use a search bar or filter to find households by name and/or address.
+- Matching results appear immediately in a results list.
+
+### View List of Households [`* * *`]
+**User Story:** As a social service worker, I can view a list of all stored households so that I can quickly browse through records.
+
+**Conditions of Satisfaction:**
+- I can see all stored households in a structured list.
+- Each household entry displays key information like name, address, and contact details.
+
+### Delete Household [`* * *`]
+**User Story:** As a social service worker, I can delete a household record so that I can remove outdated or incorrect information.
+
+**Conditions of Satisfaction:**
+- I can delete a household from the system.
+- The deleted household is removed from the household list.
+
+### Clear All Entries [`* *`]
+**User Story:** As a social service worker, I can clear all stored entries so that I can reset the system when necessary.
+
+**Conditions of Satisfaction:**
+- I can remove all stored households and sessions.
+- The system confirms before clearing all data.
+
+### Exit Program [`* * *`]
+**User Story:** As a social service worker, I can exit the program so that I can close the application safely.
+
+**Conditions of Satisfaction:**
+- I can terminate the application using an exit command.
+- The system safely closes all sessions and saves necessary data.
+
+### Viewing Help [`* * *`]
+**User Story:** As a social service worker, I can view a help menu so that I can understand how to use the system.
+
+**Conditions of Satisfaction:**
+- The system provides a help command.
+- The help menu explains how to use available features.
+
+### Receive Session Notification [`* *`]
+**User Story:** As a social service worker, I receive notifications for upcoming sessions so that I am reminded of my appointments.
+
+**Conditions of Satisfaction:**
+- The system sends reminders for scheduled sessions.
+- Notifications appear in-app or via email.
 
 
-### User stories
-
-Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
-
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
-
-*{More to be added}*
 
 ### Use cases
 
