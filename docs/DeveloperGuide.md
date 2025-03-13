@@ -1,35 +1,28 @@
----
-  layout: default.md
-  title: "Developer Guide"
-  pageNav: 3
----
+# Em-Social Developer Guide
 
-# AB-3 Developer Guide
+## Product Scope
 
-<!-- * Table of Contents -->
-<page-nav-print />
+### Target User Profile
 
---------------------------------------------------------------------------------------------------------------------
+- **Efficient Management:**  
+  Has a need to manage a significant number of household records and engagement sessions efficiently.
 
-## **Acknowledgements**
+- **Monitoring Household Conditions:**  
+  Has a need to take note of household conditions if there are any areas of concern.
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+- **Desktop Preference:**  
+  Prefers desktop applications over web or mobile solutions for stability and performance.
 
---------------------------------------------------------------------------------------------------------------------
+- **CLI Enthusiast:**  
+  Prefers typing over mouse interactions, favoring a Command Line Interface (CLI) for speed.
 
-## **Setting up, getting started**
+- **Comfort with CLI:**  
+  Is reasonably comfortable using CLI applications, with minimal reliance on Graphical User Interfaces (GUI).
 
-Refer to the guide [_Setting up and getting started_](SettingUp.md).
+### Value Proposition
 
---------------------------------------------------------------------------------------------------------------------
+**Em-Social** enables social service workers to manage household records and schedule sessions faster and more efficiently than traditional mouse/GUI-driven applications by leveraging an efficient CLI interface and structured data handling. This ensures that users can quickly search, update, and schedule without unnecessary navigation overhead, improving productivity and accuracy. By helping social workers to stay organized, they can focus on supporting households instead of managing logistics.
 
-## **Design**
-
-### Architecture
-
-<puml src="diagrams/ArchitectureDiagram.puml" width="280" />
-
-The ***Architecture Diagram*** given above explains the high-level design of the App.
 
 Given below is a quick overview of main components and how they interact with each other.
 
@@ -180,7 +173,7 @@ Step 2. The user executes `delete 5` command to delete the 5th person in the add
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add n/David …` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
@@ -662,7 +655,7 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+1. _{ more test cases … }_
 
 ### Deleting a person
 
@@ -679,7 +672,7 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+1. _{ more test cases … }_
 
 ### Saving data
 
@@ -687,4 +680,4 @@ testers are expected to do more *exploratory* testing.
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
-1. _{ more test cases …​ }_
+1. _{ more test cases … }_
