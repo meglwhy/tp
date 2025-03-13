@@ -332,13 +332,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+4. The chatbot should ensure that it handles file retrieval without corrupting files, preserving their original formats and data.
+5. If the chatbot modifies any files (e.g., adds new contacts), it should maintain data consistency to ensure there are no errors or inconsistencies between the data presented and the file content.
+6. The chatbot should not consume excessive disk space or resources when indexing files or storing user preferences.
+7. The chatbot should be easy to update, with the ability to roll out new features or bug fixes without affecting the user experience or data integrity.
+8. The chatbot should function well offline, since it's accessing local files rather than cloud-based storage.
 
 *{More to be added}*
 
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
 
 --------------------------------------------------------------------------------------------------------------------
 

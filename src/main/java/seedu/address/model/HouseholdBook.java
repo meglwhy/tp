@@ -54,7 +54,7 @@ public class HouseholdBook implements ReadOnlyHouseholdBook {
     }
 
     /**
-     * Returns true if a household with the same ID as {@code household} exists in the household book.
+     * Returns true if a household with the same ID, name, address or contact exists in the household book.
      */
     public boolean hasHousehold(Household household) {
         requireNonNull(household);

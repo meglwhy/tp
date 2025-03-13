@@ -7,25 +7,24 @@ import static java.util.Objects.requireNonNull;
  * Guarantees: immutable; ID is valid as declared in {@link #isValidId(String)}
  */
 public class HouseholdId {
-    public static final String MESSAGE_CONSTRAINTS = 
-            "Household ID should start with 'H' followed by 6 digits";
-    private static final String VALIDATION_REGEX = "H\\d{6}";
+    public static final String MESSAGE_CONSTRAINTS =
+            "Household ID should be a positive integer";
     private static long idCounter = 0;
 
-    public final String value;
+    public final long value;
 
     /**
      * Constructs a new {@code HouseholdId}.
      */
-    private HouseholdId(String value) {
+    private HouseholdId(long value) {
         this.value = value;
     }
 
     /**
-     * Creates a new HouseholdId with auto-generated ID.
+     * Creates a new HouseholdId with an auto-generated ID.
      */
     public static HouseholdId generateNewId() {
-        return new HouseholdId(String.format("H%06d", ++idCounter));
+        return new HouseholdId(++idCounter);
     }
 
     /**
@@ -33,38 +32,41 @@ public class HouseholdId {
      */
     public static HouseholdId fromString(String id) {
         requireNonNull(id);
-        HouseholdId householdId = new HouseholdId(id);
-        
         try {
-            long storedId = Long.parseLong(id.substring(1));
+            long storedId = Long.parseLong(id);
             idCounter = Math.max(idCounter, storedId);
+            return new HouseholdId(storedId);
         } catch (NumberFormatException e) {
-            // Handle invalid ID format if necessary
+            throw new IllegalArgumentException("Invalid Household ID: " + id);
         }
-        return householdId;
     }
 
     /**
      * Returns true if a given string is a valid household ID.
      */
     public static boolean isValidId(String test) {
-        return test != null && test.matches(VALIDATION_REGEX);
+        try {
+            long parsedId = Long.parseLong(test);
+            return parsedId > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     @Override
     public String toString() {
-        return value;
+        return String.valueOf(value);
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof HouseholdId
-                && value.equals(((HouseholdId) other).value));
+                && value == ((HouseholdId) other).value);
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return Long.hashCode(value);
     }
 }
