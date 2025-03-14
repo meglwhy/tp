@@ -4,11 +4,12 @@ import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a Household's ID in the household book.
- *
- * Guarantees: immutable; ID is valid as declared in {@link #isValidId(String)}.
+ * Guarantees: immutable; ID is valid as declared in {@link #isValidId(String)}
  */
 public class HouseholdId {
-    public static final String MESSAGE_CONSTRAINTS = "Household ID should be in the format H followed by a positive integer";
+    public static final String MESSAGE_CONSTRAINTS =
+            "Household ID should start with 'H' followed by 6 digits";
+    private static final String VALIDATION_REGEX = "H\\d{6}";
     private static long idCounter = 0;
 
     public final String value;
@@ -21,11 +22,10 @@ public class HouseholdId {
     }
 
     /**
-     * Creates a new HouseholdId with an auto-generated ID (starting with H).
+     * Creates a new HouseholdId with auto-generated ID.
      */
     public static HouseholdId generateNewId() {
-        idCounter++;  // Increment counter for the next ID
-        return new HouseholdId("H" + idCounter);
+        return new HouseholdId(String.format("H%06d", ++idCounter));
     }
 
     /**
@@ -33,22 +33,22 @@ public class HouseholdId {
      */
     public static HouseholdId fromString(String id) {
         requireNonNull(id);
-        if (!id.startsWith("H") || !isValidId(id.substring(1))) {
-            throw new IllegalArgumentException("Invalid Household ID: " + id);
+        HouseholdId householdId = new HouseholdId(id);
+
+        try {
+            long storedId = Long.parseLong(id.substring(1));
+            idCounter = Math.max(idCounter, storedId);
+        } catch (NumberFormatException e) {
+            // Handle invalid ID format if necessary
         }
-        return new HouseholdId(id);
+        return householdId;
     }
 
     /**
-     * Returns true if a given string is a valid household ID (must start with "H" and followed by a positive integer).
+     * Returns true if a given string is a valid household ID.
      */
     public static boolean isValidId(String test) {
-        try {
-            long parsedId = Long.parseLong(test);
-            return parsedId > 0;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+        return test != null && test.matches(VALIDATION_REGEX);
     }
 
     @Override
@@ -58,7 +58,9 @@ public class HouseholdId {
 
     @Override
     public boolean equals(Object other) {
-        return other == this || (other instanceof HouseholdId && value.equals(((HouseholdId) other).value));
+        return other == this
+                || (other instanceof HouseholdId
+                && value.equals(((HouseholdId) other).value));
     }
 
     @Override
