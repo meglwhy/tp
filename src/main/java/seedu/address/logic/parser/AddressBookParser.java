@@ -69,9 +69,6 @@ public class AddressBookParser {
         case ListHouseholdsCommand.COMMAND_WORD:
             return new ListHouseholdsCommand();
 
-        case ViewHistoryCommand.COMMAND_WORD:
-            return new ViewHistoryCommandParser().parse(arguments);
-
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 

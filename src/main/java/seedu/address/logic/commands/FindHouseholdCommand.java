@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -23,8 +24,8 @@ public class FindHouseholdCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all households whose names, addresses, tags, "
             + "household ID or phone numbers contain any of the specified keywords (case-insensitive) and displays them as a list.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " smith";
+            + "Parameters: KEYWORD [MORE_KEYWORDS]... or phrases in double quotes\n"
+            + "Example: " + COMMAND_WORD + " \"John Smith\" 12345";
 
     public static final String MESSAGE_NO_KEYWORDS = "Please provide at least one keyword.";
     public static final String MESSAGE_SUCCESS = "Found %1$d household(s) matching: %2$s";
@@ -42,15 +43,29 @@ public class FindHouseholdCommand extends Command {
 
         this.keywords = trimmedKeywords;
 
-        // Determine if the keyword can be parsed as a number (either household ID or phone number)
-        if (isNumber(trimmedKeywords)) {
-            // If it is a number, treat it as a special case (search by ID or phone)
-            this.predicate = new HouseholdContainsKeywordsPredicate(
-                    Arrays.asList(trimmedKeywords.split("\\s+")), true); // pass a flag for numeric search
-        } else {
-            this.predicate = new HouseholdContainsKeywordsPredicate(
-                    Arrays.asList(trimmedKeywords.split("\\s+")), false); // normal keyword search
+        // Extract keywords, considering phrases inside double quotes as a single keyword
+        List<String> parsedKeywords = extractKeywords(trimmedKeywords);
+
+        boolean numericSearch = parsedKeywords.stream().allMatch(this::isNumber);
+
+        this.predicate = new HouseholdContainsKeywordsPredicate(parsedKeywords, numericSearch);
+    }
+
+    // Helper method to extract keywords, including handling quoted phrases
+    private List<String> extractKeywords(String input) {
+        List<String> keywords = new ArrayList<>();
+        Matcher matcher = Pattern.compile("\"([^\"]+)\"|(\\S+)").matcher(input);
+
+        while (matcher.find()) {
+            if (matcher.group(1) != null) {
+                // Found a phrase inside double quotes, add it as a single keyword
+                keywords.add(matcher.group(1));
+            } else {
+                // Found a single word, add it as a keyword
+                keywords.add(matcher.group(2));
+            }
         }
+        return keywords;
     }
 
     // Helper method to check if a keyword is a number (e.g., household ID or phone number)
