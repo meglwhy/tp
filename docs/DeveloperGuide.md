@@ -1,35 +1,28 @@
----
-  layout: default.md
-  title: "Developer Guide"
-  pageNav: 3
----
+# Em-Social Developer Guide
 
-# AB-3 Developer Guide
+## Product Scope
 
-<!-- * Table of Contents -->
-<page-nav-print />
+### Target User Profile
 
---------------------------------------------------------------------------------------------------------------------
+- **Efficient Management:**  
+  Has a need to manage a significant number of household records and engagement sessions efficiently.
 
-## **Acknowledgements**
+- **Monitoring Household Conditions:**  
+  Has a need to take note of household conditions if there are any areas of concern.
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+- **Desktop Preference:**  
+  Prefers desktop applications over web or mobile solutions for stability and performance.
 
---------------------------------------------------------------------------------------------------------------------
+- **CLI Enthusiast:**  
+  Prefers typing over mouse interactions, favoring a Command Line Interface (CLI) for speed.
 
-## **Setting up, getting started**
+- **Comfort with CLI:**  
+  Is reasonably comfortable using CLI applications, with minimal reliance on Graphical User Interfaces (GUI).
 
-Refer to the guide [_Setting up and getting started_](SettingUp.md).
+### Value Proposition
 
---------------------------------------------------------------------------------------------------------------------
+**Em-Social** enables social service workers to manage household records and schedule sessions faster and more efficiently than traditional mouse/GUI-driven applications by leveraging an efficient CLI interface and structured data handling. This ensures that users can quickly search, update, and schedule without unnecessary navigation overhead, improving productivity and accuracy. By helping social workers to stay organized, they can focus on supporting households instead of managing logistics.
 
-## **Design**
-
-### Architecture
-
-<puml src="diagrams/ArchitectureDiagram.puml" width="280" />
-
-The ***Architecture Diagram*** given above explains the high-level design of the App.
 
 Given below is a quick overview of main components and how they interact with each other.
 
@@ -180,7 +173,7 @@ Step 2. The user executes `delete 5` command to delete the 5th person in the add
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add n/David …` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
@@ -270,75 +263,369 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ## **Appendix: Requirements**
 
-### Product scope
+## Product scope
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* Social service workers managing multiple households.
+* Users who need to track household details and engagement sessions efficiently.
+* Prefer a structured system for scheduling and managing household interactions.
+* Require features to prevent duplicate entries and session conflicts.
+* May work with a large number of records and require filtering/search options.
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: 
+
+Em-Social is a social worker management software designed to streamline household management and session scheduling. It allows users to:
+* Add, edit, and categorize household details while preventing duplicate entries.
+* Schedule engagement sessions with households while ensuring no double bookings.
+* Add notes for each session for accurate record-keeping.
+* Search and filter households based on tags or specific criteria.
+
+**Out of scope**:
+
+* Advanced case management with intervention plans.
+* Analytics, financial, and resource management.
+* Automated reminders beyond basic session notifications.
+* Legal compliance tracking.
+* Mobile app with offline support.
+
+Em-Social focuses on efficient household and session management, with potential future expansions based on user needs.
+
+## User stories
+
+Priorities: High (must have) - `* * *`, Medium (good to have) - `* *`, Low (unlikely to have) - `*`
+
+### Create & Store Household Records [`* * *`]
+**User Story:** As a social service worker, I can create a new household record (address, members, etc.) so that I can easily store and reference important household information.
+
+**Conditions of Satisfaction:**
+- I can fill in household address, contact details, and member names.
+- The record is saved in the system and is visible in a household list.
+
+### Update & Edit Household Information [`* *`]
+**User Story:** As a social service worker, I can update an existing household record so that I can keep the information current and accurate.
+
+**Conditions of Satisfaction:**
+- I can edit household details at any time.
+- The updated information is saved and immediately visible in the system.
+
+### Add Session Notes [`* *`]
+**User Story:** As a social service worker, I can add notes to a session so that I can document important details about household visits.
+
+**Conditions of Satisfaction:**
+- I can write session notes when creating or updating a session.
+- Notes are saved and linked to the session for future reference.
+
+### Search Household Records [`* *`]
+**User Story:** As a social service worker, I can search for households by name or address so that I can quickly find the relevant record.
+
+**Conditions of Satisfaction:**
+- I can use a search bar or filter to find households by name and/or address.
+- Matching results appear immediately in a results list.
+
+### View List of Households [`* * *`]
+**User Story:** As a social service worker, I can view a list of all stored households so that I can quickly browse through records.
+
+**Conditions of Satisfaction:**
+- I can see all stored households in a structured list.
+- Each household entry displays key information like name, address, and contact details.
+
+### Delete Household [`* * *`]
+**User Story:** As a social service worker, I can delete a household record so that I can remove outdated or incorrect information.
+
+**Conditions of Satisfaction:**
+- I can delete a household from the system.
+- The deleted household is removed from the household list.
+
+### Clear All Entries [`* *`]
+**User Story:** As a social service worker, I can clear all stored entries so that I can reset the system when necessary.
+
+**Conditions of Satisfaction:**
+- I can remove all stored households and sessions.
+- The system confirms before clearing all data.
+
+### Exit Program [`* * *`]
+**User Story:** As a social service worker, I can exit the program so that I can close the application safely.
+
+**Conditions of Satisfaction:**
+- I can terminate the application using an exit command.
+- The system safely closes all sessions and saves necessary data.
+
+### Viewing Help [`* * *`]
+**User Story:** As a social service worker, I can view a help menu so that I can understand how to use the system.
+
+**Conditions of Satisfaction:**
+- The system provides a help command.
+- The help menu explains how to use available features.
+
+### Receive Session Notification [`* *`]
+**User Story:** As a social service worker, I receive notifications for upcoming sessions so that I am reminded of my appointments.
+
+**Conditions of Satisfaction:**
+- The system sends reminders for scheduled sessions.
+- Notifications appear in-app or via email.
 
 
-### User stories
 
-Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
+## Use cases
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+(For all use cases below, the **System** is the `Em-Social` and the **Actor** is the `Social Service Worker`, unless specified otherwise)
 
-*{More to be added}*
+### Use Case: U1. Create Household Record
 
-### Use cases
-
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
-
-**Use case: Delete a person**
-
-**MSS**
-
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+**Main Success Scenario:**
+1. User selects the option to add a household.
+2. System prompts for household details.
+3. User enters household name, address, and contact information.
+4. System validates the input.
+5. System saves the household record.
+6. System displays a confirmation message.
 
     Use case ends.
 
-**Extensions**
+**Extensions:**
 
-* 2a. The list is empty.
+4a. Invalid input provided.  
+* 4a1. System displays an error message.  
+* 4a2. User corrects input and retries.  
+Use case resumes from step 4.
 
-  Use case ends.
+6a. System fails to save the household record.  
+* 6a1. System displays an error message indicating the failure.  
+* 6a2. System prompts the user to retry saving.  
+* 6a3. If the issue persists, the system logs the error for troubleshooting.  
+Use case resumes from step 3 or ends if saving is unsuccessful.
 
-* 3a. The given index is invalid.
+---
 
-    * 3a1. AddressBook shows an error message.
+### Use Case: U2. Schedule Engagement Session
 
-      Use case resumes at step 2.
+**Main Success Scenario:**
+1. User selects a household.
+2. User schedules a session.
+3. System performs (**Prevent Double-Booking (U4)**) to prevent scheduling conflicts.
+4. If there is no conflict, system saves the session and updates the calendar.
+5. System displays a confirmation message.
 
-*{More to be added}*
+    Use case ends.
+
+**Extensions:**
+
+2a. Invalid date/time format.  
+* 2a1. System displays an error message.  
+* 2a2. User corrects input and retries.  
+Use case resumes from step 2.
+
+---
+
+### Use Case: U3. Edit Household Record
+
+**Main Success Scenario:**
+1. User selects a household to edit.
+2. System displays household details (i.e., name, address, contact, household ID, tags, sessions).
+3. User updates the desired detail (name, address, contact, tag).
+4. System validates changes.
+5. System saves changes and updates the record.
+6. System displays a confirmation message.
+
+    Use case ends.
+
+**Extensions:**
+
+4a. Invalid input provided.  
+* 4a1. System displays an error message.  
+* 4a2. User corrects input and retries.  
+Use case resumes from step 4.
+
+---
+
+### Use Case: U4. Prevent Double-Booking
+
+**Main Success Scenario:**
+1. User selects a date and time to schedule a session.
+2. System checks for existing sessions at the specified time.
+3. If no conflicts exist, the system schedules the session.
+4. System displays a confirmation message.
+
+    Use case ends.
+
+**Extensions:**
+
+2a. A session already exists at the selected time.  
+* 2a1. System displays a conflict warning.  
+Use case ends.
+
+---
+
+### Use Case: U5. View Household Session History
+
+**Main Success Scenario:**
+1. User selects a household.
+2. User chooses to view session history.
+3. System retrieves and displays past sessions in chronological order.
+4. User reviews session details.
+
+    Use case ends.
+
+**Extensions:**
+
+3a. No past sessions recorded.  
+* 3a1. System displays a message indicating no history available.  
+Use case ends.
+
+---
+
+### Use Case: U6. Search for Household
+
+**Main Success Scenario:**
+1. User enters a keyword in the search bar.
+2. System retrieves matching household records.
+3. System displays results in a list.
+4. User selects a household for further action.
+
+    Use case ends.
+
+**Extensions:**
+
+2a. No matching records found.  
+* 2a1. System displays a "No households found" message.  
+Use case ends.
+
+---
+
+### Use Case: U7. Delete Household
+
+**Main Success Scenario:**
+1. User enters `delete-household id/HOUSEHOLD_ID`.
+2. System checks if the provided household ID exists.
+3. System prompts the user for confirmation.
+4. User confirms the deletion.
+5. System removes the household record from the list.
+6. System displays a confirmation message:
+    - "Household [ID] deleted successfully."
+
+    Use case ends. 
+
+**Extensions:**
+
+2a. Household ID does not exist.  
+* 2a1. System displays error message: `"Error: Household ID not found."`  
+Use case ends.
+
+3a. User cancels deletion.  
+* 3a1. System aborts the deletion process.  
+Use case ends.
+
+5a. Household has linked sessions.  
+* 5a1. System prompts user to confirm deleting associated sessions.  
+* 5a2. User confirms or cancels deletion.
+  - If confirmed, system deletes the household and linked sessions.
+  - If canceled, use case ends.
+
+---
+
+### Use Case: U8. Edit Session (with Optional Notes)
+
+**Main Success Scenario:**
+1. User enters `edit-session INDEX [d/DATE] [t/TIME] [n/NOTE]` to update a session.
+2. System checks if the provided session index exists.
+3. System validates the new date, time, or note.
+4. If valid, system updates the session details.
+5. System displays a confirmation message:
+    - `"Session updated successfully."`
+
+    Use case ends.
+
+**Extensions:**
+
+2a. Invalid session index.  
+* 2a1. System displays an error message: `"Error: Invalid session index."`  
+Use case ends.
+
+3a. Invalid date/time format.  
+* 3a1. System displays an error message: `"Error: Date must be in DD-MM-YYYY format."`  
+* 3a2. User corrects input and retries.  
+Use case resumes from step 1.
+
+3b. A session already exists at the new date/time (**See Use Case: Prevent Double-Booking (U4)**).  
+* 3b1. System displays an error message: `"Error: Time slot unavailable due to scheduling conflict."`  
+* 3b2. User selects a different time or cancels.  
+Use case resumes from step 1 or ends if canceled.
+
+3c. Empty note provided when `n/NOTE` is used.  
+* 3c1. System displays an error message: `"Error: Note cannot be empty if provided."`  
+* 3c2. User corrects input and retries.  
+Use case resumes from step 1.
+
+4a. System fails to save the changes.  
+* 4a1. System displays an error message: `"Error: Unable to save changes. Please try again."`  
+* 4a2. User retries or exits.  
+Use case resumes from step 1 or ends if unsuccessful.
+
+---
+
+### Use Case: U9. Clear All Entries
+
+**Main Success Scenario:**
+1. User enters `clear` to clear all entries.
+2. System prompts for confirmation.
+3. User confirms the action.
+4. System removes all stored data (households, sessions, and notes).
+5. System displays a confirmation message.
+
+    Use case ends.
+
+**Extensions:**
+
+2a. User cancels the operation.  
+* 2a1. System aborts the clearing process.  
+Use case ends.
+
+4a. System fails to clear data.  
+* 4a1. System displays an error message.  
+* 4a2. User retries or exits.  
+Use case resumes from step 2 or ends if the issue persists.
+
+---
+
+### Use Case: U10. Receive Session Notification
+
+**Main Success Scenario:**
+1. System checks upcoming sessions.
+2. System sends a notification (in-app or email) before the session.
+3. User receives the notification.
+
+    Use case ends. 
+
+**Extensions:**
+
+2a. Notifications are disabled.  
+* 2a1. System does not send a notification.  
+Use case ends.
+
+2b. Email notification fails.  
+* 2b1. System logs the error and retries.  
+* 2b2. If the issue persists, system notifies the user in-app.  
+Use case resumes from step 3.
+
+--------------------------------------------------------------------------------------------------------------------
 
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+4. The chatbot should ensure that it handles file retrieval without corrupting files, preserving their original formats and data.
+5. If the chatbot modifies any files (e.g., adds new contacts), it should maintain data consistency to ensure there are no errors or inconsistencies between the data presented and the file content.
+6. The chatbot should not consume excessive disk space or resources when indexing files or storing user preferences.
+7. The chatbot should be easy to update, with the ability to roll out new features or bug fixes without affecting the user experience or data integrity.
+8. The chatbot should function well offline, since it's accessing local files rather than cloud-based storage.
 
 *{More to be added}*
 
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -368,7 +655,7 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+1. _{ more test cases … }_
 
 ### Deleting a person
 
@@ -385,7 +672,7 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+1. _{ more test cases … }_
 
 ### Saving data
 
@@ -393,4 +680,4 @@ testers are expected to do more *exploratory* testing.
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
-1. _{ more test cases …​ }_
+1. _{ more test cases … }_

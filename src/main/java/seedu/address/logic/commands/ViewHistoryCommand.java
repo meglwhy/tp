@@ -24,7 +24,7 @@ public class ViewHistoryCommand extends Command {
             + "Parameters: "
             + PREFIX_ID + "HOUSEHOLD_ID\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_ID + "H000001";
+            + PREFIX_ID + "1";
 
     public static final String MESSAGE_SUCCESS = "Session history for %1$s:\n%2$s";
     public static final String MESSAGE_HOUSEHOLD_NOT_FOUND = "No household found with ID: %1$s";

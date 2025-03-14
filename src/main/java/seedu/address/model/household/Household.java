@@ -105,7 +105,11 @@ public class Household {
         }
 
         Household otherHousehold = (Household) other;
-        return otherHousehold.getId().equals(getId()); // Households are equal if they have the same ID
+
+        return this.getId().equals(otherHousehold.getId()) ||
+                this.getName().toString().equalsIgnoreCase(otherHousehold.getName().toString()) ||
+                this.getAddress().toString().equalsIgnoreCase(otherHousehold.getAddress().toString()) ||
+                this.getContact().toString().equals(otherHousehold.getContact().toString());
     }
 
     @Override
