@@ -8,7 +8,7 @@
   Has a need to manage a significant number of household records and engagement sessions efficiently.
 
 - **Monitoring Household Conditions:**  
-  Has a need to take note of household conditions if there are any areas of concern.
+  Has a need to take note of household conditions when there are areas of concern.
 
 - **Desktop Preference:**  
   Prefers desktop applications over web or mobile solutions for stability and performance.
