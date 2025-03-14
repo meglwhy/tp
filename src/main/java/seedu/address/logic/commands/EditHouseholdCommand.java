@@ -1,18 +1,23 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
-
-import java.util.Collections;
 import java.util.HashSet;
+import static java.util.Objects.requireNonNull;
 import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.HouseholdBook;
-import seedu.address.model.household.*;
-import seedu.address.model.tag.Tag;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import seedu.address.model.Model;
+import seedu.address.model.household.Address;
+import seedu.address.model.household.Contact;
+import seedu.address.model.household.Household;
+import seedu.address.model.household.HouseholdId;
+import seedu.address.model.household.Name;
+import seedu.address.model.tag.Tag;
 
 /**
  * Edits the details of an existing household in the household book.
@@ -39,6 +44,7 @@ public class EditHouseholdCommand extends Command {
     public static final String MESSAGE_EDIT_HOUSEHOLD_SUCCESS = "Edited Household: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_HOUSEHOLD_NOT_FOUND = "No household found with ID: %1$s";
+    public static final String MESSAGE_DUPLICATE_HOUSEHOLD = "This household would be a duplicate of an existing household.";
 
     private final HouseholdId householdId;
     private final EditHouseholdDescriptor editHouseholdDescriptor;
@@ -64,6 +70,11 @@ public class EditHouseholdCommand extends Command {
                         String.format(MESSAGE_HOUSEHOLD_NOT_FOUND, householdId)));
 
         Household editedHousehold = createEditedHousehold(householdToEdit, editHouseholdDescriptor);
+
+        // Check if edited household would result in a duplicate
+        if (householdBook.getHouseholdBook().hasHousehold(editedHousehold)) {
+            throw new CommandException(MESSAGE_DUPLICATE_HOUSEHOLD);
+        }
 
         householdBook.getHouseholdBook().updateHousehold(householdToEdit, editedHousehold);
         return new CommandResult(String.format(MESSAGE_EDIT_HOUSEHOLD_SUCCESS, editedHousehold));

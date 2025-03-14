@@ -3,8 +3,8 @@ package seedu.address.model.household;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import static java.util.Objects.requireNonNull;
+import java.util.Set;
 
 import seedu.address.model.session.Session;
 import seedu.address.model.tag.Tag;
@@ -94,6 +94,11 @@ public class Household {
         }
     }
 
+    /**
+     * Returns true if both households have the same identifying fields.
+     * This defines if adding/editing would result in duplicates.
+     */
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -106,8 +111,7 @@ public class Household {
 
         Household otherHousehold = (Household) other;
 
-        return this.getId().equals(otherHousehold.getId()) ||
-                this.getName().toString().equalsIgnoreCase(otherHousehold.getName().toString()) ||
+        return this.getName().toString().equalsIgnoreCase(otherHousehold.getName().toString()) ||
                 this.getAddress().toString().equalsIgnoreCase(otherHousehold.getAddress().toString()) ||
                 this.getContact().toString().equals(otherHousehold.getContact().toString());
     }
