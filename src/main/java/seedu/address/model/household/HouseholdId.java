@@ -8,23 +8,24 @@ import static java.util.Objects.requireNonNull;
  */
 public class HouseholdId {
     public static final String MESSAGE_CONSTRAINTS =
-            "Household ID should be a positive integer";
+            "Household ID should start with 'H' followed by 6 digits";
+    private static final String VALIDATION_REGEX = "H\\d{6}";
     private static long idCounter = 0;
 
-    public final long value;
+    public final String value;
 
     /**
      * Constructs a new {@code HouseholdId}.
      */
-    private HouseholdId(long value) {
+    private HouseholdId(String value) {
         this.value = value;
     }
 
     /**
-     * Creates a new HouseholdId with an auto-generated ID.
+     * Creates a new HouseholdId with auto-generated ID.
      */
     public static HouseholdId generateNewId() {
-        return new HouseholdId(++idCounter);
+        return new HouseholdId(String.format("H%06d", ++idCounter));
     }
 
     /**
@@ -32,41 +33,38 @@ public class HouseholdId {
      */
     public static HouseholdId fromString(String id) {
         requireNonNull(id);
+        HouseholdId householdId = new HouseholdId(id);
+
         try {
-            long storedId = Long.parseLong(id);
+            long storedId = Long.parseLong(id.substring(1));
             idCounter = Math.max(idCounter, storedId);
-            return new HouseholdId(storedId);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Invalid Household ID: " + id);
+            // Handle invalid ID format if necessary
         }
+        return householdId;
     }
 
     /**
      * Returns true if a given string is a valid household ID.
      */
     public static boolean isValidId(String test) {
-        try {
-            long parsedId = Long.parseLong(test);
-            return parsedId > 0;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+        return test != null && test.matches(VALIDATION_REGEX);
     }
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+        return value;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof HouseholdId
-                && value == ((HouseholdId) other).value);
+                && value.equals(((HouseholdId) other).value));
     }
 
     @Override
     public int hashCode() {
-        return Long.hashCode(value);
+        return value.hashCode();
     }
 }
