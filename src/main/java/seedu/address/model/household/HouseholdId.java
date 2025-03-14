@@ -4,27 +4,28 @@ import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a Household's ID in the household book.
- * Guarantees: immutable; ID is valid as declared in {@link #isValidId(String)}
+ *
+ * Guarantees: immutable; ID is valid as declared in {@link #isValidId(String)}.
  */
 public class HouseholdId {
-    public static final String MESSAGE_CONSTRAINTS =
-            "Household ID should be a positive integer";
+    public static final String MESSAGE_CONSTRAINTS = "Household ID should be in the format H followed by a positive integer";
     private static long idCounter = 0;
 
-    public final long value;
+    public final String value;
 
     /**
      * Constructs a new {@code HouseholdId}.
      */
-    private HouseholdId(long value) {
+    private HouseholdId(String value) {
         this.value = value;
     }
 
     /**
-     * Creates a new HouseholdId with an auto-generated ID.
+     * Creates a new HouseholdId with an auto-generated ID (starting with H).
      */
     public static HouseholdId generateNewId() {
-        return new HouseholdId(++idCounter);
+        idCounter++;  // Increment counter for the next ID
+        return new HouseholdId("H" + idCounter);
     }
 
     /**
@@ -32,17 +33,14 @@ public class HouseholdId {
      */
     public static HouseholdId fromString(String id) {
         requireNonNull(id);
-        try {
-            long storedId = Long.parseLong(id);
-            idCounter = Math.max(idCounter, storedId);
-            return new HouseholdId(storedId);
-        } catch (NumberFormatException e) {
+        if (!id.startsWith("H") || !isValidId(id.substring(1))) {
             throw new IllegalArgumentException("Invalid Household ID: " + id);
         }
+        return new HouseholdId(id);
     }
 
     /**
-     * Returns true if a given string is a valid household ID.
+     * Returns true if a given string is a valid household ID (must start with "H" and followed by a positive integer).
      */
     public static boolean isValidId(String test) {
         try {
@@ -55,18 +53,16 @@ public class HouseholdId {
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+        return value;
     }
 
     @Override
     public boolean equals(Object other) {
-        return other == this
-                || (other instanceof HouseholdId
-                && value == ((HouseholdId) other).value);
+        return other == this || (other instanceof HouseholdId && value.equals(((HouseholdId) other).value));
     }
 
     @Override
     public int hashCode() {
-        return Long.hashCode(value);
+        return value.hashCode();
     }
 }
