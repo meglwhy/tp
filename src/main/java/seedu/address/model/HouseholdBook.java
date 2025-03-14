@@ -54,11 +54,13 @@ public class HouseholdBook implements ReadOnlyHouseholdBook {
     }
 
     /**
-     * Returns true if a household with the same ID, name, address or contact exists in the household book.
+     * Returns true if a household with the same name, address or contact exists in the household book.
+     * Excludes households with the same ID as the input household.
      */
     public boolean hasHousehold(Household household) {
         requireNonNull(household);
         return households.stream()
+                .filter(existingHousehold -> !existingHousehold.getId().equals(household.getId()))
                 .anyMatch(existingHousehold -> existingHousehold.equals(household));
     }
 
