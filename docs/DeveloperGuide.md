@@ -8,7 +8,7 @@
   Has a need to manage a significant number of household records and engagement sessions efficiently.
 
 - **Monitoring Household Conditions:**  
-  Has a need to take note of household conditions if there are any areas of concern.
+  Has a need to take note of household conditions when there are areas of concern.
 
 - **Desktop Preference:**  
   Prefers desktop applications over web or mobile solutions for stability and performance.
@@ -21,7 +21,7 @@
 
 ### Value Proposition
 
-**Em-Social** enables social service workers to manage household records and schedule sessions faster and more efficiently than traditional mouse/GUI-driven applications by leveraging an efficient CLI interface and structured data handling. This ensures that users can quickly search, update, and schedule without unnecessary navigation overhead, improving productivity and accuracy. By helping social workers to stay organized, they can focus on supporting households instead of managing logistics.
+**Em-Social** enables social service workers to manage household records and schedule sessions faster than traditional mouse/GUI-driven applications by leveraging an efficient CLI interface and structured data handling. This ensures that users can quickly search, update, and schedule without unnecessary navigation overhead, improving productivity and accuracy. By helping social workers to stay organized, they can focus on supporting households instead of managing logistics.
 
 
 Given below is a quick overview of main components and how they interact with each other.
