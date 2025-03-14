@@ -25,7 +25,7 @@ public class AddHouseholdCommandParser implements Parser<AddHouseholdCommand> {
 
         if (!argMultimap.arePrefixesPresent(PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, 
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddHouseholdCommand.MESSAGE_USAGE));
         }
 
@@ -37,4 +37,4 @@ public class AddHouseholdCommandParser implements Parser<AddHouseholdCommand> {
 
         return new AddHouseholdCommand(household);
     }
-} 
+}

@@ -21,7 +21,7 @@ import seedu.address.commons.core.index.Index;
  */
 public class HouseholdBook implements ReadOnlyHouseholdBook {
     private final ObservableList<Household> households = FXCollections.observableArrayList();
-    private final ObservableList<Household> unmodifiableHouseholds = 
+    private final ObservableList<Household> unmodifiableHouseholds =
             FXCollections.unmodifiableObservableList(households);
 
     private final ObservableList<Session> sessions = FXCollections.observableArrayList();
@@ -118,7 +118,6 @@ public class HouseholdBook implements ReadOnlyHouseholdBook {
                 .findFirst()
                 .ifPresent(h -> h.addSession(session));
         
-        // Add to main sessions list
         sessions.add(session);
     }
 
@@ -133,8 +132,8 @@ public class HouseholdBook implements ReadOnlyHouseholdBook {
         return households.stream()
                 .flatMap(h -> h.getSessions().stream())
                 .filter(existingSession -> !List.of(exclude).contains(existingSession))
-                .anyMatch(existingSession -> 
-                        existingSession.getDate().equals(session.getDate()) 
+                .anyMatch(existingSession ->
+                        existingSession.getDate().equals(session.getDate())
                         && existingSession.getTime().equals(session.getTime()));
     }
 
@@ -148,8 +147,8 @@ public class HouseholdBook implements ReadOnlyHouseholdBook {
         return households.stream()
                 .flatMap(h -> h.getSessions().stream())
                 .filter(existingSession -> !List.of(exclude).contains(existingSession))
-                .filter(existingSession -> 
-                        existingSession.getDate().equals(session.getDate()) 
+                .filter(existingSession ->
+                        existingSession.getDate().equals(session.getDate())
                         && existingSession.getTime().equals(session.getTime()))
                 .findFirst();
     }
@@ -231,4 +230,4 @@ public class HouseholdBook implements ReadOnlyHouseholdBook {
     public int hashCode() {
         return households.hashCode();
     }
-} 
+}

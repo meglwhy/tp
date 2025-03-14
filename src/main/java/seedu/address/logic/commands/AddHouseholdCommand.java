@@ -57,4 +57,4 @@ public class AddHouseholdCommand extends Command {
                 || (other instanceof AddHouseholdCommand // instanceof handles nulls
                 && toAdd.equals(((AddHouseholdCommand) other).toAdd));
     }
-} 
+}
