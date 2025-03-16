@@ -14,7 +14,7 @@ public class CliSyntax {
     
     // New prefixes for session commands
     public static final Prefix PREFIX_DATE = new Prefix("d/");
-    public static final Prefix PREFIX_TIME = new Prefix("tm/");    // Changed to avoid conflict with TAG
+    public static final Prefix PREFIX_TIME = new Prefix("tm/"); // Changed to avoid conflict with TAG
     public static final Prefix PREFIX_ID = new Prefix("id/");
     public static final Prefix PREFIX_NOTE = new Prefix("n/");
 }
