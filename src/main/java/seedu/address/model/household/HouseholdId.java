@@ -16,6 +16,7 @@ public class HouseholdId {
 
     /**
      * Constructs a new {@code HouseholdId}.
+     * Public for tests.
      */
     public HouseholdId(String value) {
         this.value = value;

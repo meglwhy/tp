@@ -27,7 +27,7 @@ public class AddSessionCommandParser implements Parser<AddSessionCommand> {
 
         if (!argMultimap.arePrefixesPresent(PREFIX_ID, PREFIX_DATE, PREFIX_TIME)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, 
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddSessionCommand.MESSAGE_USAGE));
         }
 
@@ -37,4 +37,4 @@ public class AddSessionCommandParser implements Parser<AddSessionCommand> {
 
         return new AddSessionCommand(householdId, date, time);
     }
-} 
+}

@@ -29,4 +29,4 @@ public class DeleteHouseholdCommandParser implements Parser<DeleteHouseholdComma
 
         return new DeleteHouseholdCommand(householdId);
     }
-} 
+}

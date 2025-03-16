@@ -35,7 +35,7 @@ public class EditHouseholdCommandParser implements Parser<EditHouseholdCommand> 
                 ArgumentTokenizer.tokenize(args, PREFIX_ID, PREFIX_NAME, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_TAG);
 
         if (!argMultimap.getValue(PREFIX_ID).isPresent()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, 
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EditHouseholdCommand.MESSAGE_USAGE));
         }
 
@@ -74,4 +74,4 @@ public class EditHouseholdCommandParser implements Parser<EditHouseholdCommand> 
         Collection<String> tagSet = tags.size() == 1 && tags.iterator().next().isEmpty() ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
-} 
+}

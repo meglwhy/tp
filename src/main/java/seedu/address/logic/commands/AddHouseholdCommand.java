@@ -38,6 +38,12 @@ public class AddHouseholdCommand extends Command {
         requireNonNull(household);
         toAdd = household;
     }
+    /**
+     * Getter for the household to be added.
+     */
+    public Household getHousehold() {
+        return toAdd;
+    }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
