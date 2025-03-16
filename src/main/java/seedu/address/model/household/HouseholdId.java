@@ -17,7 +17,7 @@ public class HouseholdId {
     /**
      * Constructs a new {@code HouseholdId}.
      */
-    private HouseholdId(String value) {
+    public HouseholdId(String value) {
         this.value = value;
     }
 
