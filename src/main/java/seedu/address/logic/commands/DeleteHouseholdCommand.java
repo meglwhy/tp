@@ -8,9 +8,9 @@ import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.household.Household;
 import seedu.address.model.household.HouseholdId;
-import seedu.address.model.Model;
 
 /**
  * Deletes a household identified using its household ID from the household book.
@@ -57,8 +57,10 @@ public class DeleteHouseholdCommand extends Command {
     /**
      * Displays a confirmation dialog before deleting a household.
      * @return true if user confirms, false otherwise.
+     * Public for testing.
      */
-    private boolean showConfirmationDialog(Household household) {
+    @SuppressWarnings("checkstyle:JavadocTagContinuationIndentation")
+    public boolean showConfirmationDialog(Household household) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Deletion");
         alert.setHeaderText("WARNING: You are about to delete a household.");
