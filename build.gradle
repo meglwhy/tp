@@ -67,7 +67,6 @@ dependencies {
 testImplementation 'org.mockito:mockito-core:4.0.0'
 
 testImplementation 'org.mockito:mockito-junit-jupiter:4.0.0'  // For JUnit integration
-
 }
 
 shadowJar {
