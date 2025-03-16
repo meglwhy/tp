@@ -35,7 +35,7 @@ public class EditSessionCommand extends Command {
 
     public static final String MESSAGE_EDIT_SESSION_SUCCESS = "Edited Session: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_SESSION = 
+    public static final String MESSAGE_DUPLICATE_SESSION =
             "This time slot is already booked.\n"
             + "Existing session: %1$s";
     public static final String MESSAGE_SESSION_NOT_FOUND = "No session found with this index.";
@@ -168,4 +168,4 @@ public class EditSessionCommand extends Command {
                     && getNote().equals(e.getNote());
         }
     }
-} 
+}

@@ -38,7 +38,7 @@ public class AddSessionCommand extends Command {
             + PREFIX_TIME + "14:30";
 
     public static final String MESSAGE_SUCCESS = "New session added to household %1$s: %2$s";
-    public static final String MESSAGE_DUPLICATE_SESSION = 
+    public static final String MESSAGE_DUPLICATE_SESSION =
             "This time slot is already booked.\n"
             + "Existing session: %1$s";
     public static final String MESSAGE_PAST_DATE = "Session date cannot be in the past";
@@ -54,7 +54,7 @@ public class AddSessionCommand extends Command {
         requireNonNull(householdId);
         requireNonNull(date);
         requireNonNull(time);
-        
+
         this.householdId = householdId;
         this.toAdd = new Session(householdId, date, time);
     }
@@ -93,4 +93,4 @@ public class AddSessionCommand extends Command {
                 && householdId.equals(((AddSessionCommand) other).householdId)
                 && toAdd.equals(((AddSessionCommand) other).toAdd));
     }
-} 
+}

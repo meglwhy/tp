@@ -32,4 +32,4 @@ public class FindHouseholdCommandParser implements Parser<FindHouseholdCommand> 
             throw new ParseException(e.getMessage());
         }
     }
-} 
+}

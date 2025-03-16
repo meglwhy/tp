@@ -4,19 +4,19 @@
 
 ### Target User Profile
 
-- **Efficient Management:**  
+- **Efficient Management:**
   Has a need to manage a significant number of household records and engagement sessions efficiently.
 
-- **Monitoring Household Conditions:**  
+- **Monitoring Household Conditions:**
   Has a need to take note of household conditions when there are areas of concern.
 
-- **Desktop Preference:**  
+- **Desktop Preference:**
   Prefers desktop applications over web or mobile solutions for stability and performance.
 
-- **CLI Enthusiast:**  
+- **CLI Enthusiast:**
   Prefers typing over mouse interactions, favoring a Command Line Interface (CLI) for speed.
 
-- **Comfort with CLI:**  
+- **Comfort with CLI:**
   Is reasonably comfortable using CLI applications, with minimal reliance on Graphical User Interfaces (GUI).
 
 ### Value Proposition
@@ -273,7 +273,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * Require features to prevent duplicate entries and session conflicts.
 * May work with a large number of records and require filtering/search options.
 
-**Value proposition**: 
+**Value proposition**:
 
 Em-Social is a social worker management software designed to streamline household management and session scheduling. It allows users to:
 * Add, edit, and categorize household details while preventing duplicate entries.
@@ -385,15 +385,15 @@ Priorities: High (must have) - `* * *`, Medium (good to have) - `* *`, Low (unli
 
 **Extensions:**
 
-4a. Invalid input provided.  
-* 4a1. System displays an error message.  
-* 4a2. User corrects input and retries.  
+4a. Invalid input provided.
+* 4a1. System displays an error message.
+* 4a2. User corrects input and retries.
 Use case resumes from step 4.
 
-6a. System fails to save the household record.  
-* 6a1. System displays an error message indicating the failure.  
-* 6a2. System prompts the user to retry saving.  
-* 6a3. If the issue persists, the system logs the error for troubleshooting.  
+6a. System fails to save the household record.
+* 6a1. System displays an error message indicating the failure.
+* 6a2. System prompts the user to retry saving.
+* 6a3. If the issue persists, the system logs the error for troubleshooting.
 Use case resumes from step 3 or ends if saving is unsuccessful.
 
 ---
@@ -411,9 +411,9 @@ Use case resumes from step 3 or ends if saving is unsuccessful.
 
 **Extensions:**
 
-2a. Invalid date/time format.  
-* 2a1. System displays an error message.  
-* 2a2. User corrects input and retries.  
+2a. Invalid date/time format.
+* 2a1. System displays an error message.
+* 2a2. User corrects input and retries.
 Use case resumes from step 2.
 
 ---
@@ -432,9 +432,9 @@ Use case resumes from step 2.
 
 **Extensions:**
 
-4a. Invalid input provided.  
-* 4a1. System displays an error message.  
-* 4a2. User corrects input and retries.  
+4a. Invalid input provided.
+* 4a1. System displays an error message.
+* 4a2. User corrects input and retries.
 Use case resumes from step 4.
 
 ---
@@ -451,8 +451,8 @@ Use case resumes from step 4.
 
 **Extensions:**
 
-2a. A session already exists at the selected time.  
-* 2a1. System displays a conflict warning.  
+2a. A session already exists at the selected time.
+* 2a1. System displays a conflict warning.
 Use case ends.
 
 ---
@@ -469,8 +469,8 @@ Use case ends.
 
 **Extensions:**
 
-3a. No past sessions recorded.  
-* 3a1. System displays a message indicating no history available.  
+3a. No past sessions recorded.
+* 3a1. System displays a message indicating no history available.
 Use case ends.
 
 ---
@@ -487,8 +487,8 @@ Use case ends.
 
 **Extensions:**
 
-2a. No matching records found.  
-* 2a1. System displays a "No households found" message.  
+2a. No matching records found.
+* 2a1. System displays a "No households found" message.
 Use case ends.
 
 ---
@@ -504,20 +504,20 @@ Use case ends.
 6. System displays a confirmation message:
     - "Household [ID] deleted successfully."
 
-    Use case ends. 
+    Use case ends.
 
 **Extensions:**
 
-2a. Household ID does not exist.  
-* 2a1. System displays error message: `"Error: Household ID not found."`  
+2a. Household ID does not exist.
+* 2a1. System displays error message: `"Error: Household ID not found."` 
 Use case ends.
 
-3a. User cancels deletion.  
-* 3a1. System aborts the deletion process.  
+3a. User cancels deletion.
+* 3a1. System aborts the deletion process.
 Use case ends.
 
-5a. Household has linked sessions.  
-* 5a1. System prompts user to confirm deleting associated sessions.  
+5a. Household has linked sessions.
+* 5a1. System prompts user to confirm deleting associated sessions.
 * 5a2. User confirms or cancels deletion.
   - If confirmed, system deletes the household and linked sessions.
   - If canceled, use case ends.
@@ -538,28 +538,28 @@ Use case ends.
 
 **Extensions:**
 
-2a. Invalid session index.  
-* 2a1. System displays an error message: `"Error: Invalid session index."`  
+2a. Invalid session index.
+* 2a1. System displays an error message: `"Error: Invalid session index."`
 Use case ends.
 
-3a. Invalid date/time format.  
-* 3a1. System displays an error message: `"Error: Date must be in DD-MM-YYYY format."`  
-* 3a2. User corrects input and retries.  
+3a. Invalid date/time format.
+* 3a1. System displays an error message: `"Error: Date must be in DD-MM-YYYY format."`
+* 3a2. User corrects input and retries.
 Use case resumes from step 1.
 
-3b. A session already exists at the new date/time (**See Use Case: Prevent Double-Booking (U4)**).  
-* 3b1. System displays an error message: `"Error: Time slot unavailable due to scheduling conflict."`  
-* 3b2. User selects a different time or cancels.  
+3b. A session already exists at the new date/time (**See Use Case: Prevent Double-Booking (U4)**).
+* 3b1. System displays an error message: `"Error: Time slot unavailable due to scheduling conflict."`
+* 3b2. User selects a different time or cancels.
 Use case resumes from step 1 or ends if canceled.
 
-3c. Empty note provided when `n/NOTE` is used.  
-* 3c1. System displays an error message: `"Error: Note cannot be empty if provided."`  
-* 3c2. User corrects input and retries.  
+3c. Empty note provided when `n/NOTE` is used.
+* 3c1. System displays an error message: `"Error: Note cannot be empty if provided."`
+* 3c2. User corrects input and retries.
 Use case resumes from step 1.
 
-4a. System fails to save the changes.  
-* 4a1. System displays an error message: `"Error: Unable to save changes. Please try again."`  
-* 4a2. User retries or exits.  
+4a. System fails to save the changes.
+* 4a1. System displays an error message: `"Error: Unable to save changes. Please try again."`
+* 4a2. User retries or exits.
 Use case resumes from step 1 or ends if unsuccessful.
 
 ---
@@ -577,13 +577,13 @@ Use case resumes from step 1 or ends if unsuccessful.
 
 **Extensions:**
 
-2a. User cancels the operation.  
-* 2a1. System aborts the clearing process.  
+2a. User cancels the operation.
+* 2a1. System aborts the clearing process.
 Use case ends.
 
-4a. System fails to clear data.  
-* 4a1. System displays an error message.  
-* 4a2. User retries or exits.  
+4a. System fails to clear data.
+* 4a1. System displays an error message.
+* 4a2. User retries or exits.
 Use case resumes from step 2 or ends if the issue persists.
 
 ---
@@ -595,17 +595,17 @@ Use case resumes from step 2 or ends if the issue persists.
 2. System sends a notification (in-app or email) before the session.
 3. User receives the notification.
 
-    Use case ends. 
+    Use case ends.
 
 **Extensions:**
 
-2a. Notifications are disabled.  
-* 2a1. System does not send a notification.  
+2a. Notifications are disabled.
+* 2a1. System does not send a notification. 
 Use case ends.
 
-2b. Email notification fails.  
-* 2b1. System logs the error and retries.  
-* 2b2. If the issue persists, system notifies the user in-app.  
+2b. Email notification fails.
+* 2b1. System logs the error and retries.
+* 2b2. If the issue persists, system notifies the user in-app.
 Use case resumes from step 3.
 
 --------------------------------------------------------------------------------------------------------------------

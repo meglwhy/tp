@@ -31,7 +31,7 @@ public class EditSessionCommandParser implements Parser<EditSessionCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, 
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EditSessionCommand.MESSAGE_USAGE), pe);
         }
 
@@ -52,4 +52,4 @@ public class EditSessionCommandParser implements Parser<EditSessionCommand> {
 
         return new EditSessionCommand(index, editSessionDescriptor);
     }
-} 
+}

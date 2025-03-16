@@ -71,4 +71,4 @@ public class HouseholdBookParser {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
-} 
+}
