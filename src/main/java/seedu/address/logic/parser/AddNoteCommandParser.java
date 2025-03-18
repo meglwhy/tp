@@ -2,39 +2,34 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import seedu.address.logic.commands.EditSessionCommand;
+import seedu.address.logic.commands.AddNoteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.household.HouseholdId;
 
-public class EditSessionCommandParser implements Parser<EditSessionCommand> {
+public class AddNoteCommandParser implements Parser<AddNoteCommand> {
 
     public static final String MESSAGE_INVALID_FORMAT =
-            "Invalid format! Usage: edit-session <HOUSEHOLD_ID-SESSION_INDEX> d/DATE t/TIME\n"
-                    + "Example: edit-session H000006-2 d/2025-03-16 t/15:00";
+            "Invalid format! Usage: add-note <HOUSEHOLD_ID-SESSION_INDEX> n/NOTE\n"
+                    + "Example: add-note H000006-2 n/Follow-up on medical assistance application";
 
     @Override
-    public EditSessionCommand parse(String userInput) throws ParseException {
+    public AddNoteCommand parse(String userInput) throws ParseException {
         String trimmedInput = userInput.trim();
 
-        // Find the positions of the date and time tokens.
-        int dateIndex = trimmedInput.indexOf("d/");
-        int timeIndex = trimmedInput.indexOf("t/");
-        if (dateIndex == -1 || timeIndex == -1) {
+        // The input must contain "n/" for the note.
+        int noteIndex = trimmedInput.indexOf("n/");
+        if (noteIndex == -1) {
+            throw new ParseException(MESSAGE_INVALID_FORMAT);
+        }
+        // Everything before "n/" should be the session identifier.
+        String sessionIdentifier = trimmedInput.substring(0, noteIndex).trim();
+        // Everything after "n/" is the note.
+        String note = trimmedInput.substring(noteIndex + 2).trim();
+        if (sessionIdentifier.isEmpty() || note.isEmpty()) {
             throw new ParseException(MESSAGE_INVALID_FORMAT);
         }
 
-        // The session identifier is the part before "d/".
-        String sessionIdentifier = trimmedInput.substring(0, dateIndex).trim();
-        // Extract the date: from after "d/" up to "t/".
-        String datePart = trimmedInput.substring(dateIndex + 2, timeIndex).trim();
-        // Extract the time: from after "t/" to the end.
-        String timePart = trimmedInput.substring(timeIndex + 2).trim();
-
-        if (sessionIdentifier.isEmpty() || datePart.isEmpty() || timePart.isEmpty()) {
-            throw new ParseException(MESSAGE_INVALID_FORMAT);
-        }
-
-        // Expect the sessionIdentifier to be in the format "H000006-2".
+        // Expect the sessionIdentifier to be in the form "H000006-2"
         if (!sessionIdentifier.contains("-")) {
             throw new ParseException(MESSAGE_INVALID_FORMAT);
         }
@@ -45,11 +40,13 @@ public class EditSessionCommandParser implements Parser<EditSessionCommand> {
         String householdIdStr = parts[0].trim();
         String sessionIndexStr = parts[1].trim();
 
+        // Validate the household ID.
         if (!HouseholdId.isValidId(householdIdStr)) {
             throw new ParseException("Invalid household ID: " + householdIdStr);
         }
         HouseholdId householdId = HouseholdId.fromString(householdIdStr);
 
+        // Parse the session index.
         int sessionIndex;
         try {
             sessionIndex = Integer.parseInt(sessionIndexStr);
@@ -57,9 +54,7 @@ public class EditSessionCommandParser implements Parser<EditSessionCommand> {
             throw new ParseException("Session index must be an integer: " + sessionIndexStr);
         }
 
-        return new EditSessionCommand(householdId, sessionIndex, datePart, timePart);
+        return new AddNoteCommand(householdId, sessionIndex, note);
     }
 }
-
-
 
