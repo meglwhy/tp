@@ -48,4 +48,106 @@ public class SessionListPanel extends UiPart<Region> {
     public SessionListPanel(ObservableList<Session> sessionList, Logic logic) {
         super(FXML);
         this.logic = logic;
-        sessionListView.setItems(s
+        sessionListView.setItems(sessionList);
+        sessionListView.setCellFactory(listView -> new SessionListViewCell());
+
+        addSessionButton.setOnAction(event -> showAddSessionDialog());
+    }
+
+    /**
+     * Shows a dialog to enter session details and handles adding a new session.
+     */
+    private void showAddSessionDialog() {
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle("Add Session");
+        dialog.setHeaderText("Enter Session Details");
+
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getButtonTypes().addAll(javafx.scene.control.ButtonType.OK, javafx.scene.control.ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+
+        TextField idField = new TextField();
+        TextField dateField = new TextField();
+        TextField timeField = new TextField();
+
+        grid.add(new Label("Household ID:"), 0, 0);
+        grid.add(idField, 1, 0);
+        grid.add(new Label("Date (YYYY-MM-DD):"), 0, 1);
+        grid.add(dateField, 1, 1);
+        grid.add(new Label("Time (HH:mm):"), 0, 2);
+        grid.add(timeField, 1, 2);
+
+        dialogPane.setContent(grid);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == javafx.scene.control.ButtonType.OK) {
+                return idField.getText() + " " + dateField.getText() + " " + timeField.getText();
+            }
+            return null;
+        });
+
+        dialog.showAndWait().ifPresent(result -> {
+            String[] inputs = result.split(" ");
+            if (inputs.length == 3) {
+                handleAddSession(inputs[0], inputs[1], inputs[2]);
+            } else {
+                showError("Invalid input. Please enter all details correctly.");
+            }
+        });
+    }
+
+    /**
+     * Handles adding a new session with provided details.
+     */
+    private void handleAddSession(String householdId, String date, String time) {
+        try {
+            // Ensure the command format matches what CLI expects
+            String command = String.format("%s id/%s d/%s tm/%s",
+                    AddSessionCommand.COMMAND_WORD, householdId, date, time);
+
+            CommandResult result = logic.execute(command);
+            logger.info("Added new session: " + result.getFeedbackToUser());
+            refresh();
+        } catch (CommandException | ParseException e) {
+            showError("Failed to add session: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Displays an error message.
+     */
+    private void showError(String message) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Session Addition Failed");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code Session} using a {@code SessionCard}.
+     */
+    class SessionListViewCell extends ListCell<Session> {
+        @Override
+        protected void updateItem(Session session, boolean empty) {
+            super.updateItem(session, empty);
+
+            if (empty || session == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(new SessionCard(session, getIndex() + 1, logic).getRoot());
+            }
+        }
+    }
+
+    /**
+     * Forces a refresh of the session list view.
+     */
+    public void refresh() {
+        sessionListView.refresh();
+    }
+}

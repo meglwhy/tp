@@ -48,4 +48,113 @@ public class SessionCard extends UiPart<Region> {
         this.logic = logic;
         id.setText(displayedIndex + ". ");
         date.setText("Date: " + session.getDate().toString());
-        time.setText("Time: " + session.
+        time.setText("Time: " + session.getTime().toString());
+        if (session.hasNote()) {
+            note.setText("Note: " + session.getNote().toString());
+        } else {
+            note.setVisible(false);
+        }
+
+        editSessionButton.setOnAction(event -> showEditSessionDialog(displayedIndex));
+    }
+
+    /**
+     * Shows a dialog to edit session details.
+     */
+    private void showEditSessionDialog(int index) {
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle("Edit Session");
+        dialog.setHeaderText("Edit Session Details");
+
+        DialogPane dialogPane = dialog.getDialogPane();
+        dialogPane.getButtonTypes().addAll(javafx.scene.control.ButtonType.OK, javafx.scene.control.ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+
+        TextField dateField = new TextField(session.getDate().toString());
+        TextField timeField = new TextField(session.getTime().toString());
+        TextField noteField = new TextField(session.hasNote() ? session.getNote().toString() : "");
+
+        grid.add(new Label("Date (YYYY-MM-DD):"), 0, 0);
+        grid.add(dateField, 1, 0);
+        grid.add(new Label("Time (HH:mm):"), 0, 1);
+        grid.add(timeField, 1, 1);
+        grid.add(new Label("Note:"), 0, 2);
+        grid.add(noteField, 1, 2);
+
+        dialogPane.setContent(grid);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == javafx.scene.control.ButtonType.OK) {
+                return dateField.getText() + " " + timeField.getText() + " " + noteField.getText();
+            }
+            return null;
+        });
+
+        dialog.showAndWait().ifPresent(result -> {
+            String[] inputs = result.split(" ", 3);
+            if (inputs.length >= 2) {
+                handleEditSession(index, inputs[0], inputs[1], inputs.length == 3 ? inputs[2] : "");
+            } else {
+                showError("Invalid input. Please enter at least a date and time.");
+            }
+        });
+    }
+
+    /**
+     * Handles editing a session with provided details.
+     */
+    private void handleEditSession(int index, String date, String time, String note) {
+        try {
+            String command = String.format("%s %d d/%s tm/%s %s",
+                    EditSessionCommand.COMMAND_WORD, index, date, time, note.isEmpty() ? "" : "n/" + note);
+
+            CommandResult result = logic.execute(command);
+            showSuccess("Edited session successfully: " + result.getFeedbackToUser());
+        } catch (CommandException | ParseException e) {
+            showError("Failed to edit session: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Displays an error message.
+     */
+    private void showError(String message) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Session Edit Failed");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /**
+     * Displays a success message.
+     */
+    private void showSuccess(String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText("Session Edited Successfully");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof SessionCard)) {
+            return false;
+        }
+
+        // state check
+        SessionCard card = (SessionCard) other;
+        return id.getText().equals(card.id.getText())
+                && session.equals(card.session);
+    }
+}
