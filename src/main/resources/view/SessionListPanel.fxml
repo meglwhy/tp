@@ -2,7 +2,9 @@
 
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+  <Button fx:id="addSessionButton" text="Add Session" />
   <ListView fx:id="sessionListView" VBox.vgrow="ALWAYS" />
-</VBox> 
+</VBox>

@@ -1,9 +1,21 @@
 package seedu.address.ui;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.logic.Logic;
+import seedu.address.logic.commands.EditSessionCommand;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.session.Session;
 
 /**
@@ -25,35 +37,15 @@ public class SessionCard extends UiPart<Region> {
     private Label time;
     @FXML
     private Label note;
+    @FXML
+    private Button editSessionButton;
 
-    public SessionCard(Session session, int displayedIndex) {
+    private final Logic logic;
+
+    public SessionCard(Session session, int displayedIndex, Logic logic) {
         super(FXML);
         this.session = session;
+        this.logic = logic;
         id.setText(displayedIndex + ". ");
         date.setText("Date: " + session.getDate().toString());
-        time.setText("Time: " + session.getTime().toString());
-        if (session.hasNote()) {
-            note.setText("Note: " + session.getNote().toString());
-        } else {
-            note.setVisible(false);
-        }
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof SessionCard)) {
-            return false;
-        }
-
-        // state check
-        SessionCard card = (SessionCard) other;
-        return id.getText().equals(card.id.getText())
-                && session.equals(card.session);
-    }
-} 
+        time.setText("Time: " + session.
