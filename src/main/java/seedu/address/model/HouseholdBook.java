@@ -183,6 +183,20 @@ public class HouseholdBook implements ReadOnlyHouseholdBook {
                 .ifPresent(h -> h.updateSession(oldSession, newSession));
     }
 
+    public void removeSessionById(String sessionId) {
+        // 1) Remove from the household that has this session
+        households.stream()
+                .filter(h -> h.getSessions().stream().anyMatch(s -> s.getSessionId().equals(sessionId)))
+                .findFirst()
+                .ifPresent(h -> {
+                    h.getSessions().removeIf(s -> s.getSessionId().equals(sessionId));
+                });
+
+        // 2) Also remove from the global sessions list (if you keep one)
+        sessions.removeIf(s -> s.getSessionId().equals(sessionId));
+    }
+
+
     /**
      * Returns the household with the given ID if it exists.
      */

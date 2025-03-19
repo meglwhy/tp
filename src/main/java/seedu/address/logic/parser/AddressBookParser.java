@@ -60,6 +60,15 @@ public class AddressBookParser {
         case DeleteHouseholdCommand.COMMAND_WORD:
             return new DeleteHouseholdCommandParser().parse(arguments);
 
+            case DeleteSessionCommand.COMMAND_WORD:
+                return new DeleteSessionCommandParser().parse(arguments);
+
+            case AddNoteCommand.COMMAND_WORD:
+                return new AddNoteCommandParser().parse(arguments);
+
+            case ListSessionsCommand.COMMAND_WORD:
+                return new ListSessionsCommandParser().parse(arguments);
+
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 

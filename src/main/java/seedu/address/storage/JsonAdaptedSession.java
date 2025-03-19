@@ -14,6 +14,7 @@ class JsonAdaptedSession {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Session's %s field is missing!";
 
+    private final String sessionId;
     private final String householdId;
     private final String date;
     private final String time;
@@ -23,10 +24,12 @@ class JsonAdaptedSession {
      * Constructs a {@code JsonAdaptedSession} with the given session details.
      */
     @JsonCreator
-    public JsonAdaptedSession(@JsonProperty("householdId") String householdId,
+    public JsonAdaptedSession(@JsonProperty("sessionId") String sessionId,
+            @JsonProperty("householdId") String householdId,
             @JsonProperty("date") String date,
             @JsonProperty("time") String time,
             @JsonProperty("note") String note) {
+        this.sessionId = sessionId;
         this.householdId = householdId;
         this.date = date;
         this.time = time;
@@ -37,6 +40,7 @@ class JsonAdaptedSession {
      * Converts a given {@code Session} into this class for Jackson use.
      */
     public JsonAdaptedSession(Session source) {
+        this.sessionId = source.getSessionId();
         householdId = source.getHouseholdId().toString();
         date = source.getDate().toString();
         time = source.getTime().toString();
@@ -49,6 +53,9 @@ class JsonAdaptedSession {
      * @throws IllegalValueException if there were any data constraints violated in the adapted session.
      */
     public Session toModelType() throws IllegalValueException {
+        if (sessionId == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Session ID"));
+        }
         if (householdId == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Household ID"));
         }
@@ -83,6 +90,10 @@ class JsonAdaptedSession {
             modelNote = new SessionNote(note);
         }
 
-        return new Session(modelHouseholdId, modelDate, modelTime, modelNote);
+        if (modelNote == null) {
+            return new Session(sessionId, modelHouseholdId, modelDate, modelTime);
+        } else {
+            return new Session(sessionId, modelHouseholdId, modelDate, modelTime, modelNote);
+        }
     }
 } 

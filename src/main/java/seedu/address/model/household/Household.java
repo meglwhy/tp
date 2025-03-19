@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import static java.util.Objects.requireNonNull;
 import java.util.Set;
+import javafx.collections.FXCollections;
 
+import javafx.collections.ObservableList;
 import seedu.address.model.session.Session;
 import seedu.address.model.tag.Tag;
 
@@ -18,7 +20,7 @@ public class Household {
     private final Address address;
     private final Contact contact;
     private final HouseholdId id;
-    private final List<Session> sessions;
+    private final ObservableList<Session> sessions = FXCollections.observableArrayList();
     private final Set<Tag> tags;
 
     /**
@@ -44,7 +46,6 @@ public class Household {
         this.address = address;
         this.contact = contact;
         this.id = id;
-        this.sessions = new ArrayList<>();
         this.tags = new HashSet<>(tags); // defensive copy
     }
 
@@ -64,8 +65,9 @@ public class Household {
         return id;
     }
 
-    public List<Session> getSessions() {
-        return new ArrayList<>(sessions);
+    public ObservableList<Session> getSessions() {
+        // Make sure we return the ACTUAL list, not a copy
+        return sessions;
     }
 
     public Set<Tag> getTags() {

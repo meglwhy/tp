@@ -1,7 +1,7 @@
 package seedu.address.model.session;
 
 import static java.util.Objects.requireNonNull;
-
+import java.util.UUID;
 import seedu.address.model.household.HouseholdId;
 
 /**
@@ -9,6 +9,7 @@ import seedu.address.model.household.HouseholdId;
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Session {
+    private final String sessionId;
     private final HouseholdId householdId;
     private final SessionDate date;
     private final SessionTime time;
@@ -17,10 +18,12 @@ public class Session {
     /**
      * Creates a Session object without a note.
      */
-    public Session(HouseholdId householdId, SessionDate date, SessionTime time) {
+    public Session(String sessionId, HouseholdId householdId, SessionDate date, SessionTime time) {
+        requireNonNull(sessionId);
         requireNonNull(householdId);
         requireNonNull(date);
         requireNonNull(time);
+        this.sessionId = sessionId;
         this.householdId = householdId;
         this.date = date;
         this.time = time;
@@ -30,19 +33,27 @@ public class Session {
     /**
      * Creates a Session object with a note.
      */
-    public Session(HouseholdId householdId, SessionDate date, SessionTime time, SessionNote note) {
-        this(householdId, date, time);
+    public Session(String sessionId, HouseholdId householdId, SessionDate date, SessionTime time, SessionNote note) {
+        this(sessionId, householdId, date, time);
         this.note = note;
     }
 
     /**
-     * Creates a copy of the session with potentially different date and time.
+     * Creates a new Session with a generated sessionId without a note.
      */
-    public Session(Session other, SessionDate newDate, SessionTime newTime) {
-        this(other.householdId,
-             newDate != null ? newDate : other.date,
-             newTime != null ? newTime : other.time);
-        this.note = other.note;
+    public Session(HouseholdId householdId, SessionDate date, SessionTime time) {
+        this(UUID.randomUUID().toString(), householdId, date, time);
+    }
+
+    /**
+     * Creates a new Session with a generated sessionId with a note.
+     */
+    public Session(HouseholdId householdId, SessionDate date, SessionTime time, SessionNote note) {
+        this(UUID.randomUUID().toString(), householdId, date, time, note);
+    }
+
+    public String getSessionId() {
+        return sessionId; // Not exposed to users, only used internally
     }
 
     public HouseholdId getHouseholdId() {
@@ -70,6 +81,21 @@ public class Session {
     }
 
     @Override
+    public String toString() {
+        // Hide sessionId from user output
+        return String.format("Session for %s on %s at %s%s",
+                householdId.toString(),
+                date.toString(),
+                time.toString(),
+                hasNote() ? ": " + note.toString() : "");
+    }
+
+    /**
+     * Sessions are uniquely identified by their sessionId.
+     * Using date/time for equals can cause unexpected removal or indexing issues
+     * if multiple sessions share the same date/time. So we rely on sessionId alone.
+     */
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
@@ -80,22 +106,12 @@ public class Session {
         }
 
         Session otherSession = (Session) other;
-        return otherSession.getHouseholdId().equals(getHouseholdId())
-                && otherSession.getDate().equals(getDate())
-                && otherSession.getTime().equals(getTime());
+        return sessionId.equals(otherSession.sessionId);
     }
 
     @Override
     public int hashCode() {
-        return householdId.hashCode() * 31 * 31
-                + date.hashCode() * 31
-                + time.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Session for %s on %s at %s%s", 
-                householdId.toString(), date.toString(), time.toString(),
-                hasNote() ? ": " + note.toString() : "");
+        return sessionId.hashCode();
     }
 }
+
