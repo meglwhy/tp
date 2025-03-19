@@ -392,3 +392,4 @@ Use case resumes from step 3.
 * Structured List: A formatted way of displaying household records, showing key details like name, address, and contact information.
 * Last Committed State: The most recent version of stored data that was successfully saved, ensuring that no progress is lost in case of an unexpected system crash.
 * Dependencies: External software libraries or components required for the application to function properly, such as Java Runtime Environment (JRE) or specific third-party tools.
+* 
