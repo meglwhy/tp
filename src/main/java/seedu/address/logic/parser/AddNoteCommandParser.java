@@ -6,30 +6,29 @@ import seedu.address.logic.commands.AddNoteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.household.HouseholdId;
 
+/**
+ * Parses input for the add-note command.
+ * Expected format: "id/H000006-2 n/NOTE"
+ * Example: "add-note id/H000006-2 n/Follow-up on medical assistance application"
+ */
 public class AddNoteCommandParser implements Parser<AddNoteCommand> {
 
     public static final String MESSAGE_INVALID_FORMAT =
-            "Invalid format! Usage: add-note <HOUSEHOLD_ID-SESSION_INDEX> n/NOTE\n"
-                    + "Example: add-note H000006-2 n/Follow-up on medical assistance application";
+            "Invalid format! Usage: add-note id/<HOUSEHOLD_ID-SESSION_INDEX> n/NOTE\n"
+                    + "Example: add-note id/H000006-2 n/Follow-up on medical assistance application";
+
+    private static final Prefix PREFIX_ID = new Prefix("id/");
+    private static final Prefix PREFIX_NOTE = new Prefix("n/");
 
     @Override
     public AddNoteCommand parse(String userInput) throws ParseException {
-        String trimmedInput = userInput.trim();
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(userInput, PREFIX_ID, PREFIX_NOTE);
 
-        // The input must contain "n/" for the note.
-        int noteIndex = trimmedInput.indexOf("n/");
-        if (noteIndex == -1) {
-            throw new ParseException(MESSAGE_INVALID_FORMAT);
-        }
-        // Everything before "n/" should be the session identifier.
-        String sessionIdentifier = trimmedInput.substring(0, noteIndex).trim();
-        // Everything after "n/" is the note.
-        String note = trimmedInput.substring(noteIndex + 2).trim();
-        if (sessionIdentifier.isEmpty() || note.isEmpty()) {
+        if (!argMultimap.arePrefixesPresent(PREFIX_ID, PREFIX_NOTE) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(MESSAGE_INVALID_FORMAT);
         }
 
-        // Expect the sessionIdentifier to be in the form "H000006-2"
+        String sessionIdentifier = argMultimap.getValue(PREFIX_ID).get().trim();
         if (!sessionIdentifier.contains("-")) {
             throw new ParseException(MESSAGE_INVALID_FORMAT);
         }
@@ -40,13 +39,11 @@ public class AddNoteCommandParser implements Parser<AddNoteCommand> {
         String householdIdStr = parts[0].trim();
         String sessionIndexStr = parts[1].trim();
 
-        // Validate the household ID.
         if (!HouseholdId.isValidId(householdIdStr)) {
             throw new ParseException("Invalid household ID: " + householdIdStr);
         }
         HouseholdId householdId = HouseholdId.fromString(householdIdStr);
 
-        // Parse the session index.
         int sessionIndex;
         try {
             sessionIndex = Integer.parseInt(sessionIndexStr);
@@ -54,7 +51,13 @@ public class AddNoteCommandParser implements Parser<AddNoteCommand> {
             throw new ParseException("Session index must be an integer: " + sessionIndexStr);
         }
 
+        String note = argMultimap.getValue(PREFIX_NOTE).get().trim();
+        if (note.isEmpty()) {
+            throw new ParseException(MESSAGE_INVALID_FORMAT);
+        }
+
         return new AddNoteCommand(householdId, sessionIndex, note);
     }
 }
+
 

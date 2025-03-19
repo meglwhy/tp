@@ -6,38 +6,44 @@ import seedu.address.logic.commands.DeleteSessionCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.household.HouseholdId;
 
+/**
+ * Parses input for the delete-session command.
+ * Expected format: "id/H000006-2"
+ */
 public class DeleteSessionCommandParser implements Parser<DeleteSessionCommand> {
 
     public static final String MESSAGE_INVALID_FORMAT =
-            "Invalid format! Usage: delete-session <HOUSEHOLD_ID>-<SESSION_INDEX>\n"
-                    + "Example: delete-session H000002-2";
+            "Invalid format! Usage: delete-session id/<HOUSEHOLD_ID-SESSION_INDEX>\n"
+                    + "Example: delete-session id/H000002-2";
+
+    private static final Prefix PREFIX_ID = new Prefix("id/");
 
     @Override
     public DeleteSessionCommand parse(String userInput) throws ParseException {
-        // Trim whitespace, e.g. " H000002-2 " -> "H000002-2"
-        userInput = userInput.trim();
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(userInput, PREFIX_ID);
 
-        // Must contain a dash
-        if (!userInput.contains("-")) {
+        if (!argMultimap.arePrefixesPresent(PREFIX_ID) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(MESSAGE_INVALID_FORMAT);
         }
 
-        // Split into household ID and session index
-        String[] parts = userInput.split("-", 2);
+        String idAndIndex = argMultimap.getValue(PREFIX_ID).get().trim();
+
+        if (!idAndIndex.contains("-")) {
+            throw new ParseException(MESSAGE_INVALID_FORMAT);
+        }
+        String[] parts = idAndIndex.split("-", 2);
         if (parts.length < 2) {
             throw new ParseException(MESSAGE_INVALID_FORMAT);
         }
 
-        String householdIdStr = parts[0].trim();  // "H000002"
-        String sessionIndexStr = parts[1].trim(); // "2"
+        String householdIdStr = parts[0].trim();
+        String sessionIndexStr = parts[1].trim();
 
-        // Validate the household ID
         if (!HouseholdId.isValidId(householdIdStr)) {
             throw new ParseException("Invalid household ID: " + householdIdStr);
         }
         HouseholdId householdId = HouseholdId.fromString(householdIdStr);
 
-        // Parse the session index
         int sessionIndex;
         try {
             sessionIndex = Integer.parseInt(sessionIndexStr);
@@ -48,4 +54,5 @@ public class DeleteSessionCommandParser implements Parser<DeleteSessionCommand> 
         return new DeleteSessionCommand(householdId, sessionIndex);
     }
 }
+
 
