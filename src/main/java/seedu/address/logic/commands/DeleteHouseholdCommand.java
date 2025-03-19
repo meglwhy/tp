@@ -32,6 +32,12 @@ public class DeleteHouseholdCommand extends Command {
 
     private final HouseholdId targetId;
 
+    /**
+     * Creates a {@code DeleteHouseholdCommand} to delete a household with the specified ID.
+     *
+     * @param targetId The unique identifier of the household to be deleted.
+     * @throws NullPointerException if {@code targetId} is null.
+     */
     public DeleteHouseholdCommand(HouseholdId targetId) {
         requireNonNull(targetId);
         this.targetId = targetId;
@@ -57,9 +63,7 @@ public class DeleteHouseholdCommand extends Command {
     /**
      * Displays a confirmation dialog before deleting a household.
      * @return true if user confirms, false otherwise.
-     * Public for testing.
      */
-    @SuppressWarnings("checkstyle:JavadocTagContinuationIndentation")
     public boolean showConfirmationDialog(Household household) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Deletion");

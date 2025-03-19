@@ -12,6 +12,23 @@ import seedu.address.model.household.HouseholdId;
 import seedu.address.model.session.Session;
 import seedu.address.model.session.SessionNote;
 
+/**
+ * Represents a command to add a note to a specified session in a household.
+ * The command requires a valid household ID and a session index to locate the session.
+ * If the session already has a note, the new note is appended to the existing note.
+ *
+ * Usage example:
+ * <pre>
+ *     add-note H000006-2 n/Follow-up on medical assistance application
+ * </pre>
+ *
+ * This command performs the following checks:
+ * - Ensures the household with the given ID exists.
+ * - Ensures the session index is valid for the specified household.
+ * - Appends the note if a note already exists; otherwise, sets a new note.
+ *
+ * Upon successful execution, it returns a message confirming the added note.
+ */
 public class AddNoteCommand extends Command {
 
     public static final String COMMAND_WORD = "add-note";
@@ -27,6 +44,14 @@ public class AddNoteCommand extends Command {
     private final int sessionIndex; // 1-based
     private final String note;
 
+    /**
+     * Creates an {@code AddNoteCommand} to add a note to a specific session in a household.
+     *
+     * @param householdId  The unique identifier of the household.
+     * @param sessionIndex The 1-based index of the session to which the note will be added.
+     * @param note         The note to be added to the session.
+     * @throws NullPointerException if {@code householdId} or {@code note} is null.
+     */
     public AddNoteCommand(HouseholdId householdId, int sessionIndex, String note) {
         requireNonNull(householdId);
         requireNonNull(note);

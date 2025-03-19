@@ -1,12 +1,11 @@
 package seedu.address.model.household;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import static java.util.Objects.requireNonNull;
-import java.util.Set;
-import javafx.collections.FXCollections;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.session.Session;
 import seedu.address.model.tag.Tag;
@@ -41,7 +40,6 @@ public class Household {
         requireNonNull(contact);
         requireNonNull(id);
         requireNonNull(tags);
-        
         this.name = name;
         this.address = address;
         this.contact = contact;
@@ -89,7 +87,6 @@ public class Household {
     public void updateSession(Session oldSession, Session newSession) {
         requireNonNull(oldSession);
         requireNonNull(newSession);
-        
         int index = sessions.indexOf(oldSession);
         if (index != -1) {
             sessions.set(index, newSession);
@@ -113,9 +110,9 @@ public class Household {
 
         Household otherHousehold = (Household) other;
 
-        return this.getName().toString().equalsIgnoreCase(otherHousehold.getName().toString()) ||
-                this.getAddress().toString().equalsIgnoreCase(otherHousehold.getAddress().toString()) ||
-                this.getContact().toString().equals(otherHousehold.getContact().toString());
+        return this.getName().toString().equalsIgnoreCase(otherHousehold.getName().toString())
+                || this.getAddress().toString().equalsIgnoreCase(otherHousehold.getAddress().toString())
+                || this.getContact().toString().equals(otherHousehold.getContact().toString());
     }
 
     @Override

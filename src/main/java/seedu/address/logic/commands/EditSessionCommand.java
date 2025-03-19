@@ -13,6 +13,24 @@ import seedu.address.model.session.Session;
 import seedu.address.model.session.SessionDate;
 import seedu.address.model.session.SessionTime;
 
+/**
+ * Represents a command to edit a specific session in a household.
+ * The session is identified using a household ID and a session index.
+ * The date and time of the session are updated while preserving any existing notes.
+ *
+ * Usage example:
+ * <pre>
+ *     edit-session H000006-2 d/2025-03-16 t/15:00
+ * </pre>
+ *
+ * This command performs the following checks:
+ * - Ensures the household with the given ID exists.
+ * - Ensures the session index is valid for the specified household.
+ * - Removes the old session and replaces it with a new one containing updated date and time.
+ * - Retains any existing notes from the original session.
+ *
+ * Upon successful execution, it returns a message confirming the session update.
+ */
 public class EditSessionCommand extends Command {
 
     public static final String COMMAND_WORD = "edit-session";
@@ -29,6 +47,15 @@ public class EditSessionCommand extends Command {
     private final String newDate;
     private final String newTime;
 
+    /**
+     * Creates an {@code EditSessionCommand} to update the date and time of a session in a household.
+     *
+     * @param householdId  The unique identifier of the household.
+     * @param sessionIndex The 1-based index of the session to be edited.
+     * @param newDate      The new date for the session.
+     * @param newTime      The new time for the session.
+     * @throws NullPointerException if {@code householdId}, {@code newDate}, or {@code newTime} is null.
+     */
     public EditSessionCommand(HouseholdId householdId, int sessionIndex, String newDate, String newTime) {
         requireNonNull(householdId);
         requireNonNull(newDate);

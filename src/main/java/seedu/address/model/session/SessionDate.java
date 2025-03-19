@@ -1,22 +1,20 @@
 package seedu.address.model.session;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import static java.util.Objects.requireNonNull;
-
-import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Session's date in the household book.
  * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
  */
 public class SessionDate implements Comparable<SessionDate> {
-    public static final String MESSAGE_CONSTRAINTS = 
+    public static final String MESSAGE_CONSTRAINTS =
             "Dates should be in the format YYYY-MM-DD and should be a valid date";
-    
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
-    
     public final LocalDate value;
 
     /**
@@ -63,4 +61,4 @@ public class SessionDate implements Comparable<SessionDate> {
     public int compareTo(SessionDate other) {
         return this.value.compareTo(other.value);
     }
-} 
+}

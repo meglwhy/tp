@@ -3,16 +3,13 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.HouseholdBook;
-import seedu.address.model.household.HouseholdContainsKeywordsPredicate;
-import seedu.address.model.household.Household;
 import seedu.address.model.Model;
+import seedu.address.model.household.HouseholdContainsKeywordsPredicate;
 
 /**
  * Finds and lists all households in household book whose name, address, tags, household ID, or phone numbers
@@ -23,7 +20,8 @@ public class FindHouseholdCommand extends Command {
     public static final String COMMAND_WORD = "find-household";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all households whose names, addresses, tags, "
-            + "household ID or phone numbers contain any of the specified keywords (case-insensitive) and displays them as a list.\n"
+            + "household ID or phone numbers contain any of the specified keywords (case-insensitive)"
+            + "and displays them as a list.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]... or phrases in double quotes\n"
             + "Example: " + COMMAND_WORD + " \"John Smith\" 12345";
 
@@ -33,7 +31,16 @@ public class FindHouseholdCommand extends Command {
 
     private final HouseholdContainsKeywordsPredicate predicate;
     private final String keywords;
-
+    /**
+     * Creates a {@code FindHouseholdCommand} to search for households based on the provided keywords.
+     * <p>
+     * Keywords can be single words or phrases enclosed in double quotes.
+     * If all keywords are numeric, the search will be treated as a numeric search.
+     *
+     * @param keywords The search query containing one or more keywords.
+     * @throws NullPointerException if {@code keywords} is null.
+     * @throws CommandException     if the provided keywords are empty.
+     */
     public FindHouseholdCommand(String keywords) throws CommandException {
         requireNonNull(keywords);
         String trimmedKeywords = keywords.trim();

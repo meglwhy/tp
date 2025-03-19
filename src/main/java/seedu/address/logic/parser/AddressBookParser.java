@@ -8,7 +8,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.commands.*;
+import seedu.address.logic.commands.AddHouseholdCommand;
+import seedu.address.logic.commands.AddNoteCommand;
+import seedu.address.logic.commands.AddSessionCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DeleteHouseholdCommand;
+import seedu.address.logic.commands.DeleteSessionCommand;
+import seedu.address.logic.commands.EditHouseholdCommand;
+import seedu.address.logic.commands.EditSessionCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindHouseholdCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListHouseholdsCommand;
+import seedu.address.logic.commands.ListSessionsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -60,14 +73,14 @@ public class AddressBookParser {
         case DeleteHouseholdCommand.COMMAND_WORD:
             return new DeleteHouseholdCommandParser().parse(arguments);
 
-            case DeleteSessionCommand.COMMAND_WORD:
-                return new DeleteSessionCommandParser().parse(arguments);
+        case DeleteSessionCommand.COMMAND_WORD:
+            return new DeleteSessionCommandParser().parse(arguments);
 
-            case AddNoteCommand.COMMAND_WORD:
-                return new AddNoteCommandParser().parse(arguments);
+        case AddNoteCommand.COMMAND_WORD:
+            return new AddNoteCommandParser().parse(arguments);
 
-            case ListSessionsCommand.COMMAND_WORD:
-                return new ListSessionsCommandParser().parse(arguments);
+        case ListSessionsCommand.COMMAND_WORD:
+            return new ListSessionsCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
