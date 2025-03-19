@@ -6,7 +6,20 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.address.logic.commands.*;
+import seedu.address.logic.commands.AddHouseholdCommand;
+import seedu.address.logic.commands.AddNoteCommand;
+import seedu.address.logic.commands.AddSessionCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DeleteHouseholdCommand;
+import seedu.address.logic.commands.DeleteSessionCommand;
+import seedu.address.logic.commands.EditHouseholdCommand;
+import seedu.address.logic.commands.EditSessionCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindHouseholdCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListHouseholdsCommand;
+import seedu.address.logic.commands.ListSessionsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -36,48 +49,46 @@ public class HouseholdBookParser {
         final String arguments = matcher.group("arguments");
 
         switch (commandWord) {
-
-        case AddHouseholdCommand.COMMAND_WORD:
+        case AddHouseholdCommand.COMMAND_WORD -> {
             return new AddHouseholdCommandParser().parse(arguments);
-
-        case AddSessionCommand.COMMAND_WORD:
+        }
+        case AddSessionCommand.COMMAND_WORD -> {
             return new AddSessionCommandParser().parse(arguments);
-
-        case EditHouseholdCommand.COMMAND_WORD:
+        }
+        case EditHouseholdCommand.COMMAND_WORD -> {
             return new EditHouseholdCommandParser().parse(arguments);
-
-        case EditSessionCommand.COMMAND_WORD:
+        }
+        case EditSessionCommand.COMMAND_WORD -> {
             return new EditSessionCommandParser().parse(arguments);
-
-        case DeleteHouseholdCommand.COMMAND_WORD:
+        }
+        case DeleteHouseholdCommand.COMMAND_WORD -> {
             return new DeleteHouseholdCommandParser().parse(arguments);
-
-            case DeleteSessionCommand.COMMAND_WORD:
-                return new DeleteSessionCommandParser().parse(arguments);
-
-            case AddNoteCommand.COMMAND_WORD:
-                return new AddNoteCommandParser().parse(arguments);
-
-            case ListSessionsCommand.COMMAND_WORD:
-                return new ListSessionsCommandParser().parse(arguments);
-
-        case ClearCommand.COMMAND_WORD:
+        }
+        case DeleteSessionCommand.COMMAND_WORD -> {
+            return new DeleteSessionCommandParser().parse(arguments);
+        }
+        case AddNoteCommand.COMMAND_WORD -> {
+            return new AddNoteCommandParser().parse(arguments);
+        }
+        case ListSessionsCommand.COMMAND_WORD -> {
+            return new ListSessionsCommandParser().parse(arguments);
+        }
+        case ClearCommand.COMMAND_WORD -> {
             return new ClearCommand();
-
-        case FindHouseholdCommand.COMMAND_WORD:
+        }
+        case FindHouseholdCommand.COMMAND_WORD -> {
             return new FindHouseholdCommandParser().parse(arguments);
-
-        case ListHouseholdsCommand.COMMAND_WORD:
+        }
+        case ListHouseholdsCommand.COMMAND_WORD -> {
             return new ListHouseholdsCommand();
-
-        case ExitCommand.COMMAND_WORD:
+        }
+        case ExitCommand.COMMAND_WORD -> {
             return new ExitCommand();
-
-        case HelpCommand.COMMAND_WORD:
+        }
+        case HelpCommand.COMMAND_WORD -> {
             return new HelpCommand();
-
-        default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        }
+        default -> throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
 }

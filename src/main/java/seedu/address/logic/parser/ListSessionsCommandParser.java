@@ -6,6 +6,9 @@ import seedu.address.logic.commands.ListSessionsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.household.HouseholdId;
 
+/**
+ * Parses user input to create a {@code ListSessionsCommand}.
+ */
 public class ListSessionsCommandParser implements Parser<ListSessionsCommand> {
 
     @Override

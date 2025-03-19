@@ -1,19 +1,19 @@
 package seedu.address.ui;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.EditSessionCommand;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.EditSessionCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.session.Session;
@@ -42,6 +42,17 @@ public class SessionCard extends UiPart<Region> {
 
     private final Logic logic;
 
+    /**
+     * Constructs a {@code SessionCard} with the specified session, displayed index, and logic instance.
+     *
+     * <p>This constructor initializes the card to display the details of the given {@code Session} object
+     * at the specified index. It sets up the session's date, time, and note (if present). The constructor also
+     * configures the action for the "Edit Session" button to open the edit dialog for that session.</p>
+     *
+     * @param session The {@code Session} object whose details are to be displayed on the card.
+     * @param displayedIndex The index at which the session appears in the list, used to display its position.
+     * @param logic The {@code Logic} instance used to manage and process session-related operations.
+     */
     public SessionCard(Session session, int displayedIndex, Logic logic) {
         super(FXML);
         this.session = session;

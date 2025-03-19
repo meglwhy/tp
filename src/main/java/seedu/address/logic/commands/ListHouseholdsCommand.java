@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.model.Model;
-import seedu.address.model.household.Household;
 
 /**
  * Lists all households in the household book.
@@ -21,7 +20,7 @@ public class ListHouseholdsCommand extends Command {
         requireNonNull(model);
 
         // Get the entire list of households
-        model.updateFilteredHouseholdList(unused -> true);  // No filter, show all
+        model.updateFilteredHouseholdList(unused -> true); // No filter, show all
 
         // Get the number of households in the entire list
         int householdCount = model.getFilteredHouseholdList().size();

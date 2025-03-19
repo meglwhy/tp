@@ -5,7 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.household.HouseholdId;
-import seedu.address.model.session.*;
+import seedu.address.model.session.Session;
+import seedu.address.model.session.SessionDate;
+import seedu.address.model.session.SessionNote;
+import seedu.address.model.session.SessionTime;
 
 /**
  * Jackson-friendly version of {@link Session}.
@@ -65,7 +68,8 @@ class JsonAdaptedSession {
         final HouseholdId modelHouseholdId = HouseholdId.fromString(householdId);
 
         if (date == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, SessionDate.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    SessionDate.class.getSimpleName()));
         }
         if (!SessionDate.isValidDate(date)) {
             throw new IllegalValueException(SessionDate.MESSAGE_CONSTRAINTS);
@@ -73,7 +77,8 @@ class JsonAdaptedSession {
         final SessionDate modelDate = new SessionDate(date);
 
         if (time == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, SessionTime.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    SessionTime.class.getSimpleName()));
         }
         if (!SessionTime.isValidTime(time)) {
             throw new IllegalValueException(SessionTime.MESSAGE_CONSTRAINTS);
@@ -96,4 +101,4 @@ class JsonAdaptedSession {
             return new Session(sessionId, modelHouseholdId, modelDate, modelTime, modelNote);
         }
     }
-} 
+}

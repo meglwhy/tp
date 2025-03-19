@@ -12,10 +12,6 @@ import seedu.address.model.session.Session;
  * The API of the Model component.
  */
 public interface Model {
-    /** {@code Predicate} that always evaluate to true */
-    Predicate<Household> PREDICATE_SHOW_ALL_HOUSEHOLDS = unused -> true;
-    Predicate<Session> PREDICATE_SHOW_ALL_SESSIONS = unused -> true;
-
     /** Returns the HouseholdBook */
     HouseholdBook getHouseholdBook();
 

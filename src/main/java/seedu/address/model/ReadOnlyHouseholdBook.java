@@ -30,4 +30,4 @@ public interface ReadOnlyHouseholdBook {
      * Returns true if a session with the same identity as {@code session} exists in the household book.
      */
     boolean hasSession(Session session);
-} 
+}

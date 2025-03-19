@@ -7,7 +7,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
 import seedu.address.logic.commands.AddHouseholdCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.household.*;
+import seedu.address.model.household.Address;
+import seedu.address.model.household.Contact;
+import seedu.address.model.household.Household;
+import seedu.address.model.household.Name;
+
 
 /**
  * Parses input arguments and creates a new AddHouseholdCommand object
