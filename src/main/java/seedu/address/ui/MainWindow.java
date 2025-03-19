@@ -117,7 +117,7 @@ public class MainWindow extends UiPart<Stage> {
         householdListPanel = new HouseholdListPanel(logic.getFilteredHouseholdList());
         householdListPanelPlaceholder.getChildren().add(householdListPanel.getRoot());
 
-        sessionListPanel = new SessionListPanel(logic.getFilteredSessionList());
+        sessionListPanel = new SessionListPanel(logic.getFilteredSessionList(), logic);
         sessionListPanelPlaceholder.getChildren().add(sessionListPanel.getRoot());
 
         // Add selection listener to household list
