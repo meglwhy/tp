@@ -24,7 +24,8 @@ public class HouseholdListPanel extends UiPart<Region> {
      * Constructs a {@code HouseholdListPanel} with the given list of households.
      *
      * <p>This constructor initializes the panel with the provided {@code ObservableList} of {@code Household} objects.
-     * It sets up the list view and its cell factory to display each household using the {@code HouseholdListViewCell}.</p>
+     * It sets up the list view and its cell factory to display each household using the
+     * {@code HouseholdListViewCell}.</p>
      *
      * @param householdList The list of households to be displayed in the panel.
      */
