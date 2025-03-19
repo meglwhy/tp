@@ -38,6 +38,16 @@ public class HouseholdCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
+    /**
+     * Constructs a {@code HouseholdCard} with the specified household and displayed index.
+     *
+     * <p>This constructor initializes the card to display the information of the given {@code Household} object
+     * at the specified index. It sets up the household's ID, name, address,
+     * contact, and tags in the corresponding fields.</p>
+     *
+     * @param household The {@code Household} object whose information is to be displayed on the card.
+     * @param displayedIndex The index at which the household appears in the list, used to display its position.
+     */
     public HouseholdCard(Household household, int displayedIndex) {
         super(FXML);
         this.household = household;
@@ -68,4 +78,4 @@ public class HouseholdCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && household.equals(card.household);
     }
-} 
+}

@@ -5,13 +5,28 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 import java.util.Optional;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.household.Household;
 import seedu.address.model.household.HouseholdId;
 import seedu.address.model.session.Session;
 
+/**
+ * Represents a command to delete a specific session from a household.
+ * The session is identified using a household ID and a session index.
+ *
+ * Usage example:
+ * <pre>
+ *     delete-session H000002-2
+ * </pre>
+ *
+ * This command performs the following checks:
+ * - Ensures the household with the given ID exists.
+ * - Ensures the session index is valid for the specified household.
+ * - Removes the session from both the household and the global session list.
+ *
+ * Upon successful execution, it returns a message confirming the deleted session.
+ */
 public class DeleteSessionCommand extends Command {
 
     public static final String COMMAND_WORD = "delete-session";
@@ -25,6 +40,13 @@ public class DeleteSessionCommand extends Command {
     private final HouseholdId householdId;
     private final int sessionIndex; // 1-based
 
+    /**
+     * Creates a {@code DeleteSessionCommand} to delete a session from a household.
+     *
+     * @param householdId  The unique identifier of the household.
+     * @param sessionIndex The 1-based index of the session to be deleted.
+     * @throws NullPointerException if {@code householdId} is null.
+     */
     public DeleteSessionCommand(HouseholdId householdId, int sessionIndex) {
         requireNonNull(householdId);
         this.householdId = householdId;

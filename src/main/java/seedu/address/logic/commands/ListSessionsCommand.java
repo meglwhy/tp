@@ -11,6 +11,9 @@ import seedu.address.model.household.Household;
 import seedu.address.model.household.HouseholdId;
 import seedu.address.model.session.Session;
 
+/**
+ * Lists all sessions for a given household.
+ */
 public class ListSessionsCommand extends Command {
 
     public static final String COMMAND_WORD = "list-sessions";
@@ -23,6 +26,12 @@ public class ListSessionsCommand extends Command {
 
     private final HouseholdId householdId;
 
+    /**
+     * Creates a {@code ListSessionsCommand} to retrieve and display all sessions for a specific household.
+     *
+     * @param householdId The ID of the household whose sessions should be listed.
+     * @throws NullPointerException if {@code householdId} is null.
+     */
     public ListSessionsCommand(HouseholdId householdId) {
         requireNonNull(householdId);
         this.householdId = householdId;

@@ -79,4 +79,4 @@ public class JsonHouseholdBookStorage implements HouseholdBookStorage {
         FileUtil.createIfMissing(filePath);
         JsonUtil.saveJsonFile(new JsonSerializableHouseholdBook(householdBook), filePath);
     }
-} 
+}

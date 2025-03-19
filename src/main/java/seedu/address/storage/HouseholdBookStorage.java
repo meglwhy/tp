@@ -42,4 +42,4 @@ public interface HouseholdBookStorage {
      */
     void saveHouseholdBook(ReadOnlyHouseholdBook householdBook, Path filePath) throws IOException;
 
-} 
+}

@@ -1,21 +1,27 @@
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
+package seedu.address.logic.commands;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import seedu.address.logic.commands.DeleteHouseholdCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.HouseholdBook;
 import seedu.address.model.Model;
 import seedu.address.model.household.Household;
-import seedu.address.model.HouseholdBook;
 import seedu.address.model.household.HouseholdId;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import java.util.Optional;
 
 public class DeleteHouseholdCommandTest {
 
@@ -74,7 +80,7 @@ public class DeleteHouseholdCommandTest {
     }
 
     @Test
-    public void execute_cancellation_confirmed_cancelled() throws CommandException {
+    public void executeCancellationConfirmedCancelled() throws CommandException {
         // Mock that the household is found by ID
         when(householdBook.getHouseholdById(targetId)).thenReturn(Optional.of(householdToDelete));
 

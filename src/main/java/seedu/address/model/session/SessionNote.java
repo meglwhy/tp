@@ -1,7 +1,6 @@
 package seedu.address.model.session;
 
 import static java.util.Objects.requireNonNull;
-
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
@@ -9,7 +8,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Guarantees: immutable; is valid as declared in {@link #isValidNote(String)}
  */
 public class SessionNote {
-    public static final String MESSAGE_CONSTRAINTS = 
+    public static final String MESSAGE_CONSTRAINTS =
             "Notes can take any values, and it should not be blank";
 
     /*
@@ -54,4 +53,4 @@ public class SessionNote {
     public int hashCode() {
         return value.hashCode();
     }
-} 
+}

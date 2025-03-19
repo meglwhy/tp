@@ -50,4 +50,4 @@ public class Index {
     public int hashCode() {
         return zeroBasedIndex;
     }
-} 
+}

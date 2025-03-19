@@ -76,4 +76,4 @@ class JsonSerializableHouseholdBook {
 
         return householdBook;
     }
-} 
+}

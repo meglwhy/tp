@@ -6,8 +6,15 @@ import java.util.stream.Collectors;
 
 import seedu.address.model.HouseholdBook;
 import seedu.address.model.ReadOnlyHouseholdBook;
-import seedu.address.model.household.*;
-import seedu.address.model.session.*;
+import seedu.address.model.household.Address;
+import seedu.address.model.household.Contact;
+import seedu.address.model.household.Household;
+import seedu.address.model.household.HouseholdId;
+import seedu.address.model.household.Name;
+import seedu.address.model.session.Session;
+import seedu.address.model.session.SessionDate;
+import seedu.address.model.session.SessionNote;
+import seedu.address.model.session.SessionTime;
 import seedu.address.model.tag.Tag;
 
 /**

@@ -1,19 +1,15 @@
 package seedu.address.model;
 
-import java.util.List;
 import static java.util.Objects.requireNonNull;
-import java.util.stream.Collectors;
+
+import java.util.List;
 import java.util.Optional;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.household.Household;
 import seedu.address.model.household.HouseholdId;
 import seedu.address.model.session.Session;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.household.HouseholdContainsKeywordsPredicate;
-import seedu.address.commons.core.index.Index;
 
 /**
  * Wraps all data at the household-book level
@@ -36,14 +32,6 @@ public class HouseholdBook implements ReadOnlyHouseholdBook {
         households.addAll(toBeCopied.getHouseholdList());
         sessions.addAll(toBeCopied.getSessionList());
     }
-
-    /**
-     * Replaces the contents of the household list with {@code households}.
-     */
-    public void setHouseholds(List<Household> households) {
-        this.households.setAll(households);
-    }
-
     /**
      * Resets the existing data of this {@code HouseholdBook} with an empty book.
      */
@@ -87,17 +75,6 @@ public class HouseholdBook implements ReadOnlyHouseholdBook {
     public ObservableList<Household> getHouseholdList() {
         return unmodifiableHouseholds;
     }
-
-    /**
-     * Returns a list of households that match the given predicate.
-     */
-    public List<Household> findHouseholds(HouseholdContainsKeywordsPredicate predicate) {
-        requireNonNull(predicate);
-        return households.stream()
-                .filter(predicate)
-                .collect(Collectors.toList());
-    }
-
     /**
      * Returns true if a household with the given ID exists in the household book.
      */
@@ -106,7 +83,6 @@ public class HouseholdBook implements ReadOnlyHouseholdBook {
         return households.stream()
                 .anyMatch(household -> household.getId().equals(id));
     }
-
     /**
      * Adds a session to the specified household.
      * The household must exist in the household book.
@@ -114,38 +90,18 @@ public class HouseholdBook implements ReadOnlyHouseholdBook {
     public void addSessionToHousehold(HouseholdId householdId, Session session) {
         requireNonNull(householdId);
         requireNonNull(session);
-        
         households.stream()
                 .filter(h -> h.getId().equals(householdId))
                 .findFirst()
                 .ifPresent(h -> h.addSession(session));
-        
         sessions.add(session);
     }
-
-    /**
-     * Returns true if there exists a session that conflicts with the given session.
-     * A conflict occurs when two sessions have the same date and time.
-     * Optionally excludes a session from the check (useful for edit operations).
-     */
-    public boolean hasConflictingSession(Session session, Session... exclude) {
-        requireNonNull(session);
-        
-        return households.stream()
-                .flatMap(h -> h.getSessions().stream())
-                .filter(existingSession -> !List.of(exclude).contains(existingSession))
-                .anyMatch(existingSession ->
-                        existingSession.getDate().equals(session.getDate())
-                        && existingSession.getTime().equals(session.getTime()));
-    }
-
     /**
      * Returns the conflicting session if one exists.
      * Useful for providing more detailed error messages.
      */
     public Optional<Session> getConflictingSession(Session session, Session... exclude) {
         requireNonNull(session);
-        
         return households.stream()
                 .flatMap(h -> h.getSessions().stream())
                 .filter(existingSession -> !List.of(exclude).contains(existingSession))
@@ -154,35 +110,18 @@ public class HouseholdBook implements ReadOnlyHouseholdBook {
                         && existingSession.getTime().equals(session.getTime()))
                 .findFirst();
     }
-
     /**
-     * Returns the session at the specified index.
-     * @throws CommandException if index is invalid
+     * Removes a session identified by the given session ID from both the corresponding household and
+     * the global session list.
+     *
+     * <p>This method performs the following steps:</p>
+     * <ul>
+     *   <li>Finds the household that contains the session and removes it from that household.</li>
+     *   <li>Removes the session from the global session list, if applicable.</li>
+     * </ul>
+     *
+     * @param sessionId The ID of the session to be removed.
      */
-    public Optional<Session> getSession(Index index) {
-        requireNonNull(index);
-        List<Session> allSessions = households.stream()
-                .flatMap(h -> h.getSessions().stream())
-                .collect(Collectors.toList());
-        
-        if (index.getZeroBased() >= allSessions.size()) {
-            return Optional.empty();
-        }
-        return Optional.of(allSessions.get(index.getZeroBased()));
-    }
-
-    /**
-     * Updates the old session with the new session.
-     */
-    public void updateSession(Session oldSession, Session newSession) {
-        requireAllNonNull(oldSession, newSession);
-        
-        households.stream()
-                .filter(h -> h.getSessions().contains(oldSession))
-                .findFirst()
-                .ifPresent(h -> h.updateSession(oldSession, newSession));
-    }
-
     public void removeSessionById(String sessionId) {
         // 1) Remove from the household that has this session
         households.stream()
@@ -195,8 +134,6 @@ public class HouseholdBook implements ReadOnlyHouseholdBook {
         // 2) Also remove from the global sessions list (if you keep one)
         sessions.removeIf(s -> s.getSessionId().equals(sessionId));
     }
-
-
     /**
      * Returns the household with the given ID if it exists.
      */

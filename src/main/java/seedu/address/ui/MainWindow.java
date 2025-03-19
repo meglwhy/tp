@@ -121,19 +121,19 @@ public class MainWindow extends UiPart<Stage> {
         sessionListPanelPlaceholder.getChildren().add(sessionListPanel.getRoot());
 
         // Add selection listener to household list
-        householdListPanel.getListView().getSelectionModel().selectedItemProperty().addListener(
-            (observable, oldValue, newValue) -> {
-                if (newValue != null) {
-                    // Filter sessions to show only those belonging to the selected household
-                    logic.updateFilteredSessionList(session -> 
-                        session.getHouseholdId().equals(newValue.getId()));
-                    // Force refresh the session list panel
-                    sessionListPanel.refresh();
-                } else {
-                    // If no household is selected, clear the session list
-                    logic.updateFilteredSessionList(session -> false);
-                }
-            });
+        householdListPanel.getListView().getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        // Filter sessions to show only those belonging to the selected household
+                        logic.updateFilteredSessionList(session ->
+                            session.getHouseholdId().equals(newValue.getId()));
+                        // Force refresh the session list panel
+                        sessionListPanel.refresh();
+                    } else {
+                        // If no household is selected, clear the session list
+                        logic.updateFilteredSessionList(session -> false);
+                    }
+                });
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

@@ -1,7 +1,9 @@
 package seedu.address.model.session;
 
 import static java.util.Objects.requireNonNull;
+
 import java.util.UUID;
+
 import seedu.address.model.household.HouseholdId;
 
 /**
