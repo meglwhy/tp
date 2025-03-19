@@ -10,13 +10,14 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.household.Address;
-import seedu.address.model.household.Name;
 import seedu.address.model.household.Contact;
 import seedu.address.model.household.HouseholdId;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.household.Name;
 import seedu.address.model.session.SessionDate;
-import seedu.address.model.session.SessionTime;
 import seedu.address.model.session.SessionNote;
+import seedu.address.model.session.SessionTime;
+import seedu.address.model.tag.Tag;
+
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
  */

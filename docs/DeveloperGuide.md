@@ -251,7 +251,7 @@ Use case ends.
 **Extensions:**
 
 2a. Household ID does not exist.
-* 2a1. System displays error message: `"Error: Household ID not found."` 
+* 2a1. System displays error message: `"Error: Household ID not found."`
 Use case ends.
 
 3a. User cancels deletion.
@@ -342,7 +342,7 @@ Use case resumes from step 2 or ends if the issue persists.
 **Extensions:**
 
 2a. Notifications are disabled.
-* 2a1. System does not send a notification. 
+* 2a1. System does not send a notification.
 Use case ends.
 
 2b. Email notification fails.
