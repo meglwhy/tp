@@ -138,7 +138,6 @@ public class SessionCard extends UiPart<Region> {
         // If either date/time or note changed, use edit-session command
         if (dateOrTimeChanged || noteChanged) {
             String editCommand;
-            
             // If note changed, include it in the command
             if (noteChanged) {
                 editCommand = String.format(
@@ -152,19 +151,17 @@ public class SessionCard extends UiPart<Region> {
                         householdIdStr, index, newDate, newTime
                 );
             }
-            
             try {
                 CommandResult result = logic.execute(editCommand);
-                
                 // Show appropriate message based on what changed
                 if (dateOrTimeChanged && noteChanged) {
-                    showInfoDialog("Session Updated", 
+                    showInfoDialog("Session Updated",
                             "Successfully updated date, time, and note:\n" + result.getFeedbackToUser());
                 } else if (dateOrTimeChanged) {
-                    showInfoDialog("Session Updated", 
+                    showInfoDialog("Session Updated",
                             "Successfully updated date/time:\n" + result.getFeedbackToUser());
                 } else {
-                    showInfoDialog("Note Updated", 
+                    showInfoDialog("Note Updated",
                             "Successfully updated note:\n" + result.getFeedbackToUser());
                 }
             } catch (CommandException | ParseException e) {
