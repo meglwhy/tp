@@ -15,7 +15,8 @@ public class EditSessionCommandParser implements Parser<EditSessionCommand> {
     public static final String MESSAGE_INVALID_FORMAT =
             "Invalid format! Usage: edit-session id/<HOUSEHOLD_ID-SESSION_INDEX> d/DATE t/TIME [n/NOTE]\n"
                     + "Example: edit-session id/H000006-2 d/2025-03-16 t/15:00\n"
-                    + "Example with note: edit-session id/H000006-2 d/2025-03-16 t/15:00 n/Follow-up on medical assistance application";
+                    + "Example with note: edit-session id/H000006-2 d/2025-03-16 t/15:00 n/Follow-up on"
+                    + "medical assistance application";
 
     private static final Prefix PREFIX_ID = new Prefix("id/");
     private static final Prefix PREFIX_DATE = new Prefix("d/");

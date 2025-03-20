@@ -1,7 +1,8 @@
 package seedu.address.logic.commands;
 
-import java.util.List;
 import static java.util.Objects.requireNonNull;
+
+import java.util.List;
 import java.util.Optional;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -36,10 +37,12 @@ public class EditSessionCommand extends Command {
 
     public static final String COMMAND_WORD = "edit-session";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Edits the session identified by the household ID and session index by updating date, time, and optionally a note.\n"
+            + ": Edits the session identified by the household ID and session index by updating date, time,"
+            + "and optionally a note.\n"
             + "Parameters: <HOUSEHOLD_ID-SESSION_INDEX> d/DATE t/TIME [n/NOTE]\n"
             + "Example: " + COMMAND_WORD + " H000006-2 d/2025-03-16 t/15:00\n"
-            + "Example with note: " + COMMAND_WORD + " H000006-2 d/2025-03-16 t/15:00 n/Follow-up on medical assistance application";
+            + "Example with note: " + COMMAND_WORD + " H000006-2 d/2025-03-16 t/15:00 n/Follow-up on"
+            + "medical assistance application";
     public static final String MESSAGE_EDIT_SESSION_SUCCESS = "Edited session:%nDate: %s%nTime: %s";
     public static final String MESSAGE_EDIT_SESSION_WITH_NOTE_SUCCESS = "Edited session:%nDate: %s%nTime: %s%nNote: %s";
     public static final String MESSAGE_HOUSEHOLD_NOT_FOUND = "No household found with ID %s.";
@@ -72,7 +75,6 @@ public class EditSessionCommand extends Command {
         this.note = null;
         this.hasNote = false;
     }
-    
     /**
      * Creates an {@code EditSessionCommand} to update the date, time, and note of a session in a household.
      *
@@ -118,8 +120,6 @@ public class EditSessionCommand extends Command {
 
         // Create a new session with new date and time.
         Session newSession;
-        
-        // Handle note updates
         if (hasNote) {
             // If we're explicitly setting a new note
             newSession = new Session(oldSession.getHouseholdId(),
@@ -144,7 +144,7 @@ public class EditSessionCommand extends Command {
 
         // Return appropriate success message based on whether a note was included
         if (hasNote) {
-            return new CommandResult(String.format(MESSAGE_EDIT_SESSION_WITH_NOTE_SUCCESS, 
+            return new CommandResult(String.format(MESSAGE_EDIT_SESSION_WITH_NOTE_SUCCESS,
                 newDate, newTime, note));
         } else {
             return new CommandResult(String.format(MESSAGE_EDIT_SESSION_SUCCESS, newDate, newTime));
