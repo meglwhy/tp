@@ -7,7 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddHouseholdCommand;
-import seedu.address.logic.commands.AddNoteCommand;
 import seedu.address.logic.commands.AddSessionCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -66,9 +65,6 @@ public class HouseholdBookParser {
         }
         case DeleteSessionCommand.COMMAND_WORD -> {
             return new DeleteSessionCommandParser().parse(arguments);
-        }
-        case AddNoteCommand.COMMAND_WORD -> {
-            return new AddNoteCommandParser().parse(arguments);
         }
         case ListSessionsCommand.COMMAND_WORD -> {
             return new ListSessionsCommandParser().parse(arguments);
