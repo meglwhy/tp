@@ -70,23 +70,35 @@ public class SessionCard extends UiPart<Region> {
     }
 
     /**
-     * Shows a dialog to edit session details.
+     * Shows a dialog to edit session details (date/time) and add a note.
      */
-    private void showEditSessionDialog(int index) {
-        Dialog<String> dialog = new Dialog<>();
-        dialog.setTitle("Edit Session");
-        dialog.setHeaderText("Edit Session Details");
+    private void showEditSessionDialog(int sessionIndex) {
+        // We need the actual ID from the session's HouseholdId + the 1-based index:
+        String householdIdStr = session.getHouseholdId().toString();
+        int index = sessionIndex; // This is the 1-based index from outside
+
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Edit / Add Note");
+        dialog.setHeaderText("Update Session Information");
 
         DialogPane dialogPane = dialog.getDialogPane();
-        dialogPane.getButtonTypes().addAll(javafx.scene.control.ButtonType.OK, javafx.scene.control.ButtonType.CANCEL);
+        dialogPane.getButtonTypes().addAll(
+                javafx.scene.control.ButtonType.OK,
+                javafx.scene.control.ButtonType.CANCEL
+        );
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
 
-        TextField dateField = new TextField(session.getDate().toString());
-        TextField timeField = new TextField(session.getTime().toString());
-        TextField noteField = new TextField(session.hasNote() ? session.getNote().toString() : "");
+        // Original values
+        String originalDate = session.getDate().toString();
+        String originalTime = session.getTime().toString();
+        String originalNote = session.hasNote() ? session.getNote().toString() : "";
+
+        TextField dateField = new TextField(originalDate);
+        TextField timeField = new TextField(originalTime);
+        TextField noteField = new TextField(originalNote);
 
         grid.add(new Label("Date (YYYY-MM-DD):"), 0, 0);
         grid.add(dateField, 1, 0);
@@ -97,73 +109,95 @@ public class SessionCard extends UiPart<Region> {
 
         dialogPane.setContent(grid);
 
+        // When user clicks OK, we get the new values
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == javafx.scene.control.ButtonType.OK) {
-                return dateField.getText() + " " + timeField.getText() + " " + noteField.getText();
+                // If user changed date/time, run edit-session
+                String newDate = dateField.getText().trim();
+                String newTime = timeField.getText().trim();
+                String newNote = noteField.getText().trim();
+
+                handleSessionUpdate(householdIdStr, index, originalDate, originalTime, originalNote,
+                        newDate, newTime, newNote);
             }
             return null;
         });
 
-        dialog.showAndWait().ifPresent(result -> {
-            String[] inputs = result.split(" ", 3);
-            if (inputs.length >= 2) {
-                handleEditSession(index, inputs[0], inputs[1], inputs.length == 3 ? inputs[2] : "");
-            } else {
-                showError("Invalid input. Please enter at least a date and time.");
-            }
-        });
+        dialog.showAndWait();
     }
 
     /**
-     * Handles editing a session with provided details.
+     * Checks what changed and issues either or both commands:
+     * - {@code edit-session id/HOUSEHOLD_ID-INDEX d/DATE t/TIME}
+     * - {@code add-note    id/HOUSEHOLD_ID-INDEX n/NOTE}
      */
-    private void handleEditSession(int index, String date, String time, String note) {
-        try {
-            String command = String.format("%s %d d/%s tm/%s %s",
-                    EditSessionCommand.COMMAND_WORD, index, date, time, note.isEmpty() ? "" : "n/" + note);
+    private void handleSessionUpdate(String householdIdStr, int index,
+                                     String oldDate, String oldTime, String oldNote,
+                                     String newDate, String newTime, String newNote) {
+        boolean dateOrTimeChanged = !newDate.equals(oldDate) || !newTime.equals(oldTime);
+        boolean noteChanged = !newNote.equals(oldNote);
 
-            CommandResult result = logic.execute(command);
-            showSuccess("Edited session successfully: " + result.getFeedbackToUser());
-        } catch (CommandException | ParseException e) {
-            showError("Failed to edit session: " + e.getMessage());
+        // 1) If date/time changed, run "edit-session id/H000006-2 d/DATE t/TIME"
+        if (dateOrTimeChanged) {
+            String editCommand = String.format(
+                    "edit-session id/%s-%d d/%s t/%s",
+                    householdIdStr, index, newDate, newTime
+            );
+            try {
+                CommandResult result = logic.execute(editCommand);
+                showInfoDialog("Session Updated", "Successfully updated date/time:\n" + result.getFeedbackToUser());
+            } catch (CommandException | ParseException e) {
+                showErrorDialog("Failed to Edit Session", e.getMessage());
+            }
+        }
+
+        // 2) If note changed, run "add-note id/H000006-2 n/NOTE"
+        if (noteChanged) {
+            String noteCommand = String.format(
+                    "add-note id/%s-%d n/%s",
+                    householdIdStr, index, newNote
+            );
+            try {
+                CommandResult result = logic.execute(noteCommand);
+                showInfoDialog("Note Added/Updated", result.getFeedbackToUser());
+            } catch (CommandException | ParseException e) {
+                showErrorDialog("Failed to Add Note", e.getMessage());
+            }
+        }
+
+        // If neither changed, do nothing (no commands).
+        if (!dateOrTimeChanged && !noteChanged) {
+            showInfoDialog("No Changes Detected", "No new date/time or note entered.");
         }
     }
 
-    /**
-     * Displays an error message.
-     */
-    private void showError(String message) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Session Edit Failed");
-        alert.setContentText(message);
+    /** Shows an informational dialog. */
+    private void showInfoDialog(String title, String content) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
         alert.showAndWait();
     }
 
-    /**
-     * Displays a success message.
-     */
-    private void showSuccess(String message) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Success");
-        alert.setHeaderText("Session Edited Successfully");
-        alert.setContentText(message);
+    /** Shows an error dialog. */
+    private void showErrorDialog(String title, String content) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
         alert.showAndWait();
     }
 
     @Override
     public boolean equals(Object other) {
-        // short circuit if same object
         if (other == this) {
             return true;
         }
-
-        // instanceof handles nulls
         if (!(other instanceof SessionCard)) {
             return false;
         }
 
-        // state check
         SessionCard card = (SessionCard) other;
         return id.getText().equals(card.id.getText())
                 && session.equals(card.session);
