@@ -126,9 +126,8 @@ public class SessionCard extends UiPart<Region> {
     }
 
     /**
-     * Checks what changed and issues either or both commands:
-     * - {@code edit-session id/HOUSEHOLD_ID-INDEX d/DATE t/TIME}
-     * - {@code add-note    id/HOUSEHOLD_ID-INDEX n/NOTE}
+     * Checks what changed and issues appropriate edit-session command.
+     * Now uses the enhanced edit-session command that can handle both date/time and note updates.
      */
     private void handleSessionUpdate(String householdIdStr, int index,
                                      String oldDate, String oldTime, String oldNote,
@@ -136,36 +135,43 @@ public class SessionCard extends UiPart<Region> {
         boolean dateOrTimeChanged = !newDate.equals(oldDate) || !newTime.equals(oldTime);
         boolean noteChanged = !newNote.equals(oldNote);
 
-        // 1) If date/time changed, run "edit-session id/H000006-2 d/DATE t/TIME"
-        if (dateOrTimeChanged) {
-            String editCommand = String.format(
-                    "edit-session id/%s-%d d/%s t/%s",
-                    householdIdStr, index, newDate, newTime
-            );
+        // If either date/time or note changed, use edit-session command
+        if (dateOrTimeChanged || noteChanged) {
+            String editCommand;
+            
+            // If note changed, include it in the command
+            if (noteChanged) {
+                editCommand = String.format(
+                        "edit-session id/%s-%d d/%s t/%s n/%s",
+                        householdIdStr, index, newDate, newTime, newNote
+                );
+            } else {
+                // Only date/time changed
+                editCommand = String.format(
+                        "edit-session id/%s-%d d/%s t/%s",
+                        householdIdStr, index, newDate, newTime
+                );
+            }
+            
             try {
                 CommandResult result = logic.execute(editCommand);
-                showInfoDialog("Session Updated", "Successfully updated date/time:\n" + result.getFeedbackToUser());
+                
+                // Show appropriate message based on what changed
+                if (dateOrTimeChanged && noteChanged) {
+                    showInfoDialog("Session Updated", 
+                            "Successfully updated date, time, and note:\n" + result.getFeedbackToUser());
+                } else if (dateOrTimeChanged) {
+                    showInfoDialog("Session Updated", 
+                            "Successfully updated date/time:\n" + result.getFeedbackToUser());
+                } else {
+                    showInfoDialog("Note Updated", 
+                            "Successfully updated note:\n" + result.getFeedbackToUser());
+                }
             } catch (CommandException | ParseException e) {
-                showErrorDialog("Failed to Edit Session", e.getMessage());
+                showErrorDialog("Failed to Update Session", e.getMessage());
             }
-        }
-
-        // 2) If note changed, run "add-note id/H000006-2 n/NOTE"
-        if (noteChanged) {
-            String noteCommand = String.format(
-                    "add-note id/%s-%d n/%s",
-                    householdIdStr, index, newNote
-            );
-            try {
-                CommandResult result = logic.execute(noteCommand);
-                showInfoDialog("Note Added/Updated", result.getFeedbackToUser());
-            } catch (CommandException | ParseException e) {
-                showErrorDialog("Failed to Add Note", e.getMessage());
-            }
-        }
-
-        // If neither changed, do nothing (no commands).
-        if (!dateOrTimeChanged && !noteChanged) {
+        } else {
+            // If neither changed, do nothing (no commands).
             showInfoDialog("No Changes Detected", "No new date/time or note entered.");
         }
     }
