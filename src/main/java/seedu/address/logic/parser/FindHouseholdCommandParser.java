@@ -22,7 +22,10 @@ public class FindHouseholdCommandParser implements Parser<FindHouseholdCommand> 
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindHouseholdCommand.MESSAGE_USAGE));
         }
-
+        if (!trimmedArgs.matches("[a-zA-Z0-9 ]+")) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindHouseholdCommand.MESSAGE_USAGE));
+        }
         String[] keywords = trimmedArgs.split("\\s+");
         try {
             return new FindHouseholdCommand(String.join(" ", keywords));
