@@ -29,7 +29,8 @@ public class FindHouseholdCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Found %1$d household(s) matching: %2$s";
     public static final String MESSAGE_NO_MATCHING_HOUSEHOLDS = "No households found matching: %1$s";
 
-    private final HouseholdContainsKeywordsPredicate predicate;
+    // Public for testing
+    public final HouseholdContainsKeywordsPredicate predicate;
     private final String keywords;
     /**
      * Creates a {@code FindHouseholdCommand} to search for households based on the provided keywords.
