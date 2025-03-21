@@ -83,7 +83,8 @@ class AddHouseholdCommandTest {
 
     @Test
     void equals_differentObject_returnsFalse() {
-        Household validHousehold = new Household(new Name("Smith Family"), new Address("123 Main St"), new Contact("98765432"));
+        Household validHousehold = new Household(new Name("Smith Family"), new Address("123 Main St"),
+                new Contact("98765432"));
         Household completelyDifferentHousehold = new Household(new Name("Johnson Family"), new Address("456 Elm St"),
                 new Contact("82345678"));
 
