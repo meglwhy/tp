@@ -43,13 +43,30 @@ public class EditHouseholdCommandParser implements Parser<EditHouseholdCommand> 
         EditHouseholdDescriptor editHouseholdDescriptor = new EditHouseholdDescriptor();
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editHouseholdDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+            String name = argMultimap.getValue(PREFIX_NAME).get().trim();
+            if (name.isEmpty()) {
+                throw new ParseException("Household name cannot be empty.");
+            }
+            editHouseholdDescriptor.setName(ParserUtil.parseName(name));
         }
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            editHouseholdDescriptor.setContact(ParserUtil.parseContact(argMultimap.getValue(PREFIX_PHONE).get()));
+            String phone = argMultimap.getValue(PREFIX_PHONE).get().trim();
+            if (phone.isEmpty()) {
+                throw new ParseException("Contact number cannot be empty.");
+            }
+            editHouseholdDescriptor.setContact(ParserUtil.parseContact(phone));
         }
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-            editHouseholdDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
+            String address = argMultimap.getValue(PREFIX_ADDRESS).get().trim();
+            if (address.isEmpty()) {
+                throw new ParseException("Address cannot be empty.");
+            }
+            editHouseholdDescriptor.setAddress(ParserUtil.parseAddress(address));
+        }
+
+        // Check for empty tags
+        if (argMultimap.getAllValues(PREFIX_TAG).stream().anyMatch(String::isEmpty)) {
+            throw new ParseException("Tags cannot be empty.");
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editHouseholdDescriptor::setTags);
 
