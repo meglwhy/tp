@@ -58,7 +58,7 @@ public class EditHouseholdCommandTest {
     public void execute_editHousehold_success() throws CommandException {
         // Prepare the descriptor
         EditHouseholdDescriptor descriptor = new EditHouseholdDescriptor();
-        descriptor.setContact(new Contact("91234567"));  // Updated contact
+        descriptor.setContact(new Contact("91234567")); // Updated contact
 
         // Create the command
         EditHouseholdCommand command = new EditHouseholdCommand(householdId, descriptor);
