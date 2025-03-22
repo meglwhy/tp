@@ -6,34 +6,41 @@ import seedu.address.model.household.HouseholdId;
 
 /**
  * Parses input for the edit-session command.
- * Expected format: "id/H000006-2 d/DATE t/TIME [n/NOTE]"
- * Example: "edit-session id/H000006-2 d/2025-03-16 t/15:00"
- * Example with note: "edit-session id/H000006-2 d/2025-03-16 t/15:00 n/Follow-up on medical assistance application"
+ * Expected format: "edit-session <code>id/HOUSEHOLD_ID-SESSION_INDEX</code> d/DATE tm/TIME [n/NOTE]"
+ * Example: "edit-session <code>id/H000007-2</code> d/2025-09-27 tm/19:00"
+ * Example with note: "edit-session id/H000007-2 d/2025-09-27 tm/19:00 n/Follow-up"
  */
 public class EditSessionCommandParser implements Parser<EditSessionCommand> {
 
     public static final String MESSAGE_INVALID_FORMAT =
-            "Invalid format! Usage: edit-session id/<HOUSEHOLD_ID-SESSION_INDEX> d/DATE t/TIME [n/NOTE]\n"
-                    + "Example: edit-session id/H000006-2 d/2025-03-16 t/15:00\n"
-                    + "Example with note: edit-session id/H000006-2 d/2025-03-16 t/15:00 n/Follow-up on"
-                    + "medical assistance application";
+            "Invalid format! Usage: edit-session id/<HOUSEHOLD_ID-SESSION_INDEX> d/DATE tm/TIME [n/NOTE]\n"
+                    + "Example: edit-session id/H000007-2 d/2025-09-27 tm/19:00\n"
+                    + "Example with note: edit-session id/H000007-2 d/2025-09-27 tm/19:00 n/Follow-up";
 
     private static final Prefix PREFIX_ID = new Prefix("id/");
     private static final Prefix PREFIX_DATE = new Prefix("d/");
-    private static final Prefix PREFIX_TIME = new Prefix("t/");
+    // Use tm/ for time instead of t/
+    private static final Prefix PREFIX_TIME = new Prefix("tm/");
     private static final Prefix PREFIX_NOTE = new Prefix("n/");
 
     @Override
     public EditSessionCommand parse(String userInput) throws ParseException {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
-                userInput, PREFIX_ID, PREFIX_DATE, PREFIX_TIME, PREFIX_NOTE);
+        // Tokenize the input while handling extra whitespace
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(userInput, PREFIX_ID,
+                PREFIX_DATE, PREFIX_TIME, PREFIX_NOTE);
 
         if (!argMultimap.arePrefixesPresent(PREFIX_ID, PREFIX_DATE, PREFIX_TIME)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(MESSAGE_INVALID_FORMAT);
         }
 
+        // Extract the session identifier and trim extra whitespace.
         String sessionIdentifier = argMultimap.getValue(PREFIX_ID).get().trim();
+        // If the identifier still starts with "id/", remove it.
+        if (sessionIdentifier.startsWith("id/")) {
+            sessionIdentifier = sessionIdentifier.substring(3).trim();
+        }
+        // Ensure the identifier is in the format "HOUSEHOLD_ID-SESSION_INDEX"
         if (!sessionIdentifier.contains("-")) {
             throw new ParseException(MESSAGE_INVALID_FORMAT);
         }
@@ -56,10 +63,14 @@ public class EditSessionCommandParser implements Parser<EditSessionCommand> {
             throw new ParseException("Session index must be an integer: " + sessionIndexStr);
         }
 
+        // Extract and trim the date and time tokens.
         String datePart = argMultimap.getValue(PREFIX_DATE).get().trim();
         String timePart = argMultimap.getValue(PREFIX_TIME).get().trim();
+        if (datePart.isEmpty() || timePart.isEmpty()) {
+            throw new ParseException(MESSAGE_INVALID_FORMAT);
+        }
 
-        // Check if a note is provided
+        // Check if an optional note is provided.
         if (argMultimap.getValue(PREFIX_NOTE).isPresent()) {
             String notePart = argMultimap.getValue(PREFIX_NOTE).get().trim();
             if (notePart.isEmpty()) {
@@ -71,6 +82,7 @@ public class EditSessionCommandParser implements Parser<EditSessionCommand> {
         }
     }
 }
+
 
 
 
