@@ -1,16 +1,14 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
 import seedu.address.logic.commands.EditSessionCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.household.HouseholdId;
 
 /**
  * Parses input for the edit-session command.
- * Expected format: "edit-session id/<HOUSEHOLD_ID-SESSION_INDEX> d/DATE tm/TIME [n/NOTE]"
- * Example: "edit-session id/H000007 d/2025-09-27 tm/19:00"
- * Example with note: "edit-session id/H000007 d/2025-09-27 tm/19:00 n/Follow-up"
+ * Expected format: "edit-session <code>id/HOUSEHOLD_ID-SESSION_INDEX</code> d/DATE tm/TIME [n/NOTE]"
+ * Example: "edit-session <code>id/H000007-2</code> d/2025-09-27 tm/19:00"
+ * Example with note: "edit-session id/H000007-2 d/2025-09-27 tm/19:00 n/Follow-up"
  */
 public class EditSessionCommandParser implements Parser<EditSessionCommand> {
 
@@ -28,9 +26,9 @@ public class EditSessionCommandParser implements Parser<EditSessionCommand> {
     @Override
     public EditSessionCommand parse(String userInput) throws ParseException {
         // Tokenize the input while handling extra whitespace
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(userInput, PREFIX_ID, PREFIX_DATE, PREFIX_TIME, PREFIX_NOTE);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(userInput, PREFIX_ID,
+                PREFIX_DATE, PREFIX_TIME, PREFIX_NOTE);
 
-        // Check that the required prefixes are present and preamble is empty.
         if (!argMultimap.arePrefixesPresent(PREFIX_ID, PREFIX_DATE, PREFIX_TIME)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(MESSAGE_INVALID_FORMAT);
