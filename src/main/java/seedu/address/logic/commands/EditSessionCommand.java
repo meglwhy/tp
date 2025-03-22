@@ -21,8 +21,8 @@ import seedu.address.model.session.SessionTime;
  *
  * Usage example:
  * <pre>
- *     edit-session H000006-2 d/2025-03-16 t/15:00
- *     edit-session H000006-2 d/2025-03-16 t/15:00 n/Follow-up on medical assistance application
+ *     edit-session H000006-2 d/2025-03-16 tm/15:00
+ *     edit-session H000006-2 d/2025-03-16 tm/15:00 n/Follow-up on medical assistance application
  * </pre>
  *
  * This command performs the following checks:
