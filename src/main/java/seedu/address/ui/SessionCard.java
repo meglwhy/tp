@@ -143,13 +143,13 @@ public class SessionCard extends UiPart<Region> {
             // If note changed, include it in the command
             if (noteChanged) {
                 editCommand = String.format(
-                        "edit-session id/%s-%d d/%s t/%s n/%s",
+                        "edit-session id/%s-%d d/%s tm/%s n/%s",
                         householdIdStr, index, newDate, newTime, newNote
                 );
             } else {
                 // Only date/time changed
                 editCommand = String.format(
-                        "edit-session id/%s-%d d/%s t/%s",
+                        "edit-session id/%s-%d d/%s tm/%s",
                         householdIdStr, index, newDate, newTime
                 );
             }

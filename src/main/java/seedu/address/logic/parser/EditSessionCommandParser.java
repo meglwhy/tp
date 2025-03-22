@@ -4,6 +4,8 @@ import seedu.address.logic.commands.EditSessionCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.household.HouseholdId;
 
+import static seedu.address.logic.parser.CliSyntax.*;
+
 /**
  * Parses input for the edit-session command.
  * Expected format: "edit-session <code>id/HOUSEHOLD_ID-SESSION_INDEX</code> d/DATE tm/TIME [n/NOTE]"
@@ -16,12 +18,6 @@ public class EditSessionCommandParser implements Parser<EditSessionCommand> {
             "Invalid format! Usage: edit-session id/<HOUSEHOLD_ID-SESSION_INDEX> d/DATE tm/TIME [n/NOTE]\n"
                     + "Example: edit-session id/H000007-2 d/2025-09-27 tm/19:00\n"
                     + "Example with note: edit-session id/H000007-2 d/2025-09-27 tm/19:00 n/Follow-up";
-
-    private static final Prefix PREFIX_ID = new Prefix("id/");
-    private static final Prefix PREFIX_DATE = new Prefix("d/");
-    // Use tm/ for time instead of t/
-    private static final Prefix PREFIX_TIME = new Prefix("tm/");
-    private static final Prefix PREFIX_NOTE = new Prefix("n/");
 
     @Override
     public EditSessionCommand parse(String userInput) throws ParseException {
