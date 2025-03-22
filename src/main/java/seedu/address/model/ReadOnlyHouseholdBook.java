@@ -1,5 +1,7 @@
 package seedu.address.model;
 
+import java.util.List;
+
 import javafx.collections.ObservableList;
 import seedu.address.model.household.Household;
 import seedu.address.model.session.Session;
@@ -30,4 +32,9 @@ public interface ReadOnlyHouseholdBook {
      * Returns true if a session with the same identity as {@code session} exists in the household book.
      */
     boolean hasSession(Session session);
+
+    /**
+     * Returns an unmodifiable list of all sessions across all households.
+     */
+    List<Session> getSessions();
 }

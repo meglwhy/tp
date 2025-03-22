@@ -1,0 +1,9 @@
+{
+  "households": [ {
+    "id": "H000001",
+    "name": "Tan Family",
+    "address": "",
+    "contact": "98765432",
+    "tags": [ ]
+  } ]
+}

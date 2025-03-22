@@ -1,0 +1,22 @@
+{
+  "households": [ {
+    "id": "H000001",
+    "name": "Tan Family",
+    "address": "123 Main St",
+    "contact": "98765432",
+    "tags": [ "elderly", "priority" ]
+  } ],
+  "sessions": [ {
+    "sessionId": "317d2a70-9bb1-41cf-8bd2-5bc0f974cd5f",
+    "householdId": "H000001",
+    "date": "2025-03-15",
+    "time": "14:30",
+    "note": "Initial assessment visit"
+  }, {
+    "sessionId": "417d2a70-9bb1-41cf-8bd2-5bc0f974cd5e",
+    "householdId": "H000001",
+    "date": "2025-04-01",
+    "time": "10:00",
+    "note": "Follow-up on medical assistance application"
+  } ]
+}

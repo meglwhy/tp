@@ -1,0 +1,16 @@
+{
+  "households": [ {
+    "id": "H000001",
+    "name": "Tan Family",
+    "address": "123 Main St",
+    "contact": "98765432",
+    "tags": [ "elderly", "priority" ]
+  }, {
+    "id": "H000002",
+    "name": "Lee Family",
+    "address": "456 Oak Ave",
+    "contact": "87654321",
+    "tags": [ "children", "medical" ]
+  } ],
+  "sessions": [ ]
+}

@@ -1,8 +1,9 @@
 package seedu.address.model;
 
-import static java.util.Objects.requireNonNull;
-
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import static java.util.Objects.requireNonNull;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
@@ -170,6 +171,20 @@ public class HouseholdBook implements ReadOnlyHouseholdBook {
     public boolean hasSession(Session session) {
         requireNonNull(session);
         return sessions.contains(session);
+    }
+
+    /**
+     * Returns an unmodifiable list of all sessions across all households.
+     */
+    public List<Session> getSessions() {
+        List<Session> allSessions = new ArrayList<>();
+        
+        // Collect sessions from all households
+        for (Household household : households) {
+            allSessions.addAll(household.getSessions());
+        }
+        
+        return Collections.unmodifiableList(allSessions);
     }
 
     @Override

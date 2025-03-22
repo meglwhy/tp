@@ -1,0 +1,9 @@
+{
+  "households": [ {
+    "id": "InvalidID",
+    "name": "Tan Family",
+    "address": "123 Main St",
+    "contact": "98765432",
+    "tags": [ ]
+  } ]
+}
