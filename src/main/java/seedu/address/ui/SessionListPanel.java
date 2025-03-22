@@ -51,6 +51,9 @@ public class SessionListPanel extends UiPart<Region> {
         sessionListView.setItems(sessionList);
         sessionListView.setCellFactory(listView -> new SessionListViewCell());
 
+        // Initially hide the addSessionButton
+        addSessionButton.setVisible(false);
+
         addSessionButton.setOnAction(event -> showAddSessionDialog());
     }
 
@@ -139,7 +142,8 @@ public class SessionListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new SessionCard(session, getIndex() + 1, logic).getRoot());
+                setGraphic(new SessionCard(session, getIndex() + 1, logic,
+                                            SessionListPanel.this::refresh).getRoot());
             }
         }
     }
@@ -149,5 +153,13 @@ public class SessionListPanel extends UiPart<Region> {
      */
     public void refresh() {
         sessionListView.refresh();
+    }
+
+    /**
+     * Controls the visibility of the addSessionButton.
+     * @param visible true to show the button, false to hide it.
+     */
+    public void showAddSessionButton(boolean visible) {
+        addSessionButton.setVisible(visible);
     }
 }

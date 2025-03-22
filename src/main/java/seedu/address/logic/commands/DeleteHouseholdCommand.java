@@ -24,7 +24,7 @@ public class DeleteHouseholdCommand extends Command {
             + "Parameters: "
             + PREFIX_ID + "HOUSEHOLD_ID\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_ID + "1";
+            + PREFIX_ID + "H000001";
 
     public static final String MESSAGE_DELETE_HOUSEHOLD_SUCCESS = "Deleted Household: %1$s";
     public static final String MESSAGE_HOUSEHOLD_NOT_FOUND = "No household found with ID: %1$s";

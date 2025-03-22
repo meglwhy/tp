@@ -37,7 +37,7 @@ public class EditHouseholdCommand extends Command {
             + "[" + PREFIX_PHONE + "CONTACT] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_ID + "1 "
+            + PREFIX_ID + "H000001 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_TAG + "priority "
             + PREFIX_TAG + "followup";
