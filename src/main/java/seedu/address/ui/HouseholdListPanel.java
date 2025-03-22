@@ -20,6 +20,8 @@ public class HouseholdListPanel extends UiPart<Region> {
     @FXML
     private ListView<Household> householdListView;
 
+    private final SessionListPanel sessionListPanel;
+
     /**
      * Constructs a {@code HouseholdListPanel} with the given list of households.
      *
@@ -29,10 +31,21 @@ public class HouseholdListPanel extends UiPart<Region> {
      *
      * @param householdList The list of households to be displayed in the panel.
      */
-    public HouseholdListPanel(ObservableList<Household> householdList) {
+    public HouseholdListPanel(ObservableList<Household> householdList, SessionListPanel sessionListPanel) {
         super(FXML);
+        this.sessionListPanel = sessionListPanel;
         householdListView.setItems(householdList);
         householdListView.setCellFactory(listView -> new HouseholdListViewCell());
+
+        // Add selection listener to control the visibility of the addSessionButton
+        householdListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        sessionListPanel.showAddSessionButton(true);
+                    } else {
+                        sessionListPanel.showAddSessionButton(false);
+                    }
+                });
     }
 
     /**
@@ -55,4 +68,5 @@ public class HouseholdListPanel extends UiPart<Region> {
     public ListView<Household> getListView() {
         return householdListView;
     }
+
 }

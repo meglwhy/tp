@@ -114,11 +114,13 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        householdListPanel = new HouseholdListPanel(logic.getFilteredHouseholdList());
-        householdListPanelPlaceholder.getChildren().add(householdListPanel.getRoot());
-
+        // Create the SessionListPanel first
         sessionListPanel = new SessionListPanel(logic.getFilteredSessionList(), logic);
         sessionListPanelPlaceholder.getChildren().add(sessionListPanel.getRoot());
+
+        // Create the HouseholdListPanel and pass the SessionListPanel to it
+        householdListPanel = new HouseholdListPanel(logic.getFilteredHouseholdList(), sessionListPanel);
+        householdListPanelPlaceholder.getChildren().add(householdListPanel.getRoot());
 
         // Add selection listener to household list
         householdListPanel.getListView().getSelectionModel().selectedItemProperty()
@@ -126,12 +128,16 @@ public class MainWindow extends UiPart<Stage> {
                     if (newValue != null) {
                         // Filter sessions to show only those belonging to the selected household
                         logic.updateFilteredSessionList(session ->
-                            session.getHouseholdId().equals(newValue.getId()));
+                                session.getHouseholdId().equals(newValue.getId()));
                         // Force refresh the session list panel
                         sessionListPanel.refresh();
+                        // Show the addSessionButton
+                        sessionListPanel.showAddSessionButton(true);
                     } else {
                         // If no household is selected, clear the session list
                         logic.updateFilteredSessionList(session -> false);
+                        // Hide the addSessionButton
+                        sessionListPanel.showAddSessionButton(false);
                     }
                 });
 
