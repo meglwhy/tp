@@ -16,20 +16,20 @@ Em-Social enables you to maintain detailed records of households, schedule and t
     - [Delete a household](#delete-a-household)
     - [List all households](#list-all-households)
     - [Find households](#find-households)
-    - [Tag households](#tag-households)
   - [Session Management](#session-management)
     - [Add a session](#add-a-session)
     - [Edit a session](#edit-a-session)
     - [Delete a session](#delete-a-session)
-    - [Add a note to a session](#add-a-note-to-a-session)
     - [List sessions](#list-sessions)
   - [User Interface Navigation](#user-interface-navigation)
     - [Household panel](#household-panel)
     - [Session panel](#session-panel)
     - [Command box](#command-box)
     - [Result display](#result-display)
-  - [Help](#help)
-  - [Exiting the program](#exiting-the-program)
+  - [General Commands](#general-commands)
+    - [Clear data](#clear-data)
+    - [Help](#help)
+    - [Exiting the program](#exiting-the-program)
   - [Saving the data](#saving-the-data)
   - [Command summary](#command-summary)
 
@@ -138,23 +138,6 @@ Expected outcome:
 2. Lee Family (ID: H000002)
 ```
 
-### Tag households
-You can add tags to a household with the `tag-household` command.
-```
-tag-household ID t/TAG [t/MORE_TAGS]...
-```
-
-Example of usage:
-```
-tag-household H000003 t/elderly t/medical
-```
-
-Expected outcome:
-```
-Tagged household: Wong Family (ID: H000003)
-Tags: [elderly][medical]
-```
-
 ## Session Management
 Sessions represent scheduled visits to households.
 
@@ -177,32 +160,45 @@ Time: 14:30
 ```
 
 ### Edit a session
-You can modify a session with the `edit-session` command.
+You can modify a session with the `edit-session` command. This command also allows you to add or update a note at the same time.
 ```
-edit-session INDEX d/DATE t/TIME
-```
-
-Example of usage:
-```
-edit-session 1 d/2025-03-16 t/15:00
+edit-session id/HOUSEHOLD_ID-SESSION_INDEX d/DATE t/TIME [n/NOTE]
 ```
 
-Expected outcome:
+Example of usage (without note):
+```
+edit-session id/H000003-1 d/2025-03-16 t/15:00
+```
+
+Example of usage (with note):
+```
+edit-session id/H000003-1 d/2025-03-16 t/15:00 n/Follow-up on medical assistance application
+```
+
+Expected outcome (without note):
 ```
 Edited session:
 Date: 2025-03-16
 Time: 15:00
 ```
 
+Expected outcome (with note):
+```
+Edited session:
+Date: 2025-03-16
+Time: 15:00
+Note: Follow-up on medical assistance application
+```
+
 ### Delete a session
 You can remove a session with the `delete-session` command.
 ```
-delete-session INDEX
+delete-session id/HOUSEHOLD_ID-SESSION_INDEX
 ```
 
 Example of usage:
 ```
-delete-session 1
+delete-session id/H000003-1
 ```
 
 Expected outcome:
@@ -212,32 +208,18 @@ Date: 2025-03-16
 Time: 15:00
 ```
 
-### Add a note to a session
-You can add notes to a session with the `add-note` command.
-```
-add-note INDEX n/NOTE
-```
-
-Example of usage:
-```
-add-note 1 n/Follow-up on medical assistance application
-```
-
-Expected outcome:
-```
-Added note to session:
-Date: 2025-03-15
-Time: 14:30
-Note: Follow-up on medical assistance application
-```
-
 ### List sessions
-You can view all sessions with the `list-sessions` command.
+You can view all sessions with the `list-sessions` command. Optionally, you can filter sessions by household.
 ```
 list-sessions [id/HOUSEHOLD_ID]
 ```
 
-Example of usage:
+Example of usage (all sessions):
+```
+list-sessions
+```
+
+Example of usage (household-specific):
 ```
 list-sessions id/H000003
 ```
@@ -250,27 +232,38 @@ Listed all sessions for household H000003:
 ```
 
 ## User Interface Navigation
-Em-Social features a dual-panel interface for efficient case management.
-
 ### Household panel
-The left panel displays all households. Click on a household to view its details and associated sessions.
+The household panel displays a list of all households. Click on a household to view its details and associated sessions.
 
 ### Session panel
-The right panel shows sessions for the selected household. This updates automatically when you select a different household.
+The session panel shows sessions for the selected household. Each session card displays the date, time, and any notes associated with the session.
 
 ### Command box
-Enter commands at the bottom of the window.
+Enter commands in the command box at the bottom of the application window. Press Enter to execute the command.
 
 ### Result display
-Above the command box, you'll see the results of your commands and any error messages.
+The result display shows the outcome of your most recent command, including success messages or error notifications.
 
-## Help
+## General Commands
+
+### Clear data
+You can clear all household and session data with the `clear` command.
+```
+clear
+```
+
+Expected outcome:
+```
+Address book has been cleared!
+```
+
+### Help
 You can view a summary of available commands with the `help` command.
 ```
 help
 ```
 
-## Exiting the program
+### Exiting the program
 You can exit Em-Social with the `exit` command.
 ```
 exit
@@ -288,11 +281,10 @@ Em-Social automatically saves data to a local file after each command. There is 
 | Delete household | `delete-household ID` | `delete-household H000001` |
 | List households | `list-households` | `list-households` |
 | Find households | `find-households KEYWORD [MORE_KEYWORDS]...` | `find-households Tan Lee` |
-| Tag household | `tag-household ID t/TAG [t/MORE_TAGS]...` | `tag-household H000003 t/elderly t/medical` |
 | Add session | `add-session id/HOUSEHOLD_ID d/DATE (YYYY-MM-DD) t/TIME (HH:MM)` | `add-session id/H000003 d/2025-03-15 t/14:30` |
-| Edit session | `edit-session INDEX d/DATE t/TIME` | `edit-session 1 d/2025-03-16 t/15:00` |
-| Delete session | `delete-session INDEX` | `delete-session 1` |
-| Add note to session | `add-note INDEX n/NOTE` | `add-note 1 n/Follow-up on medical assistance application` |
+| Edit session | `edit-session id/HOUSEHOLD_ID-SESSION_INDEX d/DATE t/TIME [n/NOTE]` | `edit-session id/H000003-1 d/2025-03-16 t/15:00 n/Follow-up note` |
+| Delete session | `delete-session id/HOUSEHOLD_ID-SESSION_INDEX` | `delete-session id/H000003-1` |
 | List sessions | `list-sessions [id/HOUSEHOLD_ID]` | `list-sessions id/H000003` |
+| Clear data | `clear` | `clear` |
 | Help | `help` | `help` |
 | Exit | `exit` | `exit` |

@@ -1,0 +1,16 @@
+{
+  "households": [ {
+    "id": "H000001",
+    "name": "Tan Family",
+    "address": "123 Main St",
+    "contact": "98765432",
+    "tags": [ ]
+  } ],
+  "sessions": [ {
+    "sessionId": "123456",
+    "householdId": "H000001",
+    "date": "invalid-date",
+    "time": "14:30",
+    "note": "Session with invalid date"
+  } ]
+}

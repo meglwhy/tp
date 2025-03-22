@@ -1,0 +1,9 @@
+{
+  "households": [ {
+    "id": "H000001",
+    "name": "Household with invalid name field: Tan@Family!",
+    "address": "123 Main St",
+    "contact": "98765432",
+    "tags": [ ]
+  } ]
+}
