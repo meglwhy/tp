@@ -40,6 +40,7 @@ public class SessionCard extends UiPart<Region> {
     private Button editSessionButton;
 
     private final Logic logic;
+    private final Runnable refreshCallback;
 
     /**
      * Constructs a {@code SessionCard} with the specified session, displayed index, and logic instance.
@@ -52,10 +53,11 @@ public class SessionCard extends UiPart<Region> {
      * @param displayedIndex The index at which the session appears in the list, used to display its position.
      * @param logic The {@code Logic} instance used to manage and process session-related operations.
      */
-    public SessionCard(Session session, int displayedIndex, Logic logic) {
+    public SessionCard(Session session, int displayedIndex, Logic logic, Runnable refreshCallback) {
         super(FXML);
         this.session = session;
         this.logic = logic;
+        this.refreshCallback = refreshCallback;
         id.setText(displayedIndex + ". ");
         date.setText("Date: " + session.getDate().toString());
         time.setText("Time: " + session.getTime().toString());
@@ -153,6 +155,7 @@ public class SessionCard extends UiPart<Region> {
             }
             try {
                 CommandResult result = logic.execute(editCommand);
+                refreshCallback.run();
                 // Show appropriate message based on what changed
                 if (dateOrTimeChanged && noteChanged) {
                     showInfoDialog("Session Updated",
