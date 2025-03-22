@@ -2,10 +2,10 @@ package seedu.address.storage;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Optional;
-import java.util.logging.Logger;
-import java.util.UUID;
 import java.time.LocalDate;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataLoadingException;
@@ -64,20 +64,14 @@ public class StorageManager implements Storage {
     @Override
     public Optional<ReadOnlyHouseholdBook> readHouseholdBook(Path filePath) throws DataLoadingException {
         logger.fine("Attempting to read data from file: " + filePath);
-        
         Optional<ReadOnlyHouseholdBook> householdBookOptional = householdBookStorage.readHouseholdBook(filePath);
-        
-        // If we have data, validate it before returning
         if (householdBookOptional.isPresent()) {
             ReadOnlyHouseholdBook householdBook = householdBookOptional.get();
-            
-            // Validate household data
             if (containsInvalidData(householdBook)) {
                 logger.warning("Data file at " + filePath + " contains invalid household or session data.");
                 return Optional.empty();
             }
         }
-        
         return householdBookOptional;
     }
 
@@ -87,22 +81,18 @@ public class StorageManager implements Storage {
      * @return true if any invalid data is found, false otherwise
      */
     private boolean containsInvalidData(ReadOnlyHouseholdBook householdBook) {
-        // Check households for invalid data
         for (Household household : householdBook.getHouseholdList()) {
             if (!isValidHousehold(household)) {
                 logger.warning("Invalid household found: " + household.getName().toString());
                 return true;
             }
         }
-        
-        // Check sessions for invalid data
         for (Session session : householdBook.getSessions()) {
             if (!isValidSession(session)) {
                 logger.warning("Invalid session found for household: " + session.getHouseholdId().toString());
                 return true;
             }
         }
-        
         return false;
     }
 
@@ -111,26 +101,18 @@ public class StorageManager implements Storage {
      */
     private boolean isValidHousehold(Household household) {
         try {
-            // Check ID format
             if (!household.getId().toString().matches("H\\d{6}")) {
                 return false;
             }
-            
-            // Check name (no special characters)
             if (!household.getName().toString().matches("[\\p{Alnum}\\s,.'()-]+")) {
                 return false;
             }
-            
-            // Check that address is not empty
             if (household.getAddress().toString().trim().isEmpty()) {
                 return false;
             }
-            
-            // Check contact is numeric
             if (!household.getContact().toString().matches("\\d+")) {
                 return false;
             }
-            
             return true;
         } catch (Exception e) {
             // Any exception means invalid data
@@ -144,25 +126,17 @@ public class StorageManager implements Storage {
      */
     private boolean isValidSession(Session session) {
         try {
-            // Ensure session ID is valid UUID format
             UUID.fromString(session.getSessionId().toString());
-            
-            // Check household ID format
             if (!session.getHouseholdId().toString().matches("H\\d{6}")) {
                 return false;
             }
-            
-            // Validate date format
             LocalDate.parse(session.getDate().toString());
-            
-            // Validate time format - hours should be 0-23, minutes 0-59
             String[] timeParts = session.getTime().toString().split(":");
             int hours = Integer.parseInt(timeParts[0]);
             int minutes = Integer.parseInt(timeParts[1]);
             if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
                 return false;
             }
-            
             return true;
         } catch (Exception e) {
             // Any exception means invalid data
