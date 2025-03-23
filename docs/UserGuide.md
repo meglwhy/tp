@@ -5,6 +5,15 @@ Welcome to Em-Social, a specialized management software designed for social work
 
 Em-Social enables you to maintain detailed records of households, schedule and track visits, prevent scheduling conflicts, and efficiently organize your caseload through powerful filtering and search capabilities.
 
+Em-Social is suitable for social workers who:
+1. Are comfortable with text-based command entry.
+2. Are familiar with tracking interactions with clients and updating notes.
+3. Do not need integration with external case management systems.
+4. Expect minimal mouse interaction and prefer using the keyboard.
+5. Expect quick data entry without unnecessary steps.
+
+If you're already familiar with similar applications, skip to [Usage](#running-em-social) for quick setup instructions.
+
 - [Em-Social User Guide](#em-social-user-guide)
   - [Introduction](#introduction)
   - [Features](#features)
@@ -45,19 +54,16 @@ Em-Social offers the following key features:
 
 ## Usage
 ### Running Em-Social
-1. Ensure you have Java 17 or above installed on your computer.
-To check:
-```
-java -version
-```
-[Installation](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+1. Ensure you have Java 17 or above installed on your computer by running:
+```java -version```
+If you require installation, refer to this [installation guide](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 
 2. Download the [latest release of Em-Social](https://github.com/AY2425S2-CS2103T-F10-2/tp/releases) from the releases page.
 
 3. Double-click the downloaded JAR file or run it from the command line using:
-```
-java -jar em-social.jar
-```
+```java -jar em-social.jar```
+
+4. Run ```help``` for a quick and easy walkthrough of the available commands.
 
 ## Household Management
 Households are the core entities in Em-Social. Each household represents a family or living unit that you work with.
