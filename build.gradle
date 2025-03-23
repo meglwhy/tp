@@ -75,7 +75,7 @@ testImplementation 'org.mockito:mockito-junit-jupiter:4.0.0'  // For JUnit integ
 }
 
 shadowJar {
-    archiveFileName = 'Em-Social.jar'
+    archiveFileName = 'em-social.jar'
 }
 
 defaultTasks 'clean', 'test'
