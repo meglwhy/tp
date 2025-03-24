@@ -20,6 +20,10 @@ checkstyle {
     toolVersion = '10.2'
 }
 
+run {
+    enableAssertions = true
+}
+
 tasks.withType(JavaExec).configureEach {
     jvmArgs += "-ea"
 }

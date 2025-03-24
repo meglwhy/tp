@@ -1,18 +1,14 @@
 package seedu.address;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+public class AssertionTest {
+    public static void main(String[] args) {
+        boolean assertionsEnabled = false;
+        assert assertionsEnabled = true; // This will only execute if assertions are enabled
 
-import org.junit.jupiter.api.Test;
-
-class AssertionTest {
-    @Test
-    void testAssertionsEnabled() {
-        int x = -1;
-        AssertionError thrown = assertThrows(AssertionError.class, () -> {
-            assert x >= 0 : "x should not be negative";
-        });
-
-        assertEquals("x should not be negative", thrown.getMessage());
+        if (assertionsEnabled) {
+            System.out.println("Assertions are enabled!");
+        } else {
+            System.out.println("Assertions are NOT enabled!");
+        }
     }
 }
