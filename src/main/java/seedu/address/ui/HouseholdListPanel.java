@@ -22,6 +22,8 @@ public class HouseholdListPanel extends UiPart<Region> {
 
     private final SessionListPanel sessionListPanel;
 
+    private ListView<Household> listView;
+
     /**
      * Constructs a {@code HouseholdListPanel} with the given list of households.
      *
@@ -61,6 +63,22 @@ public class HouseholdListPanel extends UiPart<Region> {
                 setText(null);
             } else {
                 setGraphic(new HouseholdCard(household, getIndex() + 1).getRoot());
+            }
+        }
+    }
+
+    /**
+     * Programmatically selects the household in the list with the specified household id.
+     * @param householdId the id of the household to select (e.g., "H000007")
+     */
+    public void selectHouseholdById(String householdId) {
+        ObservableList<Household> households = listView.getItems();
+        for (int i = 0; i < households.size(); i++) {
+            Household household = households.get(i);
+            if (household.getId().toString().equals(householdId)) {
+                listView.getSelectionModel().clearAndSelect(i);
+                listView.scrollTo(i);
+                break;
             }
         }
     }
