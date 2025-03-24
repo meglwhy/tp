@@ -76,16 +76,26 @@ public class FindHouseholdCommandParserTest {
     }
 
     @Test
-    public void parse_invalidInput_throwsParseException() {
+    public void parse_invalidInput_returnsFindHouseholdCommand() {
         // Arrange
         String userInput = "!!!";
+        FindHouseholdCommand expectedCommand = null;
+        try {
+            expectedCommand = new FindHouseholdCommand("!!!");
+        } catch (CommandException e) {
+            throw new RuntimeException(e);
+        }
 
-        // Act & Assert
-        ParseException thrown = assertThrows(ParseException.class, () -> {
-            parser.parse(userInput);
-        });
-        assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindHouseholdCommand.MESSAGE_USAGE),
-                thrown.getMessage());
+        // Act
+        FindHouseholdCommand result = null;
+        try {
+            result = parser.parse(userInput);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Assert
+        assertEquals(expectedCommand, result);
     }
 
     @Test
