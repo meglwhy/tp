@@ -20,6 +20,10 @@ checkstyle {
     toolVersion = '10.2'
 }
 
+run {
+    enableAssertions = true
+}
+
 tasks.withType(JavaExec).configureEach {
     jvmArgs += "-ea"
 }
@@ -75,7 +79,7 @@ testImplementation 'org.mockito:mockito-junit-jupiter:4.0.0'  // For JUnit integ
 }
 
 shadowJar {
-    archiveFileName = 'Em-Social.jar'
+    archiveFileName = 'em-social.jar'
 }
 
 defaultTasks 'clean', 'test'
