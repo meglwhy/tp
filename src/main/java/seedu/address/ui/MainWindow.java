@@ -206,6 +206,23 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
+            // If the command is "view-household-sessions", simulate the click on the household.
+            if (commandText.trim().startsWith("view-household-sessions")) {
+                // Parse out the household id from the command text.
+                String[] parts = commandText.split("\\s+");
+                String targetId = null;
+                for (String part : parts) {
+                    if (part.startsWith("id/")) {
+                        targetId = part.substring(3);
+                        break;
+                    }
+                }
+                if (targetId != null) {
+                    // Call the method in HouseholdListPanel to select the household.
+                    householdListPanel.selectHouseholdById(targetId);
+                }
+            }
+
             if (commandResult.isShowHelp()) {
                 handleHelp();
             }
