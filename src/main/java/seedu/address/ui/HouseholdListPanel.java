@@ -72,12 +72,12 @@ public class HouseholdListPanel extends UiPart<Region> {
      * @param householdId the id of the household to select (e.g., "H000007")
      */
     public void selectHouseholdById(String householdId) {
-        ObservableList<Household> households = listView.getItems();
+        ObservableList<Household> households = householdListView.getItems();
         for (int i = 0; i < households.size(); i++) {
             Household household = households.get(i);
             if (household.getId().toString().equals(householdId)) {
-                listView.getSelectionModel().clearAndSelect(i);
-                listView.scrollTo(i);
+                householdListView.getSelectionModel().clearAndSelect(i);
+                householdListView.scrollTo(i);
                 break;
             }
         }
