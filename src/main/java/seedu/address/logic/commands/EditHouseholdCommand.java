@@ -46,7 +46,7 @@ public class EditHouseholdCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_HOUSEHOLD_NOT_FOUND = "No household found with ID: %1$s";
     public static final String MESSAGE_DUPLICATE_HOUSEHOLD = "This household would be a duplicate"
-            + "of an existing household.";
+            + " of an existing household.";
 
     private final HouseholdId householdId;
     private final EditHouseholdDescriptor editHouseholdDescriptor;
