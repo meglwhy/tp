@@ -113,7 +113,7 @@ delete-household id/H000013
 ```
 
 The following confirmation dialog box is expected:
-![img![img_1.png](images/img_1.png).png](images/img.png)
+![img.png](images/img_1.png)
 
 This will display the following outcome upon confirmation:
 ```
@@ -126,12 +126,10 @@ You can view all households with the `list-households` command.
 list-households
 ```
 
-Expected outcome:
+Expected outcome (System Message):
 ```
-Listed all households:
-1. Tan Family (ID: H000001)
-2. Lee Family (ID: H000002)
-3. Wong Family (ID: H000003)
+Listed all households.
+Total households: 4
 ```
 
 ### Find households
@@ -154,16 +152,16 @@ find-household "Tan Family"
 
 Expected outcome (without keyphrase):
 ```
-2 households found:
-1. Tan Family (ID: H000001)
-2. Lee Family (ID: H000002)
+Found 2 household(s) matching: Tan Lee
 ```
+![img.png](images/img_3.png)
 
 Expected outcome (with keyphrase):
 ```
 1 households found:
 1. Tan Family (ID: H000001)
 ```
+![img_1.png](images/img_4.png)
 
 ## Session Management
 Sessions represent scheduled visits to households.
