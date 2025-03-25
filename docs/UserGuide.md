@@ -30,6 +30,7 @@ If you're already familiar with similar applications, skip to [Usage](#running-e
     - [Edit a session](#edit-a-session)
     - [Delete a session](#delete-a-session)
     - [List sessions](#list-sessions)
+    - [View all sessions of a household](#view-household-sessions)
   - [User Interface Navigation](#user-interface-navigation)
     - [Household panel](#household-panel)
     - [Session panel](#session-panel)
@@ -247,6 +248,22 @@ Listed all sessions for household H000003:
 1. Date: 2025-03-15, Time: 14:30
 2. Date: 2025-04-01, Time: 10:00
 ```
+### View Household Sessions
+You can switch to all existing sessions for a household using the `view-household-sessions` command.
+```
+view-household-sessions id/HOUSEHOLD_ID
+```
+
+Example of usage:
+```
+view-household-sessions id/H000003
+```
+
+Expected outcome:
+```
+Viewing sessions for household: H000003
+```
+
 
 ## User Interface Navigation
 ![img.png](images/img_2.png)
