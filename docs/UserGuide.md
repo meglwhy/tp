@@ -249,7 +249,7 @@ Listed all sessions for household H000003:
 2. Date: 2025-04-01, Time: 10:00
 ```
 ### View Household Sessions
-You can switch to all sessions for a household using the `view-household-sessions` command.
+You can switch to all existing sessions for a household using the `view-household-sessions` command.
 ```
 view-household-sessions id/HOUSEHOLD_ID
 ```
@@ -261,9 +261,7 @@ view-household-sessions id/H000003
 
 Expected outcome:
 ```
-Listed all sessions for household H000003:
-1. Date: 2025-03-15, Time: 14:30
-2. Date: 2025-04-01, Time: 10:00
+Viewing sessions for household: H000003
 ```
 
 
