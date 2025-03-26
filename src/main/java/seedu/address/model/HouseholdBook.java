@@ -66,11 +66,17 @@ public class HouseholdBook implements ReadOnlyHouseholdBook {
     }
 
     /**
-     * Removes {@code key} from this {@code HouseholdBook}.
-     * {@code key} must exist in the household book.
+     * Removes {@code household} and it's sessions from this {@code HouseholdBook}.
+     * {@code household} must exist in the household book.
      */
-    public void removeHousehold(Household key) {
-        households.remove(key);
+    public void removeHousehold(Household household) {
+        requireNonNull(household);
+
+        // Remove associated sessions from the global session list
+        sessions.removeIf(session -> household.getSessions().contains(session));
+
+        // Remove the household itself
+        households.remove(household);
     }
 
     /**

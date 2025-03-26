@@ -51,7 +51,6 @@ public class DeleteHouseholdCommand extends Command {
                 .orElseThrow(() -> new CommandException(
                         String.format(MESSAGE_HOUSEHOLD_NOT_FOUND, targetId)));
 
-        // Show confirmation dialog before deleting
         if (!showConfirmationDialog(householdToDelete)) {
             return new CommandResult(MESSAGE_CANCELLED);
         }
