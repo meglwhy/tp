@@ -84,6 +84,7 @@ Expected outcome:
 ```
 New household added: Household H000012: Tan Family at Blk 30 Geylang Street 29, #06-40 (Contact: 91234567)
 ```
+![add-household success message](images/add-household.png)
 
 ### Edit a household
 You can modify household details with the `edit-household` command.
@@ -113,7 +114,7 @@ delete-household id/H000013
 ```
 
 The following confirmation dialog box is expected:
-![img.png](images/img_1.png)
+![delete-household warning message](images/delete-confirmation.png)
 
 This will display the following outcome upon confirmation:
 ```
@@ -154,14 +155,12 @@ Expected outcome (without keyphrase):
 ```
 Found 2 household(s) matching: Tan Lee
 ```
-![img.png](images/img_3.png)
 
 Expected outcome (with keyphrase):
 ```
 1 households found:
 1. Tan Family (ID: H000001)
 ```
-![img_1.png](images/img_4.png)
 
 ## Session Management
 Sessions represent scheduled visits to households.
@@ -212,6 +211,7 @@ Date: 2025-03-16
 Time: 15:00
 Note: Follow-up on medical assistance application
 ```
+![edit-session success message](images/edit-session.png)
 
 ### Delete a session
 You can remove a session with the `delete-session` command.
@@ -246,6 +246,8 @@ Listed all sessions for household H000003:
 1. Date: 2025-03-15, Time: 14:30
 2. Date: 2025-04-01, Time: 10:00
 ```
+![list-sessions success message](images/list-session.png)
+
 ### View Household Sessions
 You can switch to all existing sessions for a household using the `view-household-sessions` command.
 ```
@@ -264,8 +266,7 @@ Viewing sessions for household: H000003
 
 
 ## User Interface Navigation
-![img.png](images/img_2.png)
-**INCOMPLETE: Add labels to the sections of the interface**
+![user interface](images/user-interface.png)
 
 ### 1. Household panel
 The household panel displays household information such as name, address, contact number and any tags. Click on a household to view its session panel.
@@ -288,7 +289,7 @@ clear
 ```
 
 The following confirmation dialog box is expected:
-![img.png](images/img.png)
+![clear-command confirmation](images/clear-confirmation.png)
 
 This will display the following outcome upon confirmation:
 ```
@@ -312,20 +313,21 @@ Em-Social automatically saves data to a local file after each command. There is 
 
 ## Command summary
 
-| Action | Format                                                                                 | Example                                                                    |
-|--------|----------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| Add household | `add-household n/HOUSEHOLD_NAME a/ADDRESS p/PHONE_NUMBER`                              | `add-household n/Tan Family a/Blk 30 Geylang Street 29, #06-40 p/91234567` |
-| Edit household | `edit-household id/HOUSEHOLD_ID [n/HOUSEHOLD_NAME] [a/ADDRESS] [p/PHONE_NUMBER] [t/TAG]` | `edit-household H000001 n/Tan Family (Urgent) p/98765432`                  |
-| Delete household | `delete-household ID`                                                                  | `delete-household H000001`                                                 |
-| List households | `list-households`                                                                      | `list-households`                                                          |
-| Find households | `find-household KEYWORD [MORE_KEYWORDS]...`                                            | `find-household Tan Lee`                                                   |
-| Add session | `add-session id/HOUSEHOLD_ID d/DATE (YYYY-MM-DD) tm/TIME (HH:MM)`                      | `add-session id/H000003 d/2025-03-15 tm/14:30`                             |
-| Edit session | `edit-session id/HOUSEHOLD_ID-SESSION_INDEX d/DATE tm/TIME [n/NOTE]`                   | `edit-session id/H000003-1 d/2025-03-16 tm/15:00 n/Follow-up note`         |
-| Delete session | `delete-session id/HOUSEHOLD_ID-SESSION_INDEX`                                         | `delete-session id/H000003-1`                                              |
-| List sessions | `list-sessions id/HOUSEHOLD_ID`                                                        | `list-sessions id/H000003`                                                 |
-| Clear data | `clear`                                                                                | `clear`                                                                    |
-| Help | `help`                                                                                 | `help`                                                                     |
-| Exit | `exit`                                                                                 | `exit`                                                                     |
+| Action                  | Format                                                                                   | Example                                                                    |
+|-------------------------|------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| Add household           | `add-household n/HOUSEHOLD_NAME a/ADDRESS p/PHONE_NUMBER`                                | `add-household n/Tan Family a/Blk 30 Geylang Street 29, #06-40 p/91234567` |
+| Edit household          | `edit-household id/HOUSEHOLD_ID [n/HOUSEHOLD_NAME] [a/ADDRESS] [p/PHONE_NUMBER] [t/TAG]` | `edit-household H000001 n/Tan Family (Urgent) p/98765432`                  |
+| Delete household        | `delete-household ID`                                                                    | `delete-household H000001`                                                 |
+| List households         | `list-households`                                                                        | `list-households`                                                          |
+| Find households         | `find-household KEYWORD [MORE_KEYWORDS]...`                                              | `find-household Tan Lee`                                                   |
+| Add session             | `add-session id/HOUSEHOLD_ID d/DATE (YYYY-MM-DD) tm/TIME (HH:MM)`                        | `add-session id/H000003 d/2025-03-15 tm/14:30`                             |
+| Edit session            | `edit-session id/HOUSEHOLD_ID-SESSION_INDEX d/DATE tm/TIME [n/NOTE]`                     | `edit-session id/H000003-1 d/2025-03-16 tm/15:00 n/Follow-up note`         |
+| Delete session          | `delete-session id/HOUSEHOLD_ID-SESSION_INDEX`                                           | `delete-session id/H000003-1`                                              |
+| List sessions           | `list-sessions id/HOUSEHOLD_ID`                                                          | `list-sessions id/H000003`                                                 |
+| View household sessions | `view-household-sessions id/HOUSEHOLD_ID`                                                | `view-household-sessions id/H000003`                                       |
+| Clear data              | `clear`                                                                                  | `clear`                                                                    |
+| Help                    | `help`                                                                                   | `help`                                                                     |
+| Exit                    | `exit`                                                                                   | `exit`                                                                     |
 
 ## Glossary
 
