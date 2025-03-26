@@ -20,7 +20,12 @@ public class Messages {
                 "Multiple values specified for the following single-valued field(s): ";
 
     /**
-     * Returns an error message indicating the duplicate prefixes.
+     * Constructs an error message indicating the presence of duplicate prefixes.
+     * Ensures that at least one duplicate prefix is provided.
+     *
+     * @param duplicatePrefixes The prefixes that are duplicated.
+     * @return A formatted error message listing the duplicate prefixes.
+     * @throws AssertionError if no duplicate prefixes are provided.
      */
     public static String getErrorMessageForDuplicatePrefixes(Prefix... duplicatePrefixes) {
         assert duplicatePrefixes.length > 0;
@@ -32,7 +37,11 @@ public class Messages {
     }
 
     /**
-     * Formats a household as text, showing all contact details.
+     * Formats the details of a household into a readable text representation.
+     * Includes the household's name, ID, address, contact, and associated tags.
+     *
+     * @param household The household to be formatted.
+     * @return A string representation of the household with all relevant details.
      */
     public static String format(Household household) {
         final StringBuilder builder = new StringBuilder();
