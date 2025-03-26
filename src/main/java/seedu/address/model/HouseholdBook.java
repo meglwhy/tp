@@ -40,7 +40,9 @@ public class HouseholdBook implements ReadOnlyHouseholdBook {
     public void resetData(HouseholdBook newData) {
         requireNonNull(newData);
         households.clear();
+        sessions.clear();
         households.addAll(newData.getHouseholdList());
+        sessions.addAll(newData.getSessionList());
     }
 
     /**
