@@ -33,7 +33,7 @@ UserPrefsStorage -up-|> Storage
 ' StorageManager implements/uses the Storage interface
 Storage <|-- StorageManager
 
-' Show usage/dependency from StorageManager to the actual implementations
+' Show usage and dependency from StorageManager to the actual implementations
 StorageManager --> JsonHouseholdBookStorage
 StorageManager --> JsonUserPrefsStorage
 
