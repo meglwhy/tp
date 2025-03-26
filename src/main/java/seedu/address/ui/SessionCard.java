@@ -31,6 +31,8 @@ public class SessionCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
+    private Label householdId;
+    @FXML
     private Label date;
     @FXML
     private Label time;
@@ -58,6 +60,7 @@ public class SessionCard extends UiPart<Region> {
         this.session = session;
         this.logic = logic;
         this.refreshCallback = refreshCallback;
+        householdId.setText("Household ID: " + session.getHouseholdId().toString());
         id.setText("Session " + displayedIndex + " ");
         date.setText("Date: " + session.getDate().toString());
         time.setText("Time: " + session.getTime().toString());

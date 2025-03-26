@@ -154,8 +154,8 @@ public class SessionListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new SessionCard(session, getIndex() + 1, logic,
-                                            SessionListPanel.this::refresh).getRoot());
+                setGraphic(new SessionCard(session, getIndex() + 1,
+                        logic, SessionListPanel.this::refresh).getRoot());
             }
         }
     }
