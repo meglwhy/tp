@@ -32,10 +32,10 @@ If you're already familiar with similar applications, skip to [Usage](#running-e
     - [List sessions](#list-sessions)
     - [View all sessions of a household](#view-household-sessions)
   - [User Interface Navigation](#user-interface-navigation)
-    - [Household panel](#household-panel)
-    - [Session panel](#session-panel)
-    - [Command box](#command-box)
-    - [Result display](#result-display)
+    - [Household panel](#1-household-panel)
+    - [Session panel](#2-session-panel)
+    - [Command box](#3-command-box)
+    - [Result display](#4-feedback-display)
   - [General Commands](#general-commands)
     - [Clear data](#clear-data)
     - [Help](#help)
@@ -268,16 +268,16 @@ Viewing sessions for household: H000003
 ## User Interface Navigation
 ![user interface](images/user-interface.png)
 
-### 1. Household panel
+### 1 Household panel
 The household panel displays household information such as name, address, contact number and any tags. Click on a household to view its session panel.
 
-### 2. Session panel
+### 2 Session panel
 The session panel displays session information for the selected household. This includes session dates, times, and any session notes.
 
-### 3. Command box
+### 3 Command box
 Enter commands in the command box of the application window. Press Enter/Return to execute the command.
 
-### 4. Feedback display
+### 4 Feedback display
 The feedback display shows the outcome of your most recent command, primarily success messages or error notifications.
 
 ## General Commands
