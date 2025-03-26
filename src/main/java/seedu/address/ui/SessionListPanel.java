@@ -3,6 +3,7 @@ package seedu.address.ui;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -44,6 +45,8 @@ public class SessionListPanel extends UiPart<Region> {
     private ListView<Session> sessionListView;
 
     private final Logic logic;
+    private String selectedHouseholdId = null;
+
 
     /**
      * Creates a {@code SessionListPanel} with the given {@code ObservableList} and {@code Logic}.
@@ -51,12 +54,21 @@ public class SessionListPanel extends UiPart<Region> {
     public SessionListPanel(ObservableList<Session> sessionList, Logic logic) {
         super(FXML);
         this.logic = logic;
-        sessionListView.setItems(sessionList);
+
+        // Sort sessions by date (descending), then time (descending)
+        SortedList<Session> sortedSessions = new SortedList<>(sessionList, (
+                s1, s2) -> {
+                    int dateCompare = s2.getDate().compareTo(s1.getDate()); // Newest date first
+                    if (dateCompare != 0) {
+                        return dateCompare;
+                    }
+                    return s2.getTime().compareTo(s1.getTime()); // Newest time first
+                });
+
+        sessionListView.setItems(sortedSessions);
         sessionListView.setCellFactory(listView -> new SessionListViewCell());
 
-        // Initially hide the addSessionButton
         addSessionButton.setVisible(false);
-
         addSessionButton.setOnAction(event -> showAddSessionDialog());
     }
 
@@ -64,8 +76,9 @@ public class SessionListPanel extends UiPart<Region> {
      * Lets other classes set which household is selected.
      * This updates the top label and toggles the add-session button.
      */
-    public void setSelectedHouseholdName(String householdName) {
+    public void setSelectedHousehold(String householdName, String householdId) {
         selectedHouseholdLabel.setText(householdName);
+        this.selectedHouseholdId = householdId;
         addSessionButton.setVisible(true);
     }
 
@@ -85,6 +98,12 @@ public class SessionListPanel extends UiPart<Region> {
         grid.setVgap(10);
 
         TextField idField = new TextField();
+        idField.setPromptText("e.g., H000001");
+
+        if (selectedHouseholdId != null) {
+            idField.setText(selectedHouseholdId);
+        }
+
         TextField dateField = new TextField();
         TextField timeField = new TextField();
 
