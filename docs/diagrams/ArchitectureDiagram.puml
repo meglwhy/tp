@@ -12,7 +12,7 @@ package "Em-Social Architecture" {
   [Model] as Model #LightPink
   [Storage] as Storage #LightYellow
   [Commons] as Commons #LightGray
-  
+
   note right of UI
     JavaFX components:
     - MainWindow
@@ -21,7 +21,7 @@ package "Em-Social Architecture" {
     - CommandBox
     - ResultDisplay
   end note
-  
+
   note right of Logic
     Command processing:
     - LogicManager
@@ -29,7 +29,7 @@ package "Em-Social Architecture" {
     - Parsers
     - CommandResult
   end note
-  
+
   note right of Model
     Domain objects:
     - HouseholdBook
@@ -37,14 +37,14 @@ package "Em-Social Architecture" {
     - Session
     - UserPrefs
   end note
-  
+
   note right of Storage
     Data persistence:
     - JsonHouseholdBookStorage
     - JsonUserPrefsStorage
     - StorageManager
   end note
-  
+
   note right of Commons
     Shared utilities:
     - Events
