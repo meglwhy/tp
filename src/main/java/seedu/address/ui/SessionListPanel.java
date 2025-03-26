@@ -35,6 +35,9 @@ public class SessionListPanel extends UiPart<Region> {
     private VBox sessionListContainer;
 
     @FXML
+    private Label selectedHouseholdLabel;
+
+    @FXML
     private Button addSessionButton;
 
     @FXML
@@ -55,6 +58,15 @@ public class SessionListPanel extends UiPart<Region> {
         addSessionButton.setVisible(false);
 
         addSessionButton.setOnAction(event -> showAddSessionDialog());
+    }
+
+    /**
+     * Lets other classes set which household is selected.
+     * This updates the top label and toggles the add-session button.
+     */
+    public void setSelectedHouseholdName(String householdName) {
+        selectedHouseholdLabel.setText(householdName);
+        addSessionButton.setVisible(true);
     }
 
     /**

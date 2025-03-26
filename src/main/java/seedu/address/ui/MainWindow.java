@@ -131,11 +131,15 @@ public class MainWindow extends UiPart<Stage> {
                                 session.getHouseholdId().equals(newValue.getId()));
                         // Force refresh the session list panel
                         sessionListPanel.refresh();
+                        // Set the household name at the top
+                        sessionListPanel.setSelectedHouseholdName(newValue.getName().toString());
                         // Show the addSessionButton
                         sessionListPanel.showAddSessionButton(true);
                     } else {
                         // If no household is selected, clear the session list
                         logic.updateFilteredSessionList(session -> false);
+                        // Indicate that no household is selected
+                        sessionListPanel.setSelectedHouseholdName("Displaying all sessions");
                         // Hide the addSessionButton
                         sessionListPanel.showAddSessionButton(false);
                     }
