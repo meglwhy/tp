@@ -53,12 +53,12 @@ If you're already familiar with similar applications, skip to [Quick Start](#qui
 
 ## Quick Start
 
-1. Ensure you have Java 11 or above installed on your computer by running:
+1. Ensure you have Java 17 or above installed on your computer by opening the terminal application on your computer and enter:
    ```
    java -version
    ```
    If you require installation, refer to this [Java Installation Guide](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html)
-
+   
 2. Download the [latest release of Em-Social](https://github.com/AY2425S2-CS2103T-F10-2/tp/releases) from the releases page.
 
 3. Double-click the downloaded JAR file or run it from the command line using:
@@ -80,6 +80,10 @@ The Em-Social interface consists of four main sections:
 2. **Session Panel** - Shows sessions for the selected household
 3. **Command Box** - Where you type commands
 4. **Result Display** - Shows feedback from your commands
+5. **Message Colours** - Coloured messages help you quickly understand outcomes:
+- ❌ **Error messages** (e.g., "Invalid command") appear in **red**.
+
+*These colour cues are designed to reduce the chance of errors and improve the user experience, especially for users working in high-volume environments.*
 
 ## Household Management
 Households are the core entities in Em-Social. Each household represents a family or living unit that you work with.
@@ -87,7 +91,7 @@ Households are the core entities in Em-Social. Each household represents a famil
 ### Add a household
 You can add a new household with the `add-household` command.
 ```
-add-household n/HOUSEHOLD_NAME a/ADDRESS p/PHONE_NUMBER [t/TAG]...
+add-household n/HOUSEHOLD_NAME a/ADDRESS p/PHONE_NUMBER
 ```
 
 Parameters:
@@ -124,12 +128,12 @@ Parameters:
 
 Example of usage:
 ```
-edit-household id/H000001 n/Tan Family Urgent p/98765432
+edit-household id/H000001 n/Tan Family p/98765432 t/Urgent
 ```
 
 Expected outcome:
 ```
-Edited Household: Household H000001: Tan Family Urgent at Blk 30 Geylang Street 29, #06-40 (Contact: 98765432)
+Edited Household: Household H000001: Tan Family at Blk 30 Geylang Street 29, #06-40 (Contact: 98765432) Tags: [Urgent]
 ```
 
 > **Warning**: Editing a household to match an existing household will be rejected to prevent duplicates.
@@ -142,13 +146,13 @@ delete-household id/HOUSEHOLD_ID
 
 Example of usage:
 ```
-delete-household id/H000013
+delete-household id/H000019
 ```
 
 The following confirmation dialog box will appear:
 ![delete-household warning message](images/delete-confirmation.png)
 
-This will display the following outcome upon confirmation:
+Upon confirmation, you will see this message:
 ```
 Deleted Household: Household H000013: Tan Family Urgent at Blk 30 Geylang Street 29, #06-40 (Contact: 98765432)
 ```
@@ -310,22 +314,6 @@ Expected outcome:
 Viewing sessions for household: H000001
 ```
 
-
-## User Interface Navigation
-![user interface](images/user-interface.png)
-
-### 1 Household panel
-The household panel displays household information such as name, address, contact number and any tags. Click on a household to view its session panel.
-
-### 2 Session panel
-The session panel displays session information for the selected household. This includes session dates, times, and any session notes.
-
-### 3 Command box
-Enter commands in the command box of the application window. Press Enter/Return to execute the command.
-
-### 4 Feedback display
-The feedback display shows the outcome of your most recent command, primarily success messages or error notifications.
-
 ## General Commands
 
 ### Clear data
@@ -337,7 +325,7 @@ clear
 The following confirmation dialog box will appear:
 ![clear-command confirmation](images/clear-confirmation.png)
 
-This will display the following outcome upon confirmation:
+Upon confirmation, you will see this message:
 ```
 All entries have been cleared.
 ```
@@ -358,7 +346,11 @@ exit
 
 ## Tips for Effective Use
 
-## Command summary
+1. **Warnings**
+Em-Social performs certain actions that cannot be undone once confirmed. Please take note of the following:
+   - ⚠️ **Deleting a household or session is irreversible.**
+   - ⚠️ **Using the `clear` command will remove all data from the system.** Only use it if you're sure you want to start fresh.
+   - The system does not prompt for confirmation when editing data, so always double-check your input before submitting.
 
 2. **Tagging Strategy**
    - Use consistent tags across households for better organization
@@ -371,10 +363,10 @@ exit
    - Add detailed notes immediately after sessions while details are fresh
    - Use the list-sessions command to review your upcoming schedule
 
-4. **Data Management**
-   - Regularly back up your data file (located at `data/householdbook.json`)
-   - Consider creating separate backups for different periods (monthly/quarterly)
-   - Review and clean up old or completed cases periodically
+4. **Data Management** 
+   - While Em-Social automatically saves data to a local file after each command, consider:
+   - Regularly backing up your data file (located at `data/householdbook.json`)
+   - Creating separate backups for different periods (monthly/quarterly)
 
 5. **Efficient Workflows**
    - Group visits by geographic area to minimize travel time
@@ -413,6 +405,7 @@ A: Please submit issues on our [GitHub repository](https://github.com/AY2425S2-C
 * **Case Notes**: Detailed information recorded during or after a session, documenting observations, actions taken, and follow-up items.
 * **ID**: A unique identifier automatically assigned to each household (format: H######) or session.
 * **Command Box**: The text input area at the bottom of the application where you type commands.
+* **Confirmation Dialog**: A popup window that appears before irreversible actions.
 * **Result Display**: The area that shows feedback after executing a command.
 * **Household Panel**: The left section of the interface that displays the list of households.
 * **Session Panel**: The right section of the interface that shows sessions for the selected household.
@@ -421,7 +414,7 @@ A: Please submit issues on our [GitHub repository](https://github.com/AY2425S2-C
 
 | Action | Format | Example |
 |--------|--------|---------|
-| Add household | `add-household n/HOUSEHOLD_NAME a/ADDRESS p/PHONE_NUMBER [t/TAG]...` | `add-household n/Tan Family a/Blk 30 Geylang Street 29, #06-40 p/91234567 t/elderly` |
+| Add household | `add-household n/HOUSEHOLD_NAME a/ADDRESS p/PHONE_NUMBER` | `add-household n/Tan Family a/Blk 30 Geylang Street 29, #06-40 p/91234567 t/elderly` |
 | Edit household | `edit-household ID [n/HOUSEHOLD_NAME] [a/ADDRESS] [p/PHONE_NUMBER] [t/TAG]...` | `edit-household id/H000001 n/Tan Family (Urgent) p/98765432` |
 | Delete household | `delete-household ID` | `delete-household id/H000001` |
 | List households | `list-households` | `list-households` |

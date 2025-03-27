@@ -31,6 +31,8 @@ public class SessionCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
+    private Label householdId;
+    @FXML
     private Label date;
     @FXML
     private Label time;
@@ -58,7 +60,8 @@ public class SessionCard extends UiPart<Region> {
         this.session = session;
         this.logic = logic;
         this.refreshCallback = refreshCallback;
-        id.setText(displayedIndex + ". ");
+        householdId.setText("Household ID: " + session.getHouseholdId().toString());
+        id.setText("Session " + displayedIndex + " ");
         date.setText("Date: " + session.getDate().toString());
         time.setText("Time: " + session.getTime().toString());
         if (session.hasNote()) {
@@ -91,22 +94,26 @@ public class SessionCard extends UiPart<Region> {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
+        grid.add(new Label("Household ID:"), 0, 0);
 
         // Original values
         String originalDate = session.getDate().toString();
         String originalTime = session.getTime().toString();
         String originalNote = session.hasNote() ? session.getNote().toString() : "";
 
+        Label householdIdValue = new Label(householdIdStr);
+
         TextField dateField = new TextField(originalDate);
         TextField timeField = new TextField(originalTime);
         TextField noteField = new TextField(originalNote);
 
-        grid.add(new Label("Date (YYYY-MM-DD):"), 0, 0);
-        grid.add(dateField, 1, 0);
-        grid.add(new Label("Time (HH:mm):"), 0, 1);
-        grid.add(timeField, 1, 1);
-        grid.add(new Label("Note:"), 0, 2);
-        grid.add(noteField, 1, 2);
+        grid.add(householdIdValue, 1, 0);
+        grid.add(new Label("Date (YYYY-MM-DD):"), 0, 1);
+        grid.add(dateField, 1, 1);
+        grid.add(new Label("Time (HH:mm):"), 0, 2);
+        grid.add(timeField, 1, 2);
+        grid.add(new Label("Note:"), 0, 3);
+        grid.add(noteField, 1, 3);
 
         dialogPane.setContent(grid);
 
