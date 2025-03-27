@@ -14,7 +14,7 @@ activate ui UI_COLOR
 ui -[UI_COLOR]> logic : execute("delete id/H000001")
 activate logic LOGIC_COLOR
 
-logic -[LOGIC_COLOR]> model : deleteHousehold("H000001")
+logic -[LOGIC_COLOR]> model : removeHousehold(H000001)
 activate model MODEL_COLOR
 
 model -[MODEL_COLOR]-> logic
