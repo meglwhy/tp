@@ -78,6 +78,7 @@ public class HouseholdListPanel extends UiPart<Region> {
             if (household.getId().toString().equals(householdId)) {
                 householdListView.getSelectionModel().clearAndSelect(i);
                 householdListView.scrollTo(i);
+                householdListView.getFocusModel().focus(i);
                 break;
             }
         }
@@ -86,5 +87,4 @@ public class HouseholdListPanel extends UiPart<Region> {
     public ListView<Household> getListView() {
         return householdListView;
     }
-
 }
