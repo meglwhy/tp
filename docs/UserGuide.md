@@ -12,10 +12,22 @@ Em-Social is suitable for social workers who:
 4. Expect minimal mouse interaction and prefer using the keyboard.
 5. Expect quick data entry without unnecessary steps.
 
+## User Assumptions
+
+This user guide assumes that users:
+
+- Are social workers or professionals working with household-based social service data.
+- Are familiar with tracking and managing interactions with households or clients.
+- Prefer using keyboard-driven interfaces and are comfortable typing structured commands.
+- Are using Em-Social on a desktop or laptop computer, not a mobile device.
+- Understand the importance of client confidentiality and data protection.
+- Do not require integration with external systems (e.g., national casework platforms).
+
 If you're already familiar with similar applications, skip to [Usage](#running-em-social) for quick setup instructions.
 
 - [Em-Social User Guide](#em-social-user-guide)
   - [Introduction](#introduction)
+  - [User Assumptions](#user-assumptions)
   - [Features](#features)
   - [Usage](#usage)
     - [Running Em-Social](#running-em-social)
@@ -32,16 +44,18 @@ If you're already familiar with similar applications, skip to [Usage](#running-e
     - [List sessions](#list-sessions)
     - [View all sessions of a household](#view-household-sessions)
   - [User Interface Navigation](#user-interface-navigation)
-    - [Household panel](#1-household-panel)
-    - [Session panel](#2-session-panel)
-    - [Command box](#3-command-box)
-    - [Result display](#4-feedback-display)
+    - [Household Panel](#1-household-panel)
+    - [Session Panel](#2-session-panel)
+    - [Command Box](#3-command-box)
+    - [Result Display](#4-feedback-display)
+    - [Message Colours](#5-message-colours)
   - [General Commands](#general-commands)
     - [Clear data](#clear-data)
     - [Help](#help)
     - [Exiting the program](#exiting-the-program)
-  - [Saving the data](#saving-the-data)
-  - [Command summary](#command-summary)
+  - [Saving the Data](#saving-the-data)
+  - [Warnings](#warnings)
+  - [Command Summary](#command-summary)
 
 ## Features
 Em-Social offers the following key features:
@@ -56,15 +70,15 @@ Em-Social offers the following key features:
 ## Usage
 ### Running Em-Social
 1. Ensure you have Java 17 or above installed on your computer by running:
-```java -version```
+`java -version`
 If you require installation, refer to this [installation guide](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 
 2. Download the [latest release of Em-Social](https://github.com/AY2425S2-CS2103T-F10-2/tp/releases) from the releases page.
 
 3. Double-click the downloaded JAR file or run it from the command line using:
-```java -jar em-social.jar```
+`java -jar em-social.jar`
 
-4. Run ```help``` for a quick and easy walkthrough of the available commands.
+4. Use the `help` command for a quick and easy walkthrough of the available commands.
 
 ## Household Management
 Households are the core entities in Em-Social. Each household represents a family or living unit that you work with.
@@ -94,12 +108,12 @@ edit-household id/HOUSEHOLD_ID [n/HOUSEHOLD_NAME] [a/ADDRESS] [p/PHONE_NUMBER] [
 
 Example of usage:
 ```
-edit-household id/H000001 n/Tan Family Urgent p/98765432
+edit-household id/H000001 n/Tan Family p/98765432 t/Urgent
 ```
 
 Expected outcome:
 ```
-Edited Household: Household H000001: Tan Family Urgent at Blk 30 Geylang Street 29, #06-40 (Contact: 98765432)
+Edited Household: Household H000001: Tan Family at Blk 30 Geylang Street 29, #06-40 (Contact: 98765432) Tags: [Urgent]
 ```
 
 ### Delete a household
@@ -110,15 +124,15 @@ delete-household id/HOUSEHOLD_ID
 
 Example of usage:
 ```
-delete-household id/H000013
+delete-household id/H000019
 ```
 
 The following confirmation dialog box is expected:
 ![delete-household warning message](images/delete-confirmation.png)
 
-This will display the following outcome upon confirmation:
+Upon confirmation, you will see this message:
 ```
-Deleted Household: Household H000013: sample at sample (Contact: 92039322)
+Deleted Household: Household H000019: sample at sample (Contact: 92039322)
 ```
 
 ### List all households
@@ -268,17 +282,23 @@ Viewing sessions for household: H000003
 ## User Interface Navigation
 ![user interface](images/user-interface.png)
 
-### 1 Household panel
+### 1. Household Panel
 The household panel displays household information such as name, address, contact number and any tags. Click on a household to view its session panel.
 
-### 2 Session panel
-The session panel displays session information for the selected household. This includes session dates, times, and any session notes.
+### 2. Session Panel
+The session panel displays session information for the selected household. This includes household id, session dates, times, and any session notes.
 
-### 3 Command box
+### 3. Command Box
 Enter commands in the command box of the application window. Press Enter/Return to execute the command.
 
-### 4 Feedback display
-The feedback display shows the outcome of your most recent command, primarily success messages or error notifications.
+### 4. Result Display
+The result display shows the outcome of your most recent command, primarily success messages or error notifications.
+
+### 5. Message Colours
+Em-Social uses coloured messages in the Result Display area to help you quickly understand outcomes:
+- ❌ **Error messages** (e.g., "Invalid command") appear in **red**.
+
+These colour cues are designed to reduce the chance of errors and improve the user experience, especially for users working in high-volume environments.
 
 ## General Commands
 
@@ -291,7 +311,7 @@ clear
 The following confirmation dialog box is expected:
 ![clear-command confirmation](images/clear-confirmation.png)
 
-This will display the following outcome upon confirmation:
+Upon confirmation, you will see this message:
 ```
 All entries have been cleared.
 ```
@@ -308,10 +328,18 @@ You can exit Em-Social with the `exit` command.
 exit
 ```
 
-## Saving the data
+## Saving the Data
 Em-Social automatically saves data to a local file after each command. There is no need to save manually.
 
-## Command summary
+## Warnings
+
+Em-Social performs certain actions that cannot be undone once confirmed. Please take note of the following:
+
+- ⚠️ **Deleting a household or session is irreversible.**
+- ⚠️ **Using the `clear` command will remove all data from the system.** Only use it if you're sure you want to start fresh.
+- The system does not prompt for confirmation when editing data, so always double-check your input before submitting.
+
+## Command Summary
 
 | Action                  | Format                                                                                   | Example                                                                    |
 |-------------------------|------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
@@ -332,10 +360,13 @@ Em-Social automatically saves data to a local file after each command. There is 
 ## Glossary
 
 * Household: Each household represents a family or living unit that you work with.
+* Household ID: A unique identifier (e.g, H000001) for each household.
 * Session: A scheduled appointment between a social service worker and a household for follow-up, assistance, or other social services.
-* Tag: A keyword or label assigned to a household record to categorize or identify it easily.
+* Session Index: The number assigned to each session for a household, used in commands like `edit-session` or `delete-session`.
+* Tag: A keyword or label assigned to a household record to categorize or identify it easily (e.g, "Urgent", "Follow up required").
 * Double-Booking: A scheduling conflict where two sessions are assigned to the same time slot, which the system should prevent.
 * Filter: A feature that allows users to refine search results based on specific criteria like name, address, or tags.
 * Session Data: Information related to a user's current interaction with the system, including active records, scheduled sessions, and temporary changes before they are saved.
-
-**INCOMPLETE: Glossary terms**
+* Command Box: The input field where the user type commands.
+* Confirmation Dialog: A popup window that appears before irreversible actions.
+* Result Display: Thea area where success/error messages appear.
