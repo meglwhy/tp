@@ -1,0 +1,20 @@
+{
+  "households": [
+    {
+      "name": "Alice Family",
+      "address": "123 Alice Road",
+      "contact": "91234567",
+      "id": "H000001",
+      "tags": []
+    }
+  ],
+  "sessions": [
+    {
+      "sessionId": "not-a-valid-uuid",
+      "householdId": "H000001",
+      "date": "2025-03-15",
+      "time": "14:30",
+      "note": "Follow-up on medical assistance application"
+    }
+  ]
+}

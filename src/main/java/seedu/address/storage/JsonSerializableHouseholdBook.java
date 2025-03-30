@@ -1,7 +1,9 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -12,13 +14,14 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.HouseholdBook;
 import seedu.address.model.ReadOnlyHouseholdBook;
 import seedu.address.model.household.Household;
+import seedu.address.model.household.HouseholdId;
 import seedu.address.model.session.Session;
 
 /**
  * An Immutable HouseholdBook that is serializable to JSON format.
  */
 @JsonRootName(value = "householdbook")
-class JsonSerializableHouseholdBook {
+public class JsonSerializableHouseholdBook {
 
     public static final String MESSAGE_DUPLICATE_HOUSEHOLD = "Households list contains duplicate household(s).";
     public static final String MESSAGE_DUPLICATE_SESSION = "Sessions list contains duplicate session(s).";
@@ -31,7 +34,7 @@ class JsonSerializableHouseholdBook {
      */
     @JsonCreator
     public JsonSerializableHouseholdBook(@JsonProperty("households") List<JsonAdaptedHousehold> households,
-            @JsonProperty("sessions") List<JsonAdaptedSession> sessions) {
+                                         @JsonProperty("sessions") List<JsonAdaptedSession> sessions) {
         this.households.addAll(households);
         this.sessions.addAll(sessions);
     }
@@ -51,29 +54,68 @@ class JsonSerializableHouseholdBook {
     }
 
     /**
-     * Converts this household book into the model's {@code ReadOnlyHouseholdBook} object.
+     * Converts this household book into the model's {@code HouseholdBook} object.
      *
      * @throws IllegalValueException if there were any data constraints violated.
      */
     public ReadOnlyHouseholdBook toModelType() throws IllegalValueException {
-        HouseholdBook householdBook = new HouseholdBook();
-
+        // First, convert all households to check for duplicates
+        List<Household> householdList = new ArrayList<>();
         for (JsonAdaptedHousehold jsonAdaptedHousehold : households) {
-            Household household = jsonAdaptedHousehold.toModelType();
-            if (householdBook.hasHousehold(household)) {
+            householdList.add(jsonAdaptedHousehold.toModelType());
+        }
+        // Check for duplicate households (by ID, name, address, or contact)
+        Set<HouseholdId> ids = new HashSet<>();
+        Set<String> names = new HashSet<>();
+        Set<String> addresses = new HashSet<>();
+        Set<String> contacts = new HashSet<>();
+        for (Household household : householdList) {
+            // Check for duplicate IDs
+            if (ids.contains(household.getId())) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_HOUSEHOLD);
             }
+            ids.add(household.getId());
+            // Check for duplicate names
+            String name = household.getName().toString();
+            if (names.contains(name)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_HOUSEHOLD);
+            }
+            names.add(name);
+            // Check for duplicate addresses
+            String address = household.getAddress().toString();
+            if (addresses.contains(address)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_HOUSEHOLD);
+            }
+            addresses.add(address);
+            // Check for duplicate contacts
+            String contact = household.getContact().toString();
+            if (contacts.contains(contact)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_HOUSEHOLD);
+            }
+            contacts.add(contact);
+        }
+        // Create the household book and add households
+        HouseholdBook householdBook = new HouseholdBook();
+        for (Household household : householdList) {
             householdBook.addHousehold(household);
         }
-
+        // Convert and check for duplicate sessions
+        List<Session> sessionList = new ArrayList<>();
         for (JsonAdaptedSession jsonAdaptedSession : sessions) {
-            Session session = jsonAdaptedSession.toModelType();
-            if (householdBook.hasSession(session)) {
+            sessionList.add(jsonAdaptedSession.toModelType());
+        }
+        // Check for duplicate session IDs
+        Set<String> sessionIds = new HashSet<>();
+        for (Session session : sessionList) {
+            if (sessionIds.contains(session.getSessionId())) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_SESSION);
             }
+            sessionIds.add(session.getSessionId());
+        }
+        // Add sessions
+        for (Session session : sessionList) {
             householdBook.addSessionToHousehold(session.getHouseholdId(), session);
         }
-
         return householdBook;
     }
 }

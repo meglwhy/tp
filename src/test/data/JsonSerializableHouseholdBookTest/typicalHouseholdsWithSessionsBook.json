@@ -1,0 +1,34 @@
+{
+  "households": [
+    {
+      "name": "Alice Family",
+      "address": "123 Alice Road",
+      "contact": "91234567",
+      "id": "H000001",
+      "tags": []
+    },
+    {
+      "name": "Bob Family",
+      "address": "456 Bob Street",
+      "contact": "98765432",
+      "id": "H000002",
+      "tags": []
+    }
+  ],
+  "sessions": [
+    {
+      "sessionId": "317d2a70-9bb1-41cf-8bd2-5bc0f974cd5f",
+      "householdId": "H000001",
+      "date": "2025-03-15",
+      "time": "14:30",
+      "note": "Follow-up on medical assistance application"
+    },
+    {
+      "sessionId": "417d2a70-9bb1-41cf-8bd2-5bc0f974cd5e",
+      "householdId": "H000002",
+      "date": "2025-04-01",
+      "time": "10:00",
+      "note": "Initial assessment"
+    }
+  ]
+}

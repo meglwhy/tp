@@ -1,0 +1,19 @@
+{
+  "households": [
+    {
+      "name": "Alice Family",
+      "address": "123 Alice Road",
+      "contact": "91234567",
+      "id": "H000001",
+      "tags": []
+    },
+    {
+      "name": "Bob Family",
+      "address": "456 Bob Street",
+      "contact": "98765432",
+      "id": "H000002",
+      "tags": []
+    }
+  ],
+  "sessions": []
+}
