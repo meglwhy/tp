@@ -58,7 +58,7 @@ If you're already familiar with similar applications, skip to [Quick Start](#qui
    java -version
    ```
    If you require installation, refer to this [Java Installation Guide](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html)
-   
+
 2. Download the [latest release of Em-Social](https://github.com/AY2425S2-CS2103T-F10-2/tp/releases) from the releases page.
 
 3. Double-click the downloaded JAR file or run it from the command line using:
@@ -363,7 +363,7 @@ Em-Social performs certain actions that cannot be undone once confirmed. Please 
    - Add detailed notes immediately after sessions while details are fresh
    - Use the list-sessions command to review your upcoming schedule
 
-4. **Data Management** 
+4. **Data Management**
    - While Em-Social automatically saves data to a local file after each command, consider:
    - Regularly backing up your data file (located at `data/householdbook.json`)
    - Creating separate backups for different periods (monthly/quarterly)
@@ -375,25 +375,25 @@ Em-Social performs certain actions that cannot be undone once confirmed. Please 
 
 ## Frequently Asked Questions
 
-**Q: Can I import data from other case management systems?**  
+**Q: Can I import data from other case management systems?**
 A: Currently, Em-Social doesn't support direct imports. You'll need to manually enter household information.
 
-**Q: How many households can Em-Social handle?**  
+**Q: How many households can Em-Social handle?**
 A: Em-Social can efficiently manage hundreds of households, though performance may decrease with extremely large datasets (1000+).
 
-**Q: Is my data secure?**  
+**Q: Is my data secure?**
 A: Em-Social stores all data locally on your computer. No data is sent to external servers. For sensitive data, ensure your computer is secured with a password and consider encrypting your drive.
 
-**Q: Can multiple social workers use Em-Social simultaneously?**  
+**Q: Can multiple social workers use Em-Social simultaneously?**
 A: Em-Social is designed for individual use. For team settings, each social worker should use their own instance of the application.
 
-**Q: What happens if I accidentally delete a household?**  
+**Q: What happens if I accidentally delete a household?**
 A: Unfortunately, there's no built-in recovery for deleted households. This is why Em-Social asks for confirmation before deletion. Consider regular backups of your data file.
 
-**Q: Can I customize the fields for households?**  
+**Q: Can I customize the fields for households?**
 A: The current version has fixed fields. Future versions may include customizable fields based on user feedback.
 
-**Q: How do I report bugs or request features?**  
+**Q: How do I report bugs or request features?**
 A: Please submit issues on our [GitHub repository](https://github.com/AY2425S2-CS2103T-F10-2/tp/issues).
 
 ## Glossary
