@@ -40,6 +40,16 @@ public class DeleteHouseholdCommand extends Command {
         this.targetId = targetId;
     }
 
+    /**
+     * Shows a confirmation dialog for deleting the specified {@code Household}.
+     *
+     * <p>This is an instance method that delegates to the static UI method
+     * {@link MainWindow#showDeleteConfirmationDialog(Household)}. It is kept as an instance
+     * method so that tests can conveniently spy on it and override its return value.</p>
+     *
+     * @param household The {@code Household} to be deleted.
+     * @return {@code true} if the user confirms the deletion, or {@code false} otherwise.
+     */
     public boolean confirmDeletion(Household household) {
         return MainWindow.showDeleteConfirmationDialog(household);
     }
