@@ -3,14 +3,11 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
 
-import java.util.Optional;
-
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.household.Household;
 import seedu.address.model.household.HouseholdId;
+import seedu.address.ui.MainWindow;
 
 /**
  * Deletes a household identified using its household ID from the household book.
@@ -43,6 +40,10 @@ public class DeleteHouseholdCommand extends Command {
         this.targetId = targetId;
     }
 
+    public boolean confirmDeletion(Household household) {
+        return MainWindow.showDeleteConfirmationDialog(household);
+    }
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -51,26 +52,12 @@ public class DeleteHouseholdCommand extends Command {
                 .orElseThrow(() -> new CommandException(
                         String.format(MESSAGE_HOUSEHOLD_NOT_FOUND, targetId)));
 
-        if (!showConfirmationDialog(householdToDelete)) {
+        if (!confirmDeletion(householdToDelete)) {
             return new CommandResult(MESSAGE_CANCELLED);
         }
 
         model.getHouseholdBook().removeHousehold(householdToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_HOUSEHOLD_SUCCESS, householdToDelete));
-    }
-
-    /**
-     * Displays a confirmation dialog before deleting a household.
-     * @return true if user confirms, false otherwise.
-     */
-    public boolean showConfirmationDialog(Household household) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirm Deletion");
-        alert.setHeaderText("WARNING: You are about to delete a household.");
-        alert.setContentText("Are you sure you want to delete " + household + "? This action cannot be undone.");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.OK;
     }
 
     @Override

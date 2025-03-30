@@ -1,9 +1,12 @@
 package seedu.address.ui;
 
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -16,6 +19,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.household.Household;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -168,6 +172,33 @@ public class MainWindow extends UiPart<Stage> {
             primaryStage.setX(guiSettings.getWindowCoordinates().getX());
             primaryStage.setY(guiSettings.getWindowCoordinates().getY());
         }
+    }
+
+    /**
+     * Displays a confirmation dialog and returns true if the user confirms.
+     */
+    public static boolean showClearConfirmationDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Clear");
+        alert.setHeaderText("WARNING: This will remove ALL data.");
+        alert.setContentText("Are you sure you want to proceed? Press 'OK' to proceed, or 'Cancel' to abort.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
+    }
+
+    /**
+     * Displays a confirmation dialog before deleting a household.
+     * @return true if user confirms, false otherwise.
+     */
+    public static boolean showDeleteConfirmationDialog(Household household) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Deletion");
+        alert.setHeaderText("WARNING: You are about to delete a household.");
+        alert.setContentText("Are you sure you want to delete " + household + "? This action cannot be undone.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
     }
 
     /**
