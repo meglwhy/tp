@@ -1,33 +1,71 @@
-git @startuml
+@startuml
 !include <office/Concepts/globe_internet>
 !include <office/Concepts/documents>
 !include <office/Users/user>
-!include style.puml
 
-Package " "<<Rectangle>>{
-    Class UI UI_COLOR
-    Class Logic LOGIC_COLOR
-    Class Storage STORAGE_COLOR
-    Class Model MODEL_COLOR
-    Class Main #grey
-    Class Commons LOGIC_COLOR_T2
+skinparam backgroundColor white
+skinparam componentStyle rectangle
+
+package "Em-Social Architecture" {
+  [UI] as UI #PaleGreen
+  [Logic] as Logic #LightBlue
+  [Model] as Model #LightPink
+  [Storage] as Storage #LightYellow
+  [Commons] as Commons #LightGray
+
+  note right of UI
+    JavaFX components:
+    - MainWindow
+    - HouseholdListPanel
+    - SessionCard
+    - CommandBox
+    - ResultDisplay
+  end note
+
+  note right of Logic
+    Command processing:
+    - LogicManager
+    - Commands (add, edit, delete)
+    - Parsers
+    - CommandResult
+  end note
+
+  note right of Model
+    Domain objects:
+    - HouseholdBook
+    - Household
+    - Session
+    - UserPrefs
+  end note
+
+  note right of Storage
+    Data persistence:
+    - JsonHouseholdBookStorage
+    - JsonUserPrefsStorage
+    - StorageManager
+  end note
+
+  note right of Commons
+    Shared utilities:
+    - Events
+    - Exceptions
+    - Logging
+  end note
 }
 
-Class "<$user>" as User MODEL_COLOR_T2
-Class "<$documents>" as File UI_COLOR_T1
+[<$user>] as User #White
+[<$documents>] as File #White
 
+User --> UI : interacts with
+UI --> Logic : executes commands
+Logic --> Model : reads/updates data
+Logic --> Storage : saves/loads data
+Storage --> File : reads/writes
+Model --> Storage : provides data to save
+UI --> Model : observes changes
+Commons --> UI : provides utilities
+Commons --> Logic : provides utilities
+Commons --> Model : provides utilities
+Commons --> Storage : provides utilities
 
-UI -[#006400]> Logic
-UI -right[#006400]-> Model
-Logic -[#1E90FF]-> Storage
-Logic -down[#1E90FF]-> Model
-Main -[#A9A9A9]-> UI
-Main -[#A9A9A9]-> Logic
-Main -[#A9A9A9]-> Storage
-Main -up[#A9A9A9]-> Model
-Main -down[hidden]-> Commons
-
-Storage -up[STORAGE_COLOR].> Model
-Storage .right[STORAGE_COLOR].>File
-User ..> UI
 @enduml
