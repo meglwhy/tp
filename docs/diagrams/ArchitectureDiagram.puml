@@ -3,69 +3,39 @@
 !include <office/Concepts/documents>
 !include <office/Users/user>
 
-skinparam backgroundColor white
-skinparam componentStyle rectangle
+' Define colors
+!define UI_COLOR #1D8900
+!define UI_COLOR_T1 #3FC71B
+!define LOGIC_COLOR #3333C4
+!define LOGIC_COLOR_T2 #7777F7
+!define STORAGE_COLOR #DD0052
+!define STORAGE_COLOR_T1 #F97D91
+!define MODEL_COLOR #A38300
+!define MODEL_COLOR_T2 #FFD242
 
-package "Em-Social Architecture" {
-  [UI] as UI #PaleGreen
-  [Logic] as Logic #LightBlue
-  [Model] as Model #LightPink
-  [Storage] as Storage #LightYellow
-  [Commons] as Commons #LightGray
-
-  note right of UI
-    JavaFX components:
-    - MainWindow
-    - HouseholdListPanel
-    - SessionCard
-    - CommandBox
-    - ResultDisplay
-  end note
-
-  note right of Logic
-    Command processing:
-    - LogicManager
-    - Commands (add, edit, delete)
-    - Parsers
-    - CommandResult
-  end note
-
-  note right of Model
-    Domain objects:
-    - HouseholdBook
-    - Household
-    - Session
-    - UserPrefs
-  end note
-
-  note right of Storage
-    Data persistence:
-    - JsonHouseholdBookStorage
-    - JsonUserPrefsStorage
-    - StorageManager
-  end note
-
-  note right of Commons
-    Shared utilities:
-    - Events
-    - Exceptions
-    - Logging
-  end note
+Package " "<<Rectangle>>{
+    Class UI UI_COLOR
+    Class Logic LOGIC_COLOR
+    Class Storage STORAGE_COLOR
+    Class Model MODEL_COLOR
+    Class Main #grey
+    Class Commons LOGIC_COLOR_T2
 }
 
-[<$user>] as User #White
-[<$documents>] as File #White
+Class "<$user>" as User MODEL_COLOR_T2
+Class "<$documents>" as File UI_COLOR_T1
 
-User --> UI : interacts with
-UI --> Logic : executes commands
-Logic --> Model : reads/updates data
-Logic --> Storage : saves/loads data
-Storage --> File : reads/writes
-Model --> Storage : provides data to save
-UI --> Model : observes changes
-Commons --> UI : provides utilities
-Commons --> Logic : provides utilities
-Commons --> Model : provides utilities
-Commons --> Storage : provides utilities
+UI -[#green]> Logic
+UI -right[#green]-> Model
+Logic -[#blue]-> Storage
+Logic -down[#blue]-> Model
+Main -[#grey]-> UI
+Main -[#grey]-> Logic
+Main -[#grey]-> Storage
+Main -up[#grey]-> Model
+Main -down[hidden]-> Commons
 
+Storage -up[STORAGE_COLOR].> Model
+Storage .right[STORAGE_COLOR].>File
+User ..> UI
 @enduml
