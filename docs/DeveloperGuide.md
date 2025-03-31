@@ -208,7 +208,7 @@ Use case resumes from step 1.
 ### Use Case: U6. Search for Household
 
 **Main Success Scenario:**
-1. User enters a keyword in the search bar.
+1. User searches a keyword in the search bar.
 2. System retrieves matching household records.
 3. System displays a list of results.
 4. User selects a household for further action.
@@ -217,7 +217,7 @@ Use case resumes from step 1.
 
 **Extensions:**
 2a. No matching records found.
-* 2a1. System displays a "No households found" message.
+* 2a1. System displays an error message.
 
     Use case ends.
 
@@ -226,19 +226,18 @@ Use case resumes from step 1.
 ### Use Case: U7. Delete Household
 
 **Main Success Scenario:**
-1. User enters `delete-household id/HOUSEHOLD_ID`.
-2. System checks if the provided household ID exists.
+1. User specifies a household to delete.
+2. System checks if the household exists.
 3. System prompts the user for confirmation.
 4. User confirms the deletion.
 5. System removes the household record and its sessions from the list.
-6. System displays a confirmation message:
-    - "Household [ID] deleted successfully."
+6. System displays a confirmation message.
 
     Use case ends.
 
 **Extensions:**
 2a. Household ID does not exist.
-* 2a1. System displays error message: `"Error: Household ID not found."`
+* 2a1. System displays an error message.
 Use case ends.
 
 3a. User cancels deletion.
@@ -251,38 +250,30 @@ Use case ends.
 ### Use Case: U8. Edit Session (with Optional Notes)
 
 **Main Success Scenario:**
-1. User enters `edit-session INDEX [d/DATE] [t/TIME] [n/NOTE]` to update a session.
+1. User specifies the date, time or note to update for a household's session.
 2. System checks if the provided session index exists.
 3. System validates the new date, time, or note.
 4. If valid, system updates the session details.
-5. System displays a confirmation message:
-    - `"Session updated successfully."`
-
+5. System displays a confirmation message
+   
     Use case ends.
 
 **Extensions:**
 2a. Invalid session index.
-* 2a1. System displays an error message: `"Error: Invalid session index."`
+* 2a1. System displays an error message.
 
     Use case ends.
 
 3a. Invalid date/time format.
-* 3a1. System displays an error message: `"Error: Date must be in DD-MM-YYYY format."`
+* 3a1. System displays an error message.
 * 3a2. User corrects input and retries.
 Use case resumes from step 1.
 
-3b. A session already exists at the new date/time (**See Use Case: Prevent Double-Booking (U4)**).
-* 3b1. System displays an error message: `"Error: Time slot unavailable due to scheduling conflict."`
-* 3b2. User selects a different time or cancels.
+3b. A session already exists at the new date/time (**Prevent Double-Booking (U4)**).
 Use case resumes from step 1 or ends if canceled.
 
-3c. Empty note provided when `n/NOTE` is used.
-* 3c1. System displays an error message: `"Error: Note cannot be empty if provided."`
-* 3c2. User corrects input and retries.
-Use case resumes from step 1.
-
 4a. System fails to save the changes.
-* 4a1. System displays an error message: `"Error: Unable to save changes. Please try again."`
+* 4a1. System displays an error message.
 * 4a2. User retries or exits.
 Use case resumes from step 1 or ends if unsuccessful.
 
@@ -291,7 +282,7 @@ Use case resumes from step 1 or ends if unsuccessful.
 ### Use Case: U9. Clear All Entries
 
 **Main Success Scenario:**
-1. User enters `clear` to clear all entries.
+1. User clears all entries.
 2. System prompts for confirmation.
 3. User confirms the action.
 4. System removes all stored data (households, sessions, and notes).
