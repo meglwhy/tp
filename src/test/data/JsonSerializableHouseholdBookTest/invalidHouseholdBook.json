@@ -1,0 +1,12 @@
+{
+  "households": [
+    {
+      "name": "Invalid Name @#$",
+      "address": "123 Alice Road",
+      "contact": "91234567",
+      "id": "H000001",
+      "tags": []
+    }
+  ],
+  "sessions": []
+}

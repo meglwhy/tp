@@ -11,6 +11,10 @@ import seedu.address.model.household.HouseholdId;
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Session {
+    // For validation of session ID
+    public static final String MESSAGE_CONSTRAINTS_SESSION_ID =
+            "Session ID should be a valid UUID format";
+
     private final String sessionId;
     private final HouseholdId householdId;
     private final SessionDate date;
@@ -54,6 +58,20 @@ public class Session {
         this(UUID.randomUUID().toString(), householdId, date, time, note);
     }
 
+    /**
+     * Creates a Session with a specific UUID string for testing purposes.
+     */
+    public Session(UUID uuid, HouseholdId householdId, SessionDate date, SessionTime time) {
+        this(uuid.toString(), householdId, date, time);
+    }
+
+    /**
+     * Creates a Session with a specific UUID string and note for testing purposes.
+     */
+    public Session(UUID uuid, HouseholdId householdId, SessionDate date, SessionTime time, SessionNote note) {
+        this(uuid.toString(), householdId, date, time, note);
+    }
+
     public String getSessionId() {
         return sessionId; // Not exposed to users, only used internally
     }
@@ -80,6 +98,18 @@ public class Session {
 
     public boolean hasNote() {
         return note != null;
+    }
+
+    /**
+     * Returns a copy of this session with the given note.
+     */
+    public Session withNote(String noteText) {
+        return new Session(
+                this.sessionId,
+                this.householdId,
+                this.date,
+                this.time,
+                new SessionNote(noteText));
     }
 
     @Override
