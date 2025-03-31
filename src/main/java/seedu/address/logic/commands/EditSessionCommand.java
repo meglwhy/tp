@@ -45,6 +45,10 @@ public class EditSessionCommand extends Command {
             + "medical assistance application";
     public static final String MESSAGE_EDIT_SESSION_SUCCESS = "Edited session:%nDate: %s%nTime: %s";
     public static final String MESSAGE_EDIT_SESSION_WITH_NOTE_SUCCESS = "Edited session:%nDate: %s%nTime: %s%nNote: %s";
+
+    public static final String MESSAGE_DUPLICATE_SESSION =
+            "This time slot is already booked.\n"
+                    + "Existing session: %1$s";
     public static final String MESSAGE_HOUSEHOLD_NOT_FOUND = "No household found with ID %s.";
     public static final String MESSAGE_INVALID_SESSION_INDEX = "Session index %d is invalid for household %s.";
 
@@ -115,37 +119,43 @@ public class EditSessionCommand extends Command {
         }
         Session oldSession = sessions.get(sessionIndex - 1);
 
-        // Delete the old session.
-        model.getHouseholdBook().removeSessionById(oldSession.getSessionId());
-
-        // Create a new session with new date and time.
-        Session newSession;
+        // Create a candidate session with the new date, time, and note
+        // Reuse the same sessionId as oldSession.
+        Session candidateSession;
         if (hasNote) {
-            // If we're explicitly setting a new note
-            newSession = new Session(oldSession.getHouseholdId(),
+            candidateSession = new Session(oldSession.getSessionId(),
+                    oldSession.getHouseholdId(),
                     new SessionDate(newDate),
                     new SessionTime(newTime),
                     new SessionNote(note));
         } else if (oldSession.hasNote()) {
-            // If no new note but there's an existing note, preserve it
-            newSession = new Session(oldSession.getHouseholdId(),
+            candidateSession = new Session(oldSession.getSessionId(),
+                    oldSession.getHouseholdId(),
                     new SessionDate(newDate),
                     new SessionTime(newTime),
                     oldSession.getNote());
         } else {
-            // No new note and no existing note
-            newSession = new Session(oldSession.getHouseholdId(),
+            candidateSession = new Session(oldSession.getSessionId(),
+                    oldSession.getHouseholdId(),
                     new SessionDate(newDate),
                     new SessionTime(newTime));
         }
 
-        // Add the new session back to the household.
-        model.getHouseholdBook().addSessionToHousehold(householdId, newSession);
+        // Check for a conflicting session.
+        // If the only conflict is the session being edited, they will be equal.
+        Optional<Session> conflict = model.getHouseholdBook().getConflictingSession(candidateSession);
+        if (conflict.isPresent() && !conflict.get().equals(oldSession)) {
+            throw new CommandException(String.format(MESSAGE_DUPLICATE_SESSION, conflict.get()));
+        }
 
-        // Return appropriate success message based on whether a note was included
+        // No conflict found: delete the old session and add the candidate session.
+        model.getHouseholdBook().removeSessionById(oldSession.getSessionId());
+        model.getHouseholdBook().addSessionToHousehold(householdId, candidateSession);
+
+        // Return the appropriate success message.
         if (hasNote) {
             return new CommandResult(String.format(MESSAGE_EDIT_SESSION_WITH_NOTE_SUCCESS,
-                newDate, newTime, note));
+                    newDate, newTime, note));
         } else {
             return new CommandResult(String.format(MESSAGE_EDIT_SESSION_SUCCESS, newDate, newTime));
         }
