@@ -53,7 +53,7 @@ public class DeleteHouseholdCommandTest {
         DeleteHouseholdCommand deleteCommand = Mockito.spy(new DeleteHouseholdCommand(targetId));
 
         // Mock the showConfirmationDialog to return true (confirm deletion)
-        doReturn(true).when(deleteCommand).showConfirmationDialog(householdToDelete);
+        doReturn(true).when(deleteCommand).confirmDeletion(householdToDelete);
 
         CommandResult result = deleteCommand.execute(model);
         assertEquals(String.format(DeleteHouseholdCommand.MESSAGE_DELETE_HOUSEHOLD_SUCCESS, householdToDelete),
@@ -78,7 +78,7 @@ public class DeleteHouseholdCommandTest {
         DeleteHouseholdCommand deleteCommand = Mockito.spy(new DeleteHouseholdCommand(targetId));
 
         // Mock the showConfirmationDialog to return false (cancel deletion)
-        doReturn(false).when(deleteCommand).showConfirmationDialog(householdToDelete);
+        doReturn(false).when(deleteCommand).confirmDeletion(householdToDelete);
 
         CommandResult result = deleteCommand.execute(model);
 
