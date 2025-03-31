@@ -116,26 +116,24 @@ Priorities: High (must have) - `* * *`, Medium (good to have) - `* *`, Low (unli
 ### Use Case: U1. Create Household Record
 
 **Main Success Scenario:**
-1. User selects the option to add a household.
+1. User adds a household and enters household name, address, and contact information.
 2. System prompts for household details.
-3. User enters household name, address, and contact information.
-4. System validates the input.
-5. System saves the household record.
-6. System displays a confirmation message.
+3. System validates the input.
+4. System saves the household record.
+5. System displays a confirmation message.
 
     Use case ends.
 
 **Extensions:**
 
-4a. Invalid input provided.
-* 4a1. System displays an error message.
-* 4a2. User corrects input and retries.
-Use case resumes from step 4.
+3a. Invalid input provided.
+* 3a1. System displays an error message.
+Use case resumes from step 1.
 
-6a. System fails to save the household record.
-* 6a1. System displays an error message indicating the failure.
-* 6a2. System prompts the user to retry saving.
-* 6a3. If the issue persists, the system logs the error for troubleshooting.
+5a. System fails to save the household record.
+* 5a1. System displays an error message indicating the failure.
+* 5a2. System prompts the user to retry saving.
+* 5a3. If the issue persists, the system logs the error for troubleshooting.
 Use case resumes from step 3 or ends if saving is unsuccessful.
 
 ---
@@ -143,41 +141,36 @@ Use case resumes from step 3 or ends if saving is unsuccessful.
 ### Use Case: U2. Schedule Engagement Session
 
 **Main Success Scenario:**
-1. User selects a household.
-2. User schedules a session.
-3. System performs (**Prevent Double-Booking (U4)**) to prevent scheduling conflicts.
-4. If there is no conflict, system saves the session and updates the calendar.
-5. System displays a confirmation message.
+1. User schedules an engagement session with a specified household.
+2. System performs (**Prevent Double-Booking (U4)**) to prevent scheduling conflicts.
+3. If there is no conflict, system saves the session and updates the calendar.
+4. System displays a confirmation message.
 
     Use case ends.
 
 **Extensions:**
 
-2a. Invalid date/time format.
-* 2a1. System displays an error message.
-* 2a2. User corrects input and retries.
-Use case resumes from step 2.
+1a. Invalid date/time format.
+* 1a1. System displays an error message.
+Use case resumes from step 1.
 
 ---
 
 ### Use Case: U3. Edit Household Record
 
 **Main Success Scenario:**
-1. User selects a household to edit.
-2. System displays household details (i.e., name, address, contact, household ID, tags, sessions).
-3. User updates the desired detail (name, address, contact, tag).
-4. System validates changes.
-5. System saves changes and updates the record.
-6. System displays a confirmation message.
+1. User specifies a household to edit and the detail to change.
+2. System validates changes.
+3. System saves changes and updates the record.
+4. System displays a confirmation message.
 
     Use case ends.
 
 **Extensions:**
 
-4a. Invalid input provided.
-* 4a1. System displays an error message.
-* 4a2. User corrects input and retries.
-Use case resumes from step 4.
+2a. Invalid input provided.
+* 2a1. System displays an error message.
+Use case resumes from step 1.
 
 ---
 
@@ -186,43 +179,43 @@ Use case resumes from step 4.
 **Main Success Scenario:**
 1. User selects a date and time to schedule a session.
 2. System checks for existing sessions at the specified time.
-3. If no conflicts exist, the system schedules the session.
-4. System displays a confirmation message.
+3. System displays a confirmation message.
 
     Use case ends.
 
 **Extensions:**
 
 2a. A session already exists at the selected time.
-* 2a1. System displays a conflict warning.
-Use case ends.
+* 2a1. System displays a conflict warning and session is not scheduled.
+
+    Use case ends.
 
 ---
 
 ### Use Case: U5. View Household Session History
 
 **Main Success Scenario:**
-1. User selects a household.
-2. User chooses to view session history.
-3. System retrieves and displays past sessions in chronological order.
-4. User reviews session details.
+1. User views session history for a specific household.
+2. System retrieves and displays past sessions in chronological order.
+3. User reviews session details.
 
     Use case ends.
 
 **Extensions:**
 
-3a. No past sessions recorded.
-* 3a1. System displays a message indicating no history available.
-Use case ends.
+2a. No past sessions recorded.
+* 2a1. System displays a message indicating no history available.
+
+    Use case ends.
 
 ---
 
 ### Use Case: U6. Search for Household
 
 **Main Success Scenario:**
-1. User enters a keyword in the search bar.
+1. User searches a keyword in the search bar.
 2. System retrieves matching household records.
-3. System displays results in a list.
+3. System displays a list of results.
 4. User selects a household for further action.
 
     Use case ends.
@@ -230,77 +223,65 @@ Use case ends.
 **Extensions:**
 
 2a. No matching records found.
-* 2a1. System displays a "No households found" message.
-Use case ends.
+* 2a1. System displays an error message.
+
+    Use case ends.
 
 ---
 
 ### Use Case: U7. Delete Household
 
 **Main Success Scenario:**
-1. User enters `delete-household id/HOUSEHOLD_ID`.
-2. System checks if the provided household ID exists.
+1. User specifies a household to delete.
+2. System checks if the household exists.
 3. System prompts the user for confirmation.
 4. User confirms the deletion.
-5. System removes the household record from the list.
-6. System displays a confirmation message:
-    - "Household [ID] deleted successfully."
+5. System removes the household record and its sessions from the list.
+6. System displays a confirmation message.
 
     Use case ends.
 
 **Extensions:**
 
 2a. Household ID does not exist.
-* 2a1. System displays error message: `"Error: Household ID not found."`
+* 2a1. System displays an error message.
 Use case ends.
 
 3a. User cancels deletion.
 * 3a1. System aborts the deletion process.
-Use case ends.
 
-5a. Household has linked sessions.
-* 5a1. System prompts user to confirm deleting associated sessions.
-* 5a2. User confirms or cancels deletion.
-  - If confirmed, system deletes the household and linked sessions.
-  - If canceled, use case ends.
+    Use case ends.
 
 ---
 
 ### Use Case: U8. Edit Session (with Optional Notes)
 
 **Main Success Scenario:**
-1. User enters `edit-session INDEX [d/DATE] [t/TIME] [n/NOTE]` to update a session.
+1. User specifies the date, time or note to update for a household's session.
 2. System checks if the provided session index exists.
 3. System validates the new date, time, or note.
 4. If valid, system updates the session details.
-5. System displays a confirmation message:
-    - `"Session updated successfully."`
-
+5. System displays a confirmation message
+   
     Use case ends.
 
 **Extensions:**
 
 2a. Invalid session index.
-* 2a1. System displays an error message: `"Error: Invalid session index."`
-Use case ends.
+* 2a1. System displays an error message.
+
+    Use case ends.
 
 3a. Invalid date/time format.
-* 3a1. System displays an error message: `"Error: Date must be in DD-MM-YYYY format."`
+* 3a1. System displays an error message.
 * 3a2. User corrects input and retries.
 Use case resumes from step 1.
 
-3b. A session already exists at the new date/time (**See Use Case: Prevent Double-Booking (U4)**).
-* 3b1. System displays an error message: `"Error: Time slot unavailable due to scheduling conflict."`
-* 3b2. User selects a different time or cancels.
+3b. A session already exists at the new date/time (**Prevent Double-Booking (U4)**).
 Use case resumes from step 1 or ends if canceled.
 
-3c. Empty note provided when `n/NOTE` is used.
-* 3c1. System displays an error message: `"Error: Note cannot be empty if provided."`
-* 3c2. User corrects input and retries.
-Use case resumes from step 1.
-
 4a. System fails to save the changes.
-* 4a1. System displays an error message: `"Error: Unable to save changes. Please try again."`
+* 4a1. System displays an error message.
 * 4a2. User retries or exits.
 Use case resumes from step 1 or ends if unsuccessful.
 
@@ -309,7 +290,7 @@ Use case resumes from step 1 or ends if unsuccessful.
 ### Use Case: U9. Clear All Entries
 
 **Main Success Scenario:**
-1. User enters `clear` to clear all entries.
+1. User clears all entries.
 2. System prompts for confirmation.
 3. User confirms the action.
 4. System removes all stored data (households, sessions, and notes).
@@ -321,34 +302,13 @@ Use case resumes from step 1 or ends if unsuccessful.
 
 2a. User cancels the operation.
 * 2a1. System aborts the clearing process.
-Use case ends.
+
+    Use case ends.
 
 4a. System fails to clear data.
 * 4a1. System displays an error message.
 * 4a2. User retries or exits.
 Use case resumes from step 2 or ends if the issue persists.
-
----
-
-### Use Case: U10. Receive Session Notification
-
-**Main Success Scenario:**
-1. System checks upcoming sessions.
-2. System sends a notification (in-app or email) before the session.
-3. User receives the notification.
-
-    Use case ends.
-
-**Extensions:**
-
-2a. Notifications are disabled.
-* 2a1. System does not send a notification.
-Use case ends.
-
-2b. Email notification fails.
-* 2b1. System logs the error and retries.
-* 2b2. If the issue persists, system notifies the user in-app.
-Use case resumes from step 3.
 
 --------------------------------------------------------------------------------------------------------------------
 
