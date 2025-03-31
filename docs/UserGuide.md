@@ -67,7 +67,7 @@ The Em-Social interface consists of five main sections:
 Before using the commands, please understand these conventions:
 
 ### Parameter Reference
-All commands use the following format:  
+All commands use the following format:
 `command-name prefix/PARAMETER [optional-prefix/OPTIONAL_PARAMETER]...`
 
 | Parameter                       | Meaning                               | Valid Examples                    |
