@@ -125,6 +125,7 @@ Priorities: High (must have) - `* * *`, Medium (good to have) - `* *`, Low (unli
     Use case ends.
 
 **Extensions:**
+
 3a. Invalid input provided.
 * 3a1. System displays an error message.
 Use case resumes from step 1.
@@ -148,6 +149,7 @@ Use case resumes from step 3 or ends if saving is unsuccessful.
     Use case ends.
 
 **Extensions:**
+
 1a. Invalid date/time format.
 * 1a1. System displays an error message.
 Use case resumes from step 1.
@@ -165,6 +167,7 @@ Use case resumes from step 1.
     Use case ends.
 
 **Extensions:**
+
 2a. Invalid input provided.
 * 2a1. System displays an error message.
 Use case resumes from step 1.
@@ -181,6 +184,7 @@ Use case resumes from step 1.
     Use case ends.
 
 **Extensions:**
+
 2a. A session already exists at the selected time.
 * 2a1. System displays a conflict warning and session is not scheduled.
 
@@ -198,6 +202,7 @@ Use case resumes from step 1.
     Use case ends.
 
 **Extensions:**
+
 2a. No past sessions recorded.
 * 2a1. System displays a message indicating no history available.
 
@@ -216,6 +221,7 @@ Use case resumes from step 1.
     Use case ends.
 
 **Extensions:**
+
 2a. No matching records found.
 * 2a1. System displays an error message.
 
@@ -236,6 +242,7 @@ Use case resumes from step 1.
     Use case ends.
 
 **Extensions:**
+
 2a. Household ID does not exist.
 * 2a1. System displays an error message.
 Use case ends.
@@ -259,6 +266,7 @@ Use case ends.
     Use case ends.
 
 **Extensions:**
+
 2a. Invalid session index.
 * 2a1. System displays an error message.
 
@@ -291,6 +299,7 @@ Use case resumes from step 1 or ends if unsuccessful.
     Use case ends.
 
 **Extensions:**
+
 2a. User cancels the operation.
 * 2a1. System aborts the clearing process.
 
