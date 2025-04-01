@@ -96,14 +96,14 @@ All commands use the following format:
 Households are the core entities in Em-Social. Each household represents a family or living unit that you work with.
 
 ### Add a household
-You can add a new household with the `add-household` command.
+You can add a new household with the `add` command.
 ```
-add-household n/HOUSEHOLD_NAME a/ADDRESS p/PHONE_NUMBER
+add n/HOUSEHOLD_NAME a/ADDRESS p/PHONE_NUMBER
 ```
 
 Example of usage:
 ```
-add-household n/Tan Family a/Blk 30 Geylang Street 29, #06-40 p/91234567
+add n/Tan Family a/Blk 30 Geylang Street 29, #06-40 p/91234567
 ```
 
 Expected outcome:
@@ -116,14 +116,14 @@ New household added: Household H000012: Tan Family at Blk 30 Geylang Street 29, 
 > **Tip**: Use meaningful tags to categorize households for easier filtering later. Common tags might include "elderly", "children", "financial-assistance", or "priority".
 
 ### Edit a household
-You can modify household details with the `edit-household` command.
+You can modify household details with the `edit` command.
 ```
-edit-household id/HOUSEHOLD_ID [n/HOUSEHOLD_NAME] [a/ADDRESS] [p/PHONE_NUMBER] [t/TAG]...
+edit id/HOUSEHOLD_ID [n/HOUSEHOLD_NAME] [a/ADDRESS] [p/PHONE_NUMBER] [t/TAG]...
 ```
 
 Example of usage:
 ```
-edit-household id/H000001 n/Tan Family p/98765432 t/Urgent
+edit id/H000001 n/Tan Family p/98765432 t/Urgent
 ```
 
 Expected outcome:
@@ -134,14 +134,14 @@ Edited Household: Household H000001: Tan Family at Blk 30 Geylang Street 29, #06
 > **Warning**: Editing a household to match an existing household will be rejected to prevent duplicates.
 
 ### Delete a household
-You can remove a household with the `delete-household` command.
+You can remove a household with the `delete` command.
 ```
-delete-household id/HOUSEHOLD_ID
+delete id/HOUSEHOLD_ID
 ```
 
 Example of usage:
 ```
-delete-household id/H000019
+delete id/H000019
 ```
 
 The following confirmation dialog box will appear:
@@ -155,9 +155,9 @@ Deleted Household: Household H000013: Tan Family Urgent at Blk 30 Geylang Street
 > **Warning**: Deleting a household will also delete all associated sessions. This action cannot be undone.
 
 ### List all households
-You can view all households with the `list-households` command.
+You can view all households with the `list` command.
 ```
-list-households
+list
 ```
 
 Expected outcome (System Message):
@@ -169,23 +169,18 @@ Total households: 4
 > **Tip**: Use this command to refresh your view after searching or filtering.
 
 ### Find households
-You can search for households with the `find-household` command.
+You can search for households with the `find` command.
 Use double quotes to search for a key phrase.
+> **Note**: You cannot search for session content (including notes) using this command.
+
 
 ```
-find-household KEYWORD [MORE_KEYWORDS]...
+find KEYWORD [MORE_KEYWORDS]...
 ```
 
-Example of usage (without phrase matching):
+Example of usage:
 ```
-find-household Tan Lee
-```
-
-> **Tip**: Use double quotes for exact phrase matching: `"Tan Family"`
-
-Example of usage (with phrase matching):
-```
-find-household "Tan Family"
+find Tan Lee
 ```
 
 Expected outcome:
@@ -193,7 +188,14 @@ Expected outcome:
 Found 2 household(s) matching: Tan Lee
 ```
 
-Expected outcome (with keyphrase):
+> **Tip**: Use double quotes for exact phrase matching: `"Tan Family"`
+
+Example of usage (with phrase matching):
+```
+find "Tan Family"
+```
+
+Expected outcome (with phrase matching):
 ```
 1 households found:
 1. Tan Family (ID: H000001)
@@ -358,7 +360,7 @@ Em-Social performs certain actions that cannot be undone once confirmed. Please 
 
 5. **Efficient Workflows**
    - Group visits by geographic area to minimize travel time
-   - Use the find-household command with area names to identify nearby cases
+   - Use the find command with area names to identify nearby cases
    - Add time estimates to session notes for better future planning
 
 --------------------------------------------------------------------------------------------------------------------
@@ -411,11 +413,11 @@ A: Please submit issues on our [GitHub repository](https://github.com/AY2425S2-C
 
 | Action               | Command Format                                                   | Examples                                                           |
 |----------------------|------------------------------------------------------------------|--------------------------------------------------------------------|
-| **Add Household**    | `add-household n/NAME a/ADDRESS p/PHONE [t/TAG]...`              | `add-household n/Tan Family a/Blk 30 Geylang p/91234567 t/elderly` |
-| **Edit Household**   | `edit-household id/ID [n/NAME] [a/ADDRESS] [p/PHONE] [t/TAG]...` | `edit-household id/H000001 n/Lim Family p/87654321`                |
-| **Delete Household** | `delete-household id/ID`                                         | `delete-household id/H000001`                                      |
-| **List Households**  | `list-households`                                                | `list-households`                                                  |
-| **Find Households**  | `find-household KEYWORD [MORE_KEYWORDS]...`                      | `find-household "Tan Lee"`                                         |
+| **Add Household**    | `add n/NAME a/ADDRESS p/PHONE [t/TAG]...`              | `add n/Tan Family a/Blk 30 Geylang p/91234567 t/elderly` |
+| **Edit Household**   | `edit id/ID [n/NAME] [a/ADDRESS] [p/PHONE] [t/TAG]...` | `edit id/H000001 n/Lim Family p/87654321`                |
+| **Delete Household** | `delete id/ID`                                         | `delete id/H000001`                                      |
+| **List Households**  | `list`                                                | `list`                                                  |
+| **Find Households**  | `find KEYWORD [MORE_KEYWORDS]...`                      | `find "Tan Lee"`                                         |
 | **Add Session**      | `add-session id/ID d/DATE tm/TIME`                               | `add-session id/H000001 d/2025-05-15 tm/14:30`                     |
 | **Edit Session**     | `edit-session id/ID-INDEX d/DATE tm/TIME [n/NOTE]`               | `edit-session id/H000001-1 d/2025-03-16 tm/15:00 n/Follow-up`      |
 | **Delete Session**   | `delete-session id/ID-INDEX`                                     | `delete-session id/H000001-1`                                      |
