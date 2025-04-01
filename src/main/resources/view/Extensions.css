@@ -1,20 +1,25 @@
-
 .error {
     -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */
+    -fx-font-weight: bold;
 }
 
 .list-cell:empty {
-    /* Empty cells will not have alternating colours */
-    -fx-background: #383838;
+    -fx-background-color: #FFFFFF; /* Pale orange background for empty space */
 }
 
+/* Tag selector (used for filter/search etc.) */
 .tag-selector {
     -fx-border-width: 1;
-    -fx-border-color: white;
+    -fx-border-color: #FF8C00; /* Orange */
     -fx-border-radius: 3;
     -fx-background-radius: 3;
+    -fx-background-color: #FFF5E1; /* Light orange background */
+    -fx-text-fill: #000000;
 }
 
+/* Tooltip text */
 .tooltip-text {
-    -fx-text-fill: white;
+    -fx-text-fill: #FF8C00; /* Orange text */
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI";
 }

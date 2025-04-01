@@ -19,7 +19,7 @@
     </padding>
     <HBox spacing="5" alignment="CENTER_LEFT">
       <Label fx:id="id" styleClass="cell_big_label"/>
-      <Button fx:id="editSessionButton" text="Edit" />
+      <Button fx:id="editSessionButton" text="Edit"/>
     </HBox>
     <Label fx:id="householdId" styleClass="cell_small_label"/>
     <Label fx:id="date" styleClass="cell_small_label"/>

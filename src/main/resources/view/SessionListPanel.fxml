@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-  <HBox spacing="10">
+  <HBox spacing="10" alignment="CENTER_LEFT" VBox.vgrow="NEVER">
     <Label fx:id="selectedHouseholdLabel" text="Displaying all sessions"/>
     <Button fx:id="addSessionButton" text="Add Session"/>
   </HBox>
