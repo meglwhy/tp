@@ -79,11 +79,9 @@ public class HouseholdBookParser {
         case ListHouseholdsCommand.COMMAND_WORD -> {
             return new ListHouseholdsCommand();
         }
-
         case ViewHouseholdSessionsCommand.COMMAND_WORD -> {
             return new ViewHouseholdSessionsCommandParser().parse(arguments);
         }
-
         case ExitCommand.COMMAND_WORD -> {
             return new ExitCommand();
         }
