@@ -57,7 +57,7 @@
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
-    -fx-background-color: #FDF5E6; /* Light orange */
+    -fx-background-color: #FFFFFF; /* Light orange */
     -fx-border-color: lightgrey;
     -fx-border-width: 1;
 }
@@ -70,7 +70,8 @@
 
 .list-cell:empty {
     -fx-background-color: white;
-    -fx-opacity: 100;
+    -fx-opacity: 1;
+    -fx-border-color: transparent;
 }
 
 /* Household panel: even = light orange, odd = white */

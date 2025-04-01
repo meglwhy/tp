@@ -1,20 +1,16 @@
-/* Help message text */
 #helpMessage {
-    -fx-text-fill: #000000; /* Orange text for emphasis */
+    -fx-text-fill: #000000;
 }
 
-/* Copy button base style */
 #copyButton {
     -fx-text-fill: white;
     -fx-background-color: #FF8C00; /* Orange */
 }
 
-/* Hover effect: lighter orange */
 #copyButton:hover {
     -fx-background-color: #FFA64D;
 }
 
-/* Armed/pressed effect: darker orange */
 #copyButton:armed {
     -fx-background-color: #E67300;
 }
