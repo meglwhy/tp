@@ -11,8 +11,12 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-         title="Em-Social" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
+<fx:root type="javafx.stage.Stage"
+         xmlns="http://javafx.com/javafx/17"
+         xmlns:fx="http://javafx.com/fxml/1"
+         title="Em-Social"
+         minWidth="620" minHeight="450"
+         onCloseRequest="#handleExit">
   <icons>
     <Image url="@/images/address_book_32.png" />
   </icons>
@@ -45,17 +49,20 @@
         </StackPane>
 
         <SplitPane VBox.vgrow="ALWAYS" orientation="HORIZONTAL">
-          <VBox styleClass="pane-with-border" minWidth="340" prefWidth="340">
+          <!-- Household panel -->
+          <VBox styleClass="pane-with-border" minWidth="250">
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
-            <StackPane fx:id="householdListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            <StackPane fx:id="householdListPanelPlaceholder" VBox.vgrow="ALWAYS" />
           </VBox>
-          <VBox styleClass="pane-with-border" minWidth="340" prefWidth="340">
+
+          <!-- Session panel -->
+          <VBox styleClass="pane-with-border" minWidth="250">
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
-            <StackPane fx:id="sessionListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            <StackPane fx:id="sessionListPanelPlaceholder" VBox.vgrow="ALWAYS" />
           </VBox>
         </SplitPane>
 
