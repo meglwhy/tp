@@ -1,3 +1,8 @@
+---
+layout: default.md
+title: "User guide"
+pageNav: 3
+---
 # Em-Social User Guide
 
 ## Introduction
