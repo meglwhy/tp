@@ -172,9 +172,15 @@ public class SessionListPanel extends UiPart<Region> {
             if (empty || session == null) {
                 setGraphic(null);
                 setText(null);
+                setStyle("-fx-background-color: white");
             } else {
                 setGraphic(new SessionCard(session, getIndex() + 1,
                         logic, SessionListPanel.this::refresh).getRoot());
+                if (getIndex() % 2 == 0) {
+                    setStyle("-fx-background-color: #FFFFFF;"); // white
+                } else {
+                    setStyle("-fx-background-color: #FFF5E1;"); // light orange
+                }
             }
         }
     }

@@ -63,6 +63,11 @@ public class HouseholdListPanel extends UiPart<Region> {
                 setText(null);
             } else {
                 setGraphic(new HouseholdCard(household, getIndex() + 1).getRoot());
+                if (getIndex() % 2 == 0) {
+                    setStyle("-fx-background-color: #FFF5E1;");
+                } else {
+                    setStyle("-fx-background-color: #FFFFFF;");
+                }
             }
         }
     }

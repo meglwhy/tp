@@ -7,9 +7,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-  <HBox spacing="10">
-    <Label fx:id="selectedHouseholdLabel" text="Displaying all sessions"/>
-    <Button fx:id="addSessionButton" text="Add Session"/>
+  <HBox spacing="10" alignment="CENTER_LEFT" VBox.vgrow="NEVER">
+    <Label fx:id="selectedHouseholdLabel"
+           text="Select household to view sessions"
+           HBox.hgrow="ALWAYS"
+           maxWidth="Infinity"
+           styleClass="truncated-label"/>
+
+    <Button fx:id="addSessionButton"
+            text="Add Session"
+            minWidth="-Infinity"
+    maxWidth="Infinity"/>
   </HBox>
   <ListView fx:id="sessionListView" VBox.vgrow="ALWAYS" />
 </VBox>

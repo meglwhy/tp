@@ -58,7 +58,11 @@ public class HouseholdCard extends UiPart<Region> {
         contact.setText(household.getContact().toString());
         household.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+                .forEach(tag -> {
+                    Label tagLabel = new Label(tag.tagName);
+                    tagLabel.getStyleClass().add("tag-label");
+                    tags.getChildren().add(tagLabel);
+                });
     }
 
     @Override

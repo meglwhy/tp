@@ -1,20 +1,18 @@
-
 .error {
-    -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */
+    -fx-text-fill: #d80000 !important;
+    -fx-font-weight: bold;
 }
 
-.list-cell:empty {
-    /* Empty cells will not have alternating colours */
-    -fx-background: #383838;
-}
-
-.tag-selector {
-    -fx-border-width: 1;
-    -fx-border-color: white;
-    -fx-border-radius: 3;
+.tag-label {
     -fx-background-radius: 3;
+    -fx-background-color: #b81cff;
+    -fx-text-fill: #FFFFFF !important;
+    -fx-padding: 3 8 3 8;
 }
 
+/* Tooltip text */
 .tooltip-text {
-    -fx-text-fill: white;
+    -fx-text-fill: #FF8C00; /* Orange text */
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI";
 }
