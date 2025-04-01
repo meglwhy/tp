@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.GuiSettings;
@@ -79,6 +78,10 @@ public class MainWindow extends UiPart<Stage> {
         sessionListPanel = new SessionListPanel(logic.getFilteredSessionList(), logic);
         sessionListPanelPlaceholder.getChildren().add(sessionListPanel.getRoot());
 
+        logic.updateFilteredSessionList(session -> false);
+        sessionListPanel.setSelectedHousehold("Select household to view sessions", null);
+        sessionListPanel.showAddSessionButton(false);
+
         // Create the HouseholdListPanel and pass the SessionListPanel to it
         householdListPanel = new HouseholdListPanel(logic.getFilteredHouseholdList(), sessionListPanel);
         householdListPanelPlaceholder.getChildren().add(householdListPanel.getRoot());
@@ -103,7 +106,7 @@ public class MainWindow extends UiPart<Stage> {
                         // If no household is selected, clear the session list
                         logic.updateFilteredSessionList(session -> false);
                         // Indicate that no household is selected
-                        sessionListPanel.setSelectedHousehold("Displaying all sessions", null);
+                        sessionListPanel.setSelectedHousehold("Select household to view sessions", null);
                         // Hide the addSessionButton
                         sessionListPanel.showAddSessionButton(false);
                     }

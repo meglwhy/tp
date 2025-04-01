@@ -9,7 +9,7 @@
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <HBox spacing="10" alignment="CENTER_LEFT" VBox.vgrow="NEVER">
     <Label fx:id="selectedHouseholdLabel"
-           text="Displaying all sessions"
+           text="Select household to view sessions"
            HBox.hgrow="ALWAYS"
            maxWidth="Infinity"
            styleClass="truncated-label"/>
