@@ -17,7 +17,7 @@ import seedu.address.model.household.HouseholdContainsKeywordsPredicate;
  */
 public class FindHouseholdCommand extends Command {
 
-    public static final String COMMAND_WORD = "find-household";
+    public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all households whose names, addresses, tags, "
             + "household ID or phone numbers contain any of the specified keywords (case-insensitive)"
