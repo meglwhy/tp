@@ -35,37 +35,60 @@
 /* Command box */
 #commandTextField {
     -fx-background-color: #FFFFFF;
-    -fx-border-color: lightgrey;
+    -fx-border-color: #8c4811;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6px;
     -fx-border-width: 1;
     -fx-text-fill: black;
 }
 
 /* Result display */
 .result-display {
-    -fx-background-color: #FAD6A5 !important; /* Pale orange */
+    -fx-control-inner-background: #ffebd3; /* Inner area */
+    -fx-background-color: #ffebd3;
+    -fx-border-color: #955a2e;
+    -fx-border-width: 1;
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 13pt;
     -fx-text-fill: black;
-    -fx-border-color: lightgrey;
 }
 
-.result-display .label {
-    -fx-text-fill: black !important;
+.result-display .content {
+    -fx-background-color: #ffebd3;
+}
+
+.result-display .scroll-pane {
+    -fx-background-color: #ffebd3;
+    -fx-background-radius: 6;
+}
+
+.result-display .viewport {
+    -fx-background-color: #ffebd3;
+}
+
+.split-pane .split-pane:horizontal .split-pane-divider {
+    -fx-background-color: #955a2e; /* Light brown parchment */
+    -fx-border-color: #955a2e;     /* Medium brown */
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
 }
 
 /* ListView */
 .list-view {
     -fx-background-insets: 0;
-    -fx-padding: 0;
-    -fx-background-color: #FFFFFF; /* Light orange */
-    -fx-border-color: lightgrey;
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #8c4811;
     -fx-border-width: 1;
+    -fx-padding: 0;
 }
 
 .list-cell {
-    -fx-label-padding: 0;
-    -fx-graphic-text-gap: 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
     -fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-border-color: lightgrey;
 }
 
 .list-cell:empty {
@@ -108,13 +131,13 @@
 #cardPane {
     -fx-background-color: transparent;
     -fx-border-width: 1;
-    -fx-border-color: lightgrey;
+    -fx-border-color: #a56c50;
 }
 
 /* Status bar */
 .status-bar, .status-bar-with-border {
     -fx-background-color: #FFE5B4;
-    -fx-border-color: lightgrey;
+    -fx-border-color: #a56c50;
     -fx-border-width: 1px;
 }
 
@@ -126,12 +149,11 @@
 
 /* Pane with border */
 .pane-with-border {
-    -fx-background-color: #FDF5E6;
-    -fx-border-color: lightgrey;
+    -fx-background-color: #ffdfad;
+    -fx-border-color: #a56c50;
     -fx-border-width: 1;
 }
 
-/* Menu Bar */
 .menu-bar {
     -fx-background-color: #FF8C00;
     -fx-border-color: lightgrey;
@@ -143,6 +165,45 @@
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
     -fx-opacity: 0.9;
+}
+
+/* Add these new rules for hover effects */
+.menu:hover {
+    -fx-background-color: #FFA74F; /* Your desired hover color */
+}
+
+.menu-item:hover {
+    -fx-background-color: #FFA74F; /* Same hover color for items */
+}
+
+/* Optional: Style for when menu is showing its items */
+.menu:showing {
+    -fx-background-color: #FF8C00; /* Keep original color when expanded */
+}.menu-bar {
+     -fx-background-color: #FF8C00;
+     -fx-border-color: #a56c50;
+     -fx-border-width: 0 0 1 0;
+ }
+
+.menu-bar .label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 0.9;
+}
+
+/* Add these new rules for hover effects */
+.menu:hover, .menu-item:hover {
+    -fx-background-color: #FFA74F; /* Your desired hover color */
+}
+
+.menu-item {
+    -fx-background-color: #FF8C00; /* Same hover color for items */
+}
+
+/* Optional: Style for when menu is showing its items */
+.menu:showing {
+    -fx-background-color: #FFD180; /* Keep original color when expanded */
 }
 
 /* Button Styling */
