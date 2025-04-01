@@ -25,7 +25,7 @@ import seedu.address.model.tag.Tag;
  */
 public class EditHouseholdCommand extends Command {
 
-    public static final String COMMAND_WORD = "edit-household";
+    public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the household identified "
             + "by the household ID. "
