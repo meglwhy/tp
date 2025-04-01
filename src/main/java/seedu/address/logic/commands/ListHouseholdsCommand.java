@@ -9,7 +9,7 @@ import seedu.address.model.Model;
  */
 public class ListHouseholdsCommand extends Command {
 
-    public static final String COMMAND_WORD = "list-households";
+    public static final String COMMAND_WORD = "list";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all households in the household book.\n"
             + "Example: " + COMMAND_WORD;
 

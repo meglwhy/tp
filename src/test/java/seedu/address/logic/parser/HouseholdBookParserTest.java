@@ -8,9 +8,13 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.AddHouseholdCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DeleteHouseholdCommand;
+import seedu.address.logic.commands.EditHouseholdCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindHouseholdCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListHouseholdsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -41,9 +45,37 @@ public class HouseholdBookParserTest {
     }
 
     @Test
+    public void parseCommand_addHouseholdCommand_returnsAddHouseholdCommand() throws Exception {
+        // "list" should return a ListHouseholdsCommand instance.
+        Command command = parser.parseCommand("add n/sample name a/sample rd p/91234567");
+        assertTrue(command instanceof AddHouseholdCommand);
+    }
+
+    @Test
+    public void parseCommand_editHouseholdCommand_returnsEditHouseholdCommand() throws Exception {
+        // "list" should return a ListHouseholdsCommand instance.
+        Command command = parser.parseCommand("edit id/H000001 n/change name");
+        assertTrue(command instanceof EditHouseholdCommand);
+    }
+
+    @Test
+    public void parseCommand_deleteHouseholdCommand_returnsDeleteHouseholdCommand() throws Exception {
+        // "list" should return a ListHouseholdsCommand instance.
+        Command command = parser.parseCommand("delete id/H000001");
+        assertTrue(command instanceof DeleteHouseholdCommand);
+    }
+
+    @Test
+    public void parseCommand_findHouseholdCommand_returnsFindHouseholdCommand() throws Exception {
+        // "list" should return a ListHouseholdsCommand instance.
+        Command command = parser.parseCommand("find keyword");
+        assertTrue(command instanceof FindHouseholdCommand);
+    }
+
+    @Test
     public void parseCommand_listHouseholdsCommand_returnsListHouseholdsCommand() throws Exception {
-        // "list-households" should return a ListHouseholdsCommand instance.
-        Command command = parser.parseCommand("list-households");
+        // "list" should return a ListHouseholdsCommand instance.
+        Command command = parser.parseCommand("list");
         assertTrue(command instanceof ListHouseholdsCommand);
     }
 

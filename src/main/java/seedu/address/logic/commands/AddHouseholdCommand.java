@@ -14,7 +14,7 @@ import seedu.address.model.household.Household;
  */
 public class AddHouseholdCommand extends Command {
 
-    public static final String COMMAND_WORD = "add-household";
+    public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a household to the household book. "
             + "Parameters: "

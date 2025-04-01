@@ -14,7 +14,7 @@ import seedu.address.ui.MainWindow;
  */
 public class DeleteHouseholdCommand extends Command {
 
-    public static final String COMMAND_WORD = "delete-household";
+    public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the household identified by the household ID.\n"
