@@ -108,12 +108,12 @@ add n/HOUSEHOLD_NAME a/ADDRESS p/PHONE_NUMBER
 
 Example of usage:
 ```
-add n/Tan Family a/Blk 30 Geylang Street 29, #06-40 p/91234567
+add n/Ng Family a/Blk 44 Bedok North Street, #13-03 p/95553737
 ```
 
 Expected outcome:
 ```
-New household added: Household H000012: Tan Family at Blk 30 Geylang Street 29, #06-40 (Contact: 91234567)
+New household added: Household H000004: Ng Family at Blk 44 Bedok North Street, #13-03 (Contact: 95553737)
 ```
 
 ![add-household success message](images/add-household.png)
@@ -146,7 +146,7 @@ delete id/HOUSEHOLD_ID
 
 Example of usage:
 ```
-delete id/H000019
+delete id/H000004
 ```
 
 The following confirmation dialog box will appear:
@@ -154,7 +154,7 @@ The following confirmation dialog box will appear:
 
 Upon confirmation, you will see this message:
 ```
-Deleted Household: Household H000013: Tan Family Urgent at Blk 30 Geylang Street 29, #06-40 (Contact: 98765432)
+Deleted Household: Household H000004: Ng Family at Blk 44 Bedok North Street, #13-03 (Contact: 95553737)
 ```
 
 > **Warning**: Deleting a household will also delete all associated sessions. This action cannot be undone.
@@ -304,6 +304,8 @@ Expected outcome:
 ```
 Viewing sessions for household: H000001
 ```
+
+![view-household-sessions outcome](images/view-household-sessions.png)
 
 --------------------------------------------------------------------------------------------------------------------
 
