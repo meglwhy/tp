@@ -45,7 +45,7 @@ If you're already familiar with similar applications, skip to [Quick Start](#qui
       - [Add a session](#add-a-session)
       - [Edit a session](#edit-a-session)
       - [Delete a session](#delete-a-session)
-      - [View household sessions](#view-household-sessions)
+      - [View household sessions](#view-h)
    - [General Commands](#general-commands)
       - [Clear data](#clear-data)
       - [Help](#help)
@@ -245,14 +245,14 @@ Total households: 4
 Sessions represent scheduled visits or meetings with households.
 
 ### Add a session
-You can schedule a session with the `add-session` command.
+You can schedule a session with the `add-s` command.
 ```
-add-session id/HOUSEHOLD_ID d/DATE tm/TIME
+add-s id/HOUSEHOLD_ID d/DATE tm/TIME
 ```
 
 Example of usage:
 ```
-add-session id/H000001 d/2025-05-15 tm/14:30
+add-s id/H000001 d/2025-05-15 tm/14:30
 ```
 
 Expected outcome:
@@ -263,14 +263,14 @@ New session added to household H000012: Session for H000012 on 2025-05-15 at 14:
 > **Warning**: The system will prevent double-booking if you already have another session scheduled at the same time.
 
 ### Edit a session
-You can modify a session with the `edit-session` command.
+You can modify a session with the `edit-s` command.
 ```
-edit-session id/HOUSEHOLD_ID-SESSION_INDEX d/DATE tm/TIME [n/NOTE]
+edit-s id/HOUSEHOLD_ID-SESSION_INDEX d/DATE tm/TIME [n/NOTE]
 ```
 
 Example of usage (with note):
 ```
-edit-session id/H000003-1 d/2025-03-16 tm/15:00 n/Follow-up on medical assistance application
+edit-s id/H000003-1 d/2025-03-16 tm/15:00 n/Follow-up on medical assistance application
 ```
 
 Expected outcome:
@@ -286,14 +286,14 @@ Note: Follow-up on medical assistance application
 > **Tip**: Use session notes to record key discussion points, action items, or observations during your visit.
 
 ### Delete a session
-You can remove a session with the `delete-session` command.
+You can remove a session with the `delete-s` command.
 ```
-delete-session id/HOUSEHOLD_ID-SESSION_INDEX
+delete-s id/HOUSEHOLD_ID-SESSION_INDEX
 ```
 
 Example of usage:
 ```
-delete-session id/H000001-1
+delete-s id/H000001-1
 ```
 
 Expected outcome:
@@ -302,14 +302,14 @@ Deleted session 1 from household H000001: Session for H000001 on 2025-03-16 at 1
 ```
 
 ### View household sessions
-You can switch to view all existing sessions for a household using the `view-household-sessions` command.
+You can switch to view all existing sessions for a household using the `view-h` command.
 ```
-view-household-sessions id/HOUSEHOLD_ID
+view-h id/HOUSEHOLD_ID
 ```
 
 Example of usage:
 ```
-view-household-sessions id/H000001
+view-h id/H000001
 ```
 
 Expected outcome:
@@ -414,7 +414,7 @@ A: Please submit issues on our [GitHub repository](https://github.com/AY2425S2-C
 * **Household**: A family or living unit that receives social services, represented as a single entity in Em-Social.
 * **Household ID**: A unique identifier (e.g, H000001) for each household.
 * **Session**: A scheduled appointment between a social worker and a household for follow-up, assistance, or other social services.
-* **Session Index**: The number assigned to each session for a household, used in commands like `edit-session` or `delete-session`.
+* **Session Index**: The number assigned to each session for a household, used in commands like `edit-s` or `delete-s`.
 * **Tag**: A keyword or label assigned to a household record to categorize or identify it easily.
 * **Duplicate Household**: A household entry containing name, address, or contact information that already exists in another household entry.
 * **Double-Booking**: A scheduling conflict where two sessions are assigned to the same time slot, which Em-Social prevents automatically.
@@ -438,10 +438,10 @@ A: Please submit issues on our [GitHub repository](https://github.com/AY2425S2-C
 | **Delete Household** | `delete id/ID`                                         | `delete id/H000001`                                      |
 | **List Households**  | `list`                                                | `list`                                                  |
 | **Find Households**  | `find KEYWORD [MORE_KEYWORDS]...`                      | `find "Tan Lee"`                                         |
-| **Add Session**      | `add-session id/ID d/DATE tm/TIME`                               | `add-session id/H000001 d/2025-05-15 tm/14:30`                     |
-| **Edit Session**     | `edit-session id/ID-INDEX d/DATE tm/TIME [n/NOTE]`               | `edit-session id/H000001-1 d/2025-03-16 tm/15:00 n/Follow-up`      |
-| **Delete Session**   | `delete-session id/ID-INDEX`                                     | `delete-session id/H000001-1`                                      |
-| **View Sessions**    | `view-household-sessions id/ID`                                  | `view-household-sessions id/H000001`                               |
+| **Add Session**      | `add-s id/ID d/DATE tm/TIME`                               | `add-s id/H000001 d/2025-05-15 tm/14:30`                     |
+| **Edit Session**     | `edit-s id/ID-INDEX d/DATE tm/TIME [n/NOTE]`               | `edit-s id/H000001-1 d/2025-03-16 tm/15:00 n/Follow-up`      |
+| **Delete Session**   | `delete-s id/ID-INDEX`                                     | `delete-s id/H000001-1`                                      |
+| **View Sessions**    | `view-h id/ID`                                  | `view-h id/H000001`                               |
 | **Clear Data**       | `clear`                                                          | `clear`                                                            |
 | **Help**             | `help`                                                           | `help`                                                             |
 | **Exit**             | `exit`                                                           | `exit`                                                             |

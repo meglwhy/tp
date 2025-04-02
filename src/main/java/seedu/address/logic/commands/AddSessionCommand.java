@@ -20,7 +20,7 @@ import seedu.address.model.session.SessionTime;
  */
 public class AddSessionCommand extends Command {
 
-    public static final String COMMAND_WORD = "add-session";
+    public static final String COMMAND_WORD = "add-s";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a session to a household. "
             + "Parameters: "
