@@ -1,5 +1,9 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
+
 import seedu.address.logic.commands.ViewFullSessionCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.household.HouseholdId;
@@ -12,21 +16,24 @@ import seedu.address.model.household.HouseholdId;
  * <p>Example usage: {@code view-full-s id/H000001-2}</p>
  */
 public class ViewFullSessionCommandParser implements Parser<ViewFullSessionCommand> {
-    public static final String MESSAGE_INVALID_FORMAT =
-            "Invalid format! Usage: view-full-s id/HOUSEHOLD_ID-SESSION_INDEX";
 
     @Override
-    public ViewFullSessionCommand parse(String userInput) throws ParseException {
-        userInput = userInput.trim();
-        if (!userInput.startsWith("id/")) {
-            throw new ParseException(MESSAGE_INVALID_FORMAT);
+    public ViewFullSessionCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ID);
+
+        if (!argMultimap.getValue(PREFIX_ID).isPresent()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ViewFullSessionCommand.MESSAGE_USAGE));
         }
 
-        String sessionIdentifier = userInput.substring(3).trim();
+        String sessionIdentifier = argMultimap.getValue(PREFIX_ID).get().trim();
         String[] parts = sessionIdentifier.split("-", 2);
 
         if (parts.length < 2) {
-            throw new ParseException(MESSAGE_INVALID_FORMAT);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ViewFullSessionCommand.MESSAGE_USAGE));
         }
 
         String householdIdStr = parts[0].trim();
