@@ -15,7 +15,7 @@
          xmlns="http://javafx.com/javafx/17"
          xmlns:fx="http://javafx.com/fxml/1"
          title="Em-Social"
-         minWidth="620" minHeight="450"
+         minWidth="700" minHeight="450"
          onCloseRequest="#handleExit">
   <icons>
     <Image url="@/images/address_book_32.png" />
