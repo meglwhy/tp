@@ -16,8 +16,6 @@ import seedu.address.model.household.HouseholdId;
  * <p>Example usage: {@code view-full-s id/H000001-2}</p>
  */
 public class ViewFullSessionCommandParser implements Parser<ViewFullSessionCommand> {
-    public static final String MESSAGE_INVALID_FORMAT =
-            "Invalid format! Usage: view-full-s id/HOUSEHOLD_ID-SESSION_INDEX";
 
     @Override
     public ViewFullSessionCommand parse(String args) throws ParseException {
@@ -26,14 +24,16 @@ public class ViewFullSessionCommandParser implements Parser<ViewFullSessionComma
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ID);
 
         if (!argMultimap.getValue(PREFIX_ID).isPresent()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewFullSessionCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ViewFullSessionCommand.MESSAGE_USAGE));
         }
 
         String sessionIdentifier = argMultimap.getValue(PREFIX_ID).get().trim();
         String[] parts = sessionIdentifier.split("-", 2);
 
         if (parts.length < 2) {
-            throw new ParseException(MESSAGE_INVALID_FORMAT);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ViewFullSessionCommand.MESSAGE_USAGE));
         }
 
         String householdIdStr = parts[0].trim();
