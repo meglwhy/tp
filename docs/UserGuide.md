@@ -28,6 +28,33 @@ We assume our users:
 
 If you're already familiar with similar applications, skip to [Quick Start](#quick-start) for setup instructions.
 
+- [Em-Social User Guide](#em-social-user-guide)
+   - [Introduction](#introduction)
+   - [Quick Start](#quick-start)
+   - [User Interface Overview](#user-interface-overview)
+   - [Command Syntax Guide](#command-syntax-guide)
+      - [Parameter Reference](#parameter-reference)
+      - [Special Syntax](#special-syntax)
+   - [Household Management](#household-management)
+      - [Add a household](#add-a-household)
+      - [Edit a household](#edit-a-household)
+      - [Delete a household](#delete-a-household)
+      - [Find households](#find-households)
+      - [List all households](#list-all-households)
+   - [Session Management](#session-management)
+      - [Add a session](#add-a-session)
+      - [Edit a session](#edit-a-session)
+      - [Delete a session](#delete-a-session)
+      - [View household sessions](#view-household-sessions)
+   - [General Commands](#general-commands)
+      - [Clear data](#clear-data)
+      - [Help](#help)
+      - [Exiting the program](#exiting-the-program)
+   - [Tips for Effective Use](#tips-for-effective-use)
+   - [Frequently Asked Questions](#frequently-asked-questions)
+   - [Glossary](#glossary)
+   - [Command Summary](#command-summary)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Quick Start
@@ -75,17 +102,18 @@ Before using the commands, please understand these conventions:
 All commands use the following format:
 `command-name prefix/PARAMETER [optional-prefix/OPTIONAL_PARAMETER]...`
 
-| Parameter                       | Meaning                               | Valid Examples                    |
-|---------------------------------|---------------------------------------|-----------------------------------|
-| `n/HOUSEHOLD_NAME`              | Name of household (e.g, family name)  | `n/Tan Family`, `n/Lee Household` |
-| `a/ADDRESS`                     | Household address                     | `a/Blk 30 Geylang St, #06-40`     |
-| `p/PHONE_NUMBER`                | 8-digit Singapore phone number        | `p/91234567`, `p/62221234`        |
-| `id/HOUSEHOLD_ID`               | Unique household ID                   | `id/H000001`, `id/H000123`        |
-| `id/HOUSEHOLD_ID-SESSION_INDEX` | Combined household ID + session index | `id/H000001-1`, `id/H000123-3`    |
-| `d/DATE`                        | Date in YYYY-MM-DD format             | `d/2025-03-15`, `d/2025-12-31`    |
-| `tm/TIME`                       | Time in 24-hour HH:MM format          | `tm/09:00`, `tm/14:30`            |
-| `t/TAG`                         | Category label (no spaces)            | `t/elderly`, `t/financial_aid`    |
-| `n/NOTE`                        | Session notes (free text)             | `n/Medical follow-up scheduled`   |
+| Parameter                       | Flag  | Meaning                               | Valid Examples                    |
+|---------------------------------|-------|---------------------------------------|-----------------------------------|
+| `n/HOUSEHOLD_NAME`              | `n/`  | Name of household (e.g, family name)  | `n/Tan Family`, `n/Lee Household` |
+| `a/ADDRESS`                     | `a/`  | Household address                     | `a/Blk 30 Geylang St, #06-40`     |
+| `p/PHONE_NUMBER`                | `p/`  | 8-digit Singapore phone number        | `p/91234567`, `p/62221234`        |
+| `id/HOUSEHOLD_ID`               | `id/` | Unique household ID                   | `id/H000001`, `id/H000123`        |
+| `id/HOUSEHOLD_ID-SESSION_INDEX` | `id/` | Combined household ID + session index | `id/H000001-1`, `id/H000123-3`    |
+| `d/DATE`                        | `d/`  | Date in YYYY-MM-DD format             | `d/2025-03-15`, `d/2025-12-31`    |
+| `tm/TIME`                       | `tm/` | Time in 24-hour HH:MM format          | `tm/09:00`, `tm/14:30`            |
+| `t/TAG`                         | `t/`  | Category label (no spaces)            | `t/elderly`, `t/financial_aid`    |
+| `n/NOTE`                        | `n/`  | Session notes (free text)             | `n/Medical follow-up scheduled`   |
+
 
 ### Special Syntax
 | Symbol          | Meaning                                  | Example                          |
@@ -159,19 +187,6 @@ Deleted Household: Household H000004: Ng Family at Blk 44 Bedok North Street, #1
 
 > **Warning**: Deleting a household will also delete all associated sessions. This action cannot be undone.
 
-### List all households
-You can view all households with the `list` command.
-```
-list
-```
-
-Expected outcome (System Message):
-```
-Listed all households.
-Total households: 4
-```
-
-> **Tip**: Use this command to refresh your view after searching or filtering.
 
 ### Find households
 You can search for households with the `find` command.
@@ -206,6 +221,21 @@ Expected outcome (with phrase matching):
 1. Tan Family (ID: H000001)
 ```
 > **Tip**: The search is case-insensitive and matches partial words. For example, "Tan" will match "Tan Family" and "Tanaka".
+
+
+### List all households
+You can view all households with the `list` command.
+```
+list
+```
+
+Expected outcome (System Message):
+```
+Listed all households.
+Total households: 4
+```
+
+> **Tip**: Use this command to refresh your view after searching or filtering.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -412,6 +442,7 @@ A: Please submit issues on our [GitHub repository](https://github.com/AY2425S2-C
 | **Clear Data**       | `clear`                                                          | `clear`                                                            |
 | **Help**             | `help`                                                           | `help`                                                             |
 | **Exit**             | `exit`                                                           | `exit`                                                             |
+> **Note:** All command names and prefixes must be entered in lower case.
 
 </div>
 
