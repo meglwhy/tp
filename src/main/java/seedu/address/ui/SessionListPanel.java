@@ -53,6 +53,8 @@ public class SessionListPanel extends UiPart<Region> {
      */
     public SessionListPanel(ObservableList<Session> sessionList, Logic logic) {
         super(FXML);
+        assert sessionList != null : "Session list must not be null";
+        assert logic != null : "Logic must not be null";
         this.logic = logic;
 
         // Sort sessions by date (descending), then time (descending)
@@ -102,6 +104,7 @@ public class SessionListPanel extends UiPart<Region> {
 
         if (selectedHouseholdId != null) {
             idField.setText(selectedHouseholdId);
+            assert !selectedHouseholdId.isEmpty() : "selectedHouseholdId should not be empty";
         }
 
         TextField dateField = new TextField();
@@ -145,6 +148,7 @@ public class SessionListPanel extends UiPart<Region> {
             CommandResult result = logic.execute(command);
             logger.info("Added new session: " + result.getFeedbackToUser());
             refresh();
+            assert sessionListView.getItems() != null : "Session list should be refreshed and not null";
         } catch (CommandException | ParseException e) {
             showError("Failed to add session: " + e.getMessage());
         }

@@ -35,6 +35,8 @@ public class HouseholdListPanel extends UiPart<Region> {
      */
     public HouseholdListPanel(ObservableList<Household> householdList, SessionListPanel sessionListPanel) {
         super(FXML);
+        assert householdList != null : "Household list must not be null";
+        assert sessionListPanel != null : "SessionListPanel must not be null";
         this.sessionListPanel = sessionListPanel;
         householdListView.setItems(householdList);
         householdListView.setCellFactory(listView -> new HouseholdListViewCell());
@@ -78,15 +80,19 @@ public class HouseholdListPanel extends UiPart<Region> {
      */
     public void selectHouseholdById(String householdId) {
         ObservableList<Household> households = householdListView.getItems();
+        //Ensure ID is valid
+        boolean found = false;
         for (int i = 0; i < households.size(); i++) {
             Household household = households.get(i);
             if (household.getId().toString().equals(householdId)) {
                 householdListView.getSelectionModel().clearAndSelect(i);
                 householdListView.scrollTo(i);
                 householdListView.getFocusModel().focus(i);
+                found = true;
                 break;
             }
         }
+        assert found : "No household found with ID " + householdId;
     }
 
     public ListView<Household> getListView() {

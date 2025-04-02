@@ -57,6 +57,9 @@ public class SessionCard extends UiPart<Region> {
      */
     public SessionCard(Session session, int displayedIndex, Logic logic, Runnable refreshCallback) {
         super(FXML);
+        assert session != null : "Session must not be null";
+        assert logic != null : "Logic must not be null";
+        assert refreshCallback != null : "Refresh callback must not be null";
         this.session = session;
         this.logic = logic;
         this.refreshCallback = refreshCallback;

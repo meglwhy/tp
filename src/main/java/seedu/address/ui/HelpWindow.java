@@ -47,6 +47,7 @@ public class HelpWindow extends UiPart<Stage> {
     public HelpWindow(Stage root) {
         super(FXML, root);
         helpMessage.setText(HELP_MESSAGE);
+        assert !helpMessage.getText().isEmpty() : "Help message should not be empty";
     }
 
     /**

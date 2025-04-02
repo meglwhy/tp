@@ -50,6 +50,8 @@ public class HouseholdCard extends UiPart<Region> {
      */
     public HouseholdCard(Household household, int displayedIndex) {
         super(FXML);
+        assert household != null : "Household must not be null";
+        assert displayedIndex >= 0 : "Displayed index must be non-negative";
         this.household = household;
 
         // Set spacing between tag labels
@@ -68,6 +70,10 @@ public class HouseholdCard extends UiPart<Region> {
                     tagLabel.getStyleClass().add("tag-label");
                     tags.getChildren().add(tagLabel);
                 });
+        //Ensure tags populated correctly
+        int tagCount = household.getTags().size();
+        assert tags.getChildren().size() == tagCount
+                : "Mismatch between tags in model and tag labels in UI";
     }
 
     @Override

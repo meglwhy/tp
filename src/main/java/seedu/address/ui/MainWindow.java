@@ -79,6 +79,9 @@ public class MainWindow extends UiPart<Stage> {
         sessionListPanelPlaceholder.getChildren().add(sessionListPanel.getRoot());
 
         logic.updateFilteredSessionList(session -> false);
+        assert logic.getFilteredSessionList().isEmpty()
+                : "After filtering out all sessions, the session list must be empty.";
+
         sessionListPanel.setSelectedHousehold("Select household to view sessions", null);
         sessionListPanel.showAddSessionButton(false);
 
