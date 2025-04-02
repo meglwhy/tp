@@ -67,7 +67,7 @@ If you're already familiar with similar applications, skip to [Quick Start](#qui
 
 2. Download the [latest release of Em-Social](https://github.com/AY2425S2-CS2103T-F10-2/tp/releases) from the releases page.
 
-3. Double-click the downloaded JAR file or run it from the command line using:
+3. Run it from the command line using:
    ```
    java -jar em-social.jar
    ```
