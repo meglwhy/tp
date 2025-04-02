@@ -21,12 +21,13 @@ public class HelpWindow extends UiPart<Stage> {
                     + "3. view-s id/HOUSEHOLD_ID\n"
                     + "4. add-s id/HOUSEHOLD_ID d/DATE (in YYYY-MM-DD) tm/TIME (in HH:mm)\n"
                     + "5. edit-s id/HOUSEHOLD_ID-SESSION_INDEX d/DATE tm/TIME [n/Follow up]\n"
-                    + "6. delete-s id/HOUSEHOLD_ID-SESSION_INDEX\n"
-                    + "7. list\n"
-                    + "8. find KEYWORD [MORE_KEYWORDS]\n"
-                    + "9. delete id/HOUSEHOLD_ID\n"
-                    + "10. clear\n"
-                    + "11. exit\n\n"
+                    + "6. view-full-s id/HOUSEHOLD_ID-SESSION_INDEX\n"
+                    + "7. delete-s id/HOUSEHOLD_ID-SESSION_INDEX\n"
+                    + "8. list\n"
+                    + "9. find KEYWORD [MORE_KEYWORDS]\n"
+                    + "10. delete id/HOUSEHOLD_ID\n"
+                    + "11. clear\n"
+                    + "12. exit\n\n"
                     + "For more information, refer to the User-Guide (link in dialog box) " + USERGUIDE_URL;
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
