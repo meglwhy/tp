@@ -15,39 +15,19 @@ import seedu.address.commons.core.LogsCenter;
  */
 public class HelpWindow extends UiPart<Stage> {
 
-    public static final String USERGUIDE_URL = "https://ay2425s2-cs2103t-f10-2.github.io/tp/index.html";
+    public static final String USERGUIDE_URL = "https://ay2425s2-cs2103t-f10-2.github.io/tp/UserGuide.html";
     public static final String HELP_MESSAGE =
-            "add: Adds a household to the household book.\n"
-                    + "Parameters: n/NAME a/ADDRESS p/CONTACT\n"
-                    + "Example: add n/Smith Family a/123 Main St p/98765432\n\n"
-                    + "edit: Edits the details of the household identified by the household ID. "
-                    + "Existing values will be overwritten by the input values.\n"
-                    + "Parameters: id/HOUSEHOLD_ID [n/NAME] [a/ADDRESS] [p/CONTACT] [t/TAG]...\n"
-                    + "Example: edit id/H000001 p/91234567 t/priority t/followup\n\n"
-                    + "view-household-sessions: Toggles between households, "
-                    + "to view the list of session for selected households.\n"
-                    + "Parameters: id/HOUSEHOLD_ID\n"
-                    + "Example: view-household-sessions id/H000001\n\n"
-                    + "add-session: Adds a session to a household.\n"
-                    + "Parameters: id/HOUSEHOLD_ID d/DATE (in YYYY-MM-DD) tm/TIME (in HH:mm)\n"
-                    + "Example: add-session id/H000001 d/2025-03-15 tm/14:30\n\n"
-                    + "edit-session: Edits the details of a session identified by household ID and session index. "
-                    + "Existing values will be overwritten.\n"
-                    + "Parameters: id/HOUSEHOLD_ID-SESSION_INDEX d/DATE tm/TIME [n/Follow up]\n"
-                    + "Example with note: edit-session id/H000006-2 d/2025-03-16 tm/15:00 n/Follow up required\n\n"
-                    + "delete-session: Deletes the session identified by household ID and session index.\n"
-                    + "Parameters: id/HOUSEHOLD_ID-SESSION_INDEX\n"
-                    + "Example: delete-session id/H000002-2\n\n"
-                    + "list: Lists all households.\n\n"
-                    + "find: Finds all households whose names, addresses, or tags contain any of the "
-                    + "specified keywords (case-insensitive) and displays them as a list.\n"
-                    + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-                    + "Example: find smith\n\n"
-                    + "delete: Deletes the household identified by the household ID.\n"
-                    + "Parameters: id/HOUSEHOLD_ID\n"
-                    + "Example: delete id/H000001\n\n"
-                    + "clear: Removes ALL data. Requires confirmation before proceeding.\n\n"
-                    + "exit: Exits the application gracefully.\n\n"
+            "1. add n/NAME a/ADDRESS p/CONTACT\n"
+                    + "2. edit id/HOUSEHOLD_ID [n/NAME] [a/ADDRESS] [p/CONTACT] [t/TAG]...\n"
+                    + "3. view-s id/HOUSEHOLD_ID\n"
+                    + "4. add-s id/HOUSEHOLD_ID d/DATE (in YYYY-MM-DD) tm/TIME (in HH:mm)\n"
+                    + "5. edit-s id/HOUSEHOLD_ID-SESSION_INDEX d/DATE tm/TIME [n/Follow up]\n"
+                    + "6. delete-s id/HOUSEHOLD_ID-SESSION_INDEX\n"
+                    + "7. list\n"
+                    + "8. find KEYWORD [MORE_KEYWORDS]\n"
+                    + "9. delete id/HOUSEHOLD_ID\n"
+                    + "10. clear\n"
+                    + "11. exit\n\n"
                     + "For more information, refer to the User-Guide (link in dialog box) " + USERGUIDE_URL;
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
