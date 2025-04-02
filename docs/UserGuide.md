@@ -6,25 +6,25 @@ pageNav: 3
 # Em-Social User Guide
 
 ## Introduction
-Welcome to Em-Social, a specialized management software designed for social workers in Singapore. Em-Social streamlines household data management and session scheduling through an intuitive interface, allowing you to focus on what matters most – supporting the communities you serve.
-
-Em-Social enables you to maintain detailed records of households, schedule and track visits, prevent scheduling conflicts, and efficiently organize your caseload through powerful filtering and search capabilities.
+Welcome to Em-Social, a specialized management software designed for **streamlining scheduling logistics and household data management**.
+Em-Social thereby frees you up to focus on what matters most – supporting the communities you serve.
 
 ### Who is Em-Social for?
-Em-Social is designed specifically for social workers who:
-1. Manage multiple household cases simultaneously
-2. Need to schedule and track regular home visits
-3. Require a simple way to maintain case notes and follow-ups
+Em-Social is designed specifically for social workers in **Singapore** who:
+1. Manage **multiple** household cases simultaneously
+2. Need to schedule and track **regular** home visits
+3. Require a **simple** way to maintain case notes and follow-ups
 4. Work in community service centers or family service centers
-5. Need a lightweight solution that works offline
+5. Need a **lightweight** solution that works offline
 
 ### Assumptions about our users
 We assume our users:
 1. Are comfortable with basic typing and text-based commands
-2. Have basic computer literacy (can navigate files, install programs)
-3. Prefer keyboard-based workflows over extensive mouse navigation
-4. Need to quickly enter and retrieve information during busy workdays
-5. May have limited technical support in their workplace
+2. Comfortable **navigating** through files/ folders
+3. Comfortable **installing** programs from the internet
+4. Prefer keyboard-based workflows to extensive mouse navigation
+5. Need to quickly enter and retrieve information during busy workdays
+6. May have limited technical support in their workplace
 
 If you're already familiar with similar applications, skip to [Quick Start](#quick-start) for setup instructions.
 
@@ -146,7 +146,7 @@ New household added: Household H000004: Ng Family at Blk 44 Bedok North Street, 
 
 ![add-household success message](images/add-household.png)
 
-> **Tip**: Use meaningful tags to categorize households for easier filtering later. Common tags might include "elderly", "children", "financial-assistance", or "priority".
+> **Tip**: Use the edit command below to categorize households using tags.
 
 ### Edit a household
 You can modify household details with the `edit` command.
@@ -164,7 +164,9 @@ Expected outcome:
 Edited Household: Household H000001: Tan Family at Blk 30 Geylang Street 29, #06-40 (Contact: 98765432) Tags: [Urgent]
 ```
 
-> **Warning**: Editing a household to match an existing household will be rejected to prevent duplicates.
+> **Warning**: Editing a household to match an existing household will be rejected to prevent duplicate households.
+
+> **Tip**: Use meaningful tags to categorize households for easier filtering later. Common tags might include "elderly", "children", "financial-assistance", or "priority".
 
 ### Delete a household
 You can remove a household with the `delete` command.
@@ -414,6 +416,7 @@ A: Please submit issues on our [GitHub repository](https://github.com/AY2425S2-C
 * **Session**: A scheduled appointment between a social worker and a household for follow-up, assistance, or other social services.
 * **Session Index**: The number assigned to each session for a household, used in commands like `edit-session` or `delete-session`.
 * **Tag**: A keyword or label assigned to a household record to categorize or identify it easily.
+* **Duplicate Household**: A household entry containing name, address, or contact information that already exists in another household entry.
 * **Double-Booking**: A scheduling conflict where two sessions are assigned to the same time slot, which Em-Social prevents automatically.
 * **Case Notes**: Detailed information recorded during or after a session, documenting observations, actions taken, and follow-up items.
 * **Command Box**: The text input area at the bottom of the application where you type commands.
