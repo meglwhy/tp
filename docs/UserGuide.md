@@ -264,26 +264,6 @@ Expected outcome:
 Deleted session 1 from household H000001: Session for H000001 on 2025-03-16 at 15:00
 ```
 
-### List sessions
-You can view all sessions for a specific household with the `list-sessions` command.
-```
-list-sessions id/HOUSEHOLD_ID
-```
-
-Example of usage:
-```
-list-sessions id/H000001
-```
-
-Expected outcome:
-```
-Listed all sessions for household H000001:
-1. Date: 2025-03-15, Time: 14:30
-2. Date: 2025-04-01, Time: 10:00
-```
-
-![list-sessions success message](images/list-session.png)
-
 ### View household sessions
 You can switch to view all existing sessions for a household using the `view-household-sessions` command.
 ```
@@ -421,7 +401,6 @@ A: Please submit issues on our [GitHub repository](https://github.com/AY2425S2-C
 | **Add Session**      | `add-session id/ID d/DATE tm/TIME`                               | `add-session id/H000001 d/2025-05-15 tm/14:30`                     |
 | **Edit Session**     | `edit-session id/ID-INDEX d/DATE tm/TIME [n/NOTE]`               | `edit-session id/H000001-1 d/2025-03-16 tm/15:00 n/Follow-up`      |
 | **Delete Session**   | `delete-session id/ID-INDEX`                                     | `delete-session id/H000001-1`                                      |
-| **List Sessions**    | `list-sessions id/ID`                                            | `list-sessions id/H000001`                                         |
 | **View Sessions**    | `view-household-sessions id/ID`                                  | `view-household-sessions id/H000001`                               |
 | **Clear Data**       | `clear`                                                          | `clear`                                                            |
 | **Help**             | `help`                                                           | `help`                                                             |
