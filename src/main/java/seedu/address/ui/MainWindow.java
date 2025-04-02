@@ -12,8 +12,14 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.AddSessionCommand;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.EditSessionCommand;
+import seedu.address.logic.commands.ViewHouseholdSessionsCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ArgumentMultimap;
+import seedu.address.logic.parser.ArgumentTokenizer;
+import seedu.address.logic.parser.CliSyntax;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.household.Household;
 
@@ -233,29 +239,24 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
-            //Pop up logic based on special result message
+            //Pop up logic based on view-full-s result message
             if (commandResult.getFeedbackToUser().startsWith("Viewing session")) {
                 showSessionPopup(commandResult.getFeedbackToUser());
             }
 
             // Extract household id from relevant commands
-            if (commandText.trim().startsWith("view-s")
-                    || commandText.trim().startsWith("add-s")
-                    || commandText.trim().startsWith("edit-s")) {
-                String[] parts = commandText.split("\\s+");
-                String targetId = null;
-                for (String part : parts) {
-                    if (part.startsWith("id/")) {
-                        targetId = part.substring(3); // remove "id/"
-                        if (targetId.contains("-")) {
-                            targetId = targetId.split("-")[0]; // In case of "H000001-1", just get "H000001"
-                        }
-                        break;
+            if (commandText.trim().startsWith(ViewHouseholdSessionsCommand.COMMAND_WORD)
+                    || commandText.trim().startsWith(AddSessionCommand.COMMAND_WORD)
+                    || commandText.trim().startsWith(EditSessionCommand.COMMAND_WORD)) {
+                ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(commandText, CliSyntax.PREFIX_ID);
+
+                argMultimap.getValue(CliSyntax.PREFIX_ID).ifPresent(id -> {
+                    String targetId = id.trim();
+                    if (targetId.contains("-")) {
+                        targetId = targetId.split("-")[0]; // Remove session index
                     }
-                }
-                if (targetId != null) {
                     householdListPanel.selectHouseholdById(targetId);
-                }
+                });
             }
 
             if (commandResult.isShowHelp()) {
