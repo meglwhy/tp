@@ -51,6 +51,11 @@ public class HouseholdCard extends UiPart<Region> {
     public HouseholdCard(Household household, int displayedIndex) {
         super(FXML);
         this.household = household;
+
+        // Set spacing between tag labels
+        tags.setHgap(4); // horizontal space between tags
+        tags.setVgap(4); // vertical space if tags wrap
+
         id.setText(displayedIndex + ". ");
         householdId.setText(household.getId().toString());
         name.setText(household.getName().toString());

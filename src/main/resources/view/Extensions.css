@@ -4,8 +4,9 @@
 }
 
 .tag-label {
-    -fx-background-radius: 3;
-    -fx-background-color: #b81cff;
+    -fx-background-radius: 4;
+    -fx-background-color: #ab00fb;
+    -fx-opacity: 0.7;
     -fx-text-fill: #FFFFFF !important;
     -fx-padding: 3 8 3 8;
 }
