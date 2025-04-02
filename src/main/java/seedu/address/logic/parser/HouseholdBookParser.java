@@ -18,7 +18,6 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindHouseholdCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListHouseholdsCommand;
-import seedu.address.logic.commands.ListSessionsCommand;
 import seedu.address.logic.commands.ViewHouseholdSessionsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -66,9 +65,6 @@ public class HouseholdBookParser {
         }
         case DeleteSessionCommand.COMMAND_WORD -> {
             return new DeleteSessionCommandParser().parse(arguments);
-        }
-        case ListSessionsCommand.COMMAND_WORD -> {
-            return new ListSessionsCommandParser().parse(arguments);
         }
         case ClearCommand.COMMAND_WORD -> {
             return new ClearCommand();
