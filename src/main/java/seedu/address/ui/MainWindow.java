@@ -15,6 +15,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddSessionCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.EditSessionCommand;
+import seedu.address.logic.commands.ViewFullSessionCommand;
 import seedu.address.logic.commands.ViewHouseholdSessionsCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ArgumentMultimap;
@@ -239,25 +240,65 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
-            //Pop up logic based on view-full-s result message
-            if (commandResult.getFeedbackToUser().startsWith("Viewing session")) {
-                showSessionPopup(commandResult.getFeedbackToUser());
-            }
+            ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(commandText, CliSyntax.PREFIX_ID);
 
-            // Extract household id from relevant commands
+
             if (commandText.trim().startsWith(ViewHouseholdSessionsCommand.COMMAND_WORD)
                     || commandText.trim().startsWith(AddSessionCommand.COMMAND_WORD)
-                    || commandText.trim().startsWith(EditSessionCommand.COMMAND_WORD)) {
-                ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(commandText, CliSyntax.PREFIX_ID);
+                    || commandText.trim().startsWith(EditSessionCommand.COMMAND_WORD)
+                    || commandText.trim().startsWith(ViewFullSessionCommand.COMMAND_WORD)) {
 
-                argMultimap.getValue(CliSyntax.PREFIX_ID).ifPresent(id -> {
-                    String targetId = id.trim();
-                    if (targetId.contains("-")) {
-                        targetId = targetId.split("-")[0]; // Remove session index
+                String[] parts = commandText.split("\\s+");
+                String targetId = null;
+                for (String part : parts) {
+                    if (part.startsWith("id/")) {
+                        targetId = part.substring(3); // remove "id/"
+                        if (targetId.contains("-")) {
+                            targetId = targetId.split("-")[0]; // In case of "H000001-1", just get "H000001"
+                        }
+                        break;
                     }
+                }
+                if (targetId != null) {
                     householdListPanel.selectHouseholdById(targetId);
+                }
+            }
+
+            if (commandText.trim().startsWith(ViewFullSessionCommand.COMMAND_WORD)) {
+                argMultimap.getValue(CliSyntax.PREFIX_ID).ifPresent(idValue -> {
+                    String[] parts = idValue.trim().split("-", 2);
+                    if (parts.length == 2) {
+                        String householdIdStr = parts[0];
+                        try {
+                            int sessionIndex = Integer.parseInt(parts[1]);
+                            logic.getHouseholdBook()
+                                    .getHouseholdById(
+                                            seedu.address.model.household.HouseholdId.fromString(householdIdStr))
+                                    .ifPresent(household -> {
+                                        // Make sure sessionIndex is valid
+                                        if (sessionIndex >= 1 && sessionIndex <= household.getSessions().size()) {
+                                            seedu.address.model.session.Session session =
+                                                    household.getSessions().get(sessionIndex - 1);
+
+                                            String fullDetails = String.format(
+                                                    "Household ID: %s\nDate: %s\nTime: %s\nNote: %s",
+                                                    session.getHouseholdId(),
+                                                    session.getDate(),
+                                                    session.getTime(),
+                                                    session.hasNote() ? session.getNote() : "No note"
+                                            );
+
+                                            showSessionPopup(fullDetails);
+                                        }
+                                    });
+                        } catch (NumberFormatException nfe) {
+                            // If parts[1] isn't a valid integer, just ignore or handle gracefully
+                        }
+                    }
                 });
             }
+
+
 
             if (commandResult.isShowHelp()) {
                 handleHelp();

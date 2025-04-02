@@ -62,8 +62,6 @@ public class ViewFullSessionCommand extends Command {
                 session.getTime(),
                 session.hasNote() ? session.getNote() : "No note");
 
-        String resultMessage = String.format(MESSAGE_SUCCESS, sessionIndex) + "\n\n" + fullDetails;
-
-        return new CommandResult(resultMessage);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, sessionIndex));
     }
 }
