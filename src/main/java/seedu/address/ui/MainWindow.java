@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.GuiSettings;
@@ -199,6 +200,29 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
+     * Displays a pop-up window containing detailed information of a session.
+     *
+     * <p>This method creates an informational alert dialog that shows full session details provided
+     * in {@code sessionDetails}. The dialog adjusts its size automatically to accommodate the length
+     * of the session details, making it particularly suitable for lengthy notes.</p>
+     *
+     * @param sessionDetails A formatted string containing detailed information about the session.
+     */
+    private void showSessionPopup(String sessionDetails) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initOwner(primaryStage);
+        alert.setTitle("Session Details");
+        alert.setHeaderText("Full Session Information");
+        alert.setContentText(sessionDetails);
+
+        // Make the dialog expandable and auto-sizing based on notes length
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+        alert.showAndWait();
+    }
+
+
+    /**
      * Executes the command and returns the result.
      *
      * @see seedu.address.logic.Logic#execute(String)
@@ -209,10 +233,15 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
+            //Pop up logic based on special result message
+            if (commandResult.getFeedbackToUser().startsWith("Viewing session")) {
+                showSessionPopup(commandResult.getFeedbackToUser());
+            }
+
             // Extract household id from relevant commands
-            if (commandText.trim().startsWith("view-household-sessions")
-                    || commandText.trim().startsWith("add-session")
-                    || commandText.trim().startsWith("edit-session")) {
+            if (commandText.trim().startsWith("view-s")
+                    || commandText.trim().startsWith("add-s")
+                    || commandText.trim().startsWith("edit-s")) {
                 String[] parts = commandText.split("\\s+");
                 String targetId = null;
                 for (String part : parts) {

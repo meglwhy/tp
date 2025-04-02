@@ -12,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.EditSessionCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.session.Session;
@@ -120,7 +121,7 @@ public class SessionCard extends UiPart<Region> {
         // When user clicks OK, we get the new values
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == javafx.scene.control.ButtonType.OK) {
-                // If user changed date/time, run edit-session
+                // If user changed date/time, run edit-s
                 String newDate = dateField.getText().trim();
                 String newTime = timeField.getText().trim();
                 String newNote = noteField.getText().trim();
@@ -135,8 +136,8 @@ public class SessionCard extends UiPart<Region> {
     }
 
     /**
-     * Checks what changed and issues appropriate edit-session command.
-     * Now uses the enhanced edit-session command that can handle both date/time and note updates.
+     * Checks what changed and issues appropriate edit-s command.
+     * Now uses the enhanced edit-s command that can handle both date/time and note updates.
      */
     private void handleSessionUpdate(String householdIdStr, int index,
                                      String oldDate, String oldTime, String oldNote,
@@ -144,20 +145,20 @@ public class SessionCard extends UiPart<Region> {
         boolean dateOrTimeChanged = !newDate.equals(oldDate) || !newTime.equals(oldTime);
         boolean noteChanged = !newNote.equals(oldNote);
 
-        // If either date/time or note changed, use edit-session command
+        // If either date/time or note changed, use edit-s command
         if (dateOrTimeChanged || noteChanged) {
             String editCommand;
             // If note changed, include it in the command
             if (noteChanged) {
                 editCommand = String.format(
-                        "edit-session id/%s-%d d/%s tm/%s n/%s",
-                        householdIdStr, index, newDate, newTime, newNote
+                        "%s id/%s-%d d/%s tm/%s n/%s",
+                        EditSessionCommand.COMMAND_WORD, householdIdStr, index, newDate, newTime, newNote
                 );
             } else {
                 // Only date/time changed
                 editCommand = String.format(
-                        "edit-session id/%s-%d d/%s tm/%s",
-                        householdIdStr, index, newDate, newTime
+                        "%s id/%s-%d d/%s tm/%s",
+                        EditSessionCommand.COMMAND_WORD, householdIdStr, index, newDate, newTime
                 );
             }
             try {

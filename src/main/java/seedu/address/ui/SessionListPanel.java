@@ -71,7 +71,7 @@ public class SessionListPanel extends UiPart<Region> {
 
     /**
      * Lets other classes set which household is selected.
-     * This updates the top label and toggles the add-session button.
+     * This updates the top label and toggles the add-s button.
      */
     public void setSelectedHousehold(String householdName, String householdId) {
         selectedHouseholdLabel.setText(householdName);
