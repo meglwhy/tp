@@ -148,6 +148,7 @@ New household added: Household H000004: Ng Family at Blk 44 Bedok North Street, 
 
 > **Tip**: Use the edit command below to categorize households using tags.
 
+
 ### Edit a household
 You can modify household details with the `edit` command.
 ```
