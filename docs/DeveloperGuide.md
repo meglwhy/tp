@@ -142,7 +142,7 @@ Use case resumes from step 3 or ends if saving is unsuccessful.
 
 **Main Success Scenario:**
 1. User schedules an engagement session with a specified household.
-2. System performs (**Prevent Double-Booking (U4)**) to prevent scheduling conflicts.
+2. System performs <u>(**Prevent Double-Booking (U4)**)<u> to prevent scheduling conflicts.
 3. If there is no conflict, system saves the session and updates the calendar.
 4. System displays a confirmation message.
 
