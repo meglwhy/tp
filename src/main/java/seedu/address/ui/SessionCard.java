@@ -9,7 +9,6 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -26,8 +25,6 @@ public class SessionCard extends UiPart<Region> {
 
     public final Session session;
 
-    @FXML
-    private HBox cardPanel;
     @FXML
     private Label id;
     @FXML

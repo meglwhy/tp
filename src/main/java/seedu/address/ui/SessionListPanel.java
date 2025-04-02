@@ -16,7 +16,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddSessionCommand;
@@ -33,9 +32,6 @@ public class SessionListPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(SessionListPanel.class);
 
     @FXML
-    private VBox sessionListContainer;
-
-    @FXML
     private Label selectedHouseholdLabel;
 
     @FXML
@@ -46,7 +42,6 @@ public class SessionListPanel extends UiPart<Region> {
 
     private final Logic logic;
     private String selectedHouseholdId = null;
-
 
     /**
      * Creates a {@code SessionListPanel} with the given {@code ObservableList} and {@code Logic}.

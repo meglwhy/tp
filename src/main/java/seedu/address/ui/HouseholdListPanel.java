@@ -22,8 +22,6 @@ public class HouseholdListPanel extends UiPart<Region> {
 
     private final SessionListPanel sessionListPanel;
 
-    private ListView<Household> listView;
-
     /**
      * Constructs a {@code HouseholdListPanel} with the given list of households.
      *
@@ -63,6 +61,7 @@ public class HouseholdListPanel extends UiPart<Region> {
             if (empty || household == null) {
                 setGraphic(null);
                 setText(null);
+                setStyle("-fx-background-color: white");
             } else {
                 setGraphic(new HouseholdCard(household, getIndex() + 1).getRoot());
                 if (getIndex() % 2 == 0) {
