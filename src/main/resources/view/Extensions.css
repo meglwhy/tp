@@ -10,10 +10,3 @@
     -fx-text-fill: #FFFFFF !important;
     -fx-padding: 3 8 3 8;
 }
-
-/* Tooltip text */
-.tooltip-text {
-    -fx-text-fill: #FF8C00; /* Orange text */
-    -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI";
-}

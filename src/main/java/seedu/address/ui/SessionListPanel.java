@@ -16,7 +16,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddSessionCommand;
@@ -33,9 +32,6 @@ public class SessionListPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(SessionListPanel.class);
 
     @FXML
-    private VBox sessionListContainer;
-
-    @FXML
     private Label selectedHouseholdLabel;
 
     @FXML
@@ -47,12 +43,13 @@ public class SessionListPanel extends UiPart<Region> {
     private final Logic logic;
     private String selectedHouseholdId = null;
 
-
     /**
      * Creates a {@code SessionListPanel} with the given {@code ObservableList} and {@code Logic}.
      */
     public SessionListPanel(ObservableList<Session> sessionList, Logic logic) {
         super(FXML);
+        assert sessionList != null : "Session list must not be null";
+        assert logic != null : "Logic must not be null";
         this.logic = logic;
 
         // Sort sessions by date (descending), then time (descending)
@@ -74,7 +71,7 @@ public class SessionListPanel extends UiPart<Region> {
 
     /**
      * Lets other classes set which household is selected.
-     * This updates the top label and toggles the add-session button.
+     * This updates the top label and toggles the add-s button.
      */
     public void setSelectedHousehold(String householdName, String householdId) {
         selectedHouseholdLabel.setText(householdName);
@@ -102,6 +99,7 @@ public class SessionListPanel extends UiPart<Region> {
 
         if (selectedHouseholdId != null) {
             idField.setText(selectedHouseholdId);
+            assert !selectedHouseholdId.isEmpty() : "selectedHouseholdId should not be empty";
         }
 
         TextField dateField = new TextField();
@@ -145,6 +143,7 @@ public class SessionListPanel extends UiPart<Region> {
             CommandResult result = logic.execute(command);
             logger.info("Added new session: " + result.getFeedbackToUser());
             refresh();
+            assert sessionListView.getItems() != null : "Session list should be refreshed and not null";
         } catch (CommandException | ParseException e) {
             showError("Failed to add session: " + e.getMessage());
         }

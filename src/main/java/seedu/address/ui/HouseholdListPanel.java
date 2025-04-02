@@ -22,8 +22,6 @@ public class HouseholdListPanel extends UiPart<Region> {
 
     private final SessionListPanel sessionListPanel;
 
-    private ListView<Household> listView;
-
     /**
      * Constructs a {@code HouseholdListPanel} with the given list of households.
      *
@@ -35,6 +33,8 @@ public class HouseholdListPanel extends UiPart<Region> {
      */
     public HouseholdListPanel(ObservableList<Household> householdList, SessionListPanel sessionListPanel) {
         super(FXML);
+        assert householdList != null : "Household list must not be null";
+        assert sessionListPanel != null : "SessionListPanel must not be null";
         this.sessionListPanel = sessionListPanel;
         householdListView.setItems(householdList);
         householdListView.setCellFactory(listView -> new HouseholdListViewCell());
@@ -61,6 +61,7 @@ public class HouseholdListPanel extends UiPart<Region> {
             if (empty || household == null) {
                 setGraphic(null);
                 setText(null);
+                setStyle("-fx-background-color: white");
             } else {
                 setGraphic(new HouseholdCard(household, getIndex() + 1).getRoot());
                 if (getIndex() % 2 == 0) {
@@ -78,15 +79,19 @@ public class HouseholdListPanel extends UiPart<Region> {
      */
     public void selectHouseholdById(String householdId) {
         ObservableList<Household> households = householdListView.getItems();
+        //Ensure ID is valid
+        boolean found = false;
         for (int i = 0; i < households.size(); i++) {
             Household household = households.get(i);
             if (household.getId().toString().equals(householdId)) {
                 householdListView.getSelectionModel().clearAndSelect(i);
                 householdListView.scrollTo(i);
                 householdListView.getFocusModel().focus(i);
+                found = true;
                 break;
             }
         }
+        assert found : "No household found with ID " + householdId;
     }
 
     public ListView<Household> getListView() {

@@ -11,18 +11,6 @@
     -fx-opacity: 0.9;
 }
 
-.label-bright {
-    -fx-text-fill: #000000;
-    -fx-opacity: 1;
-}
-
-.label-header {
-    -fx-font-size: 32pt;
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: #FF8C00;
-    -fx-opacity: 1;
-}
-
 /* Text field */
 .text-field {
     -fx-font-size: 12pt;
@@ -178,7 +166,7 @@
 
 /* Optional: Style for when menu is showing its items */
 .menu:showing {
-    -fx-background-color: #FF8C00; /* Keep original color when expanded */
+    -fx-background-color: #FFD180;
 }.menu-bar {
      -fx-background-color: #FF8C00;
      -fx-border-color: #a56c50;
