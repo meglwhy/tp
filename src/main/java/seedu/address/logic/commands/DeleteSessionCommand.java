@@ -29,7 +29,7 @@ import seedu.address.model.session.Session;
  */
 public class DeleteSessionCommand extends Command {
 
-    public static final String COMMAND_WORD = "delete-session";
+    public static final String COMMAND_WORD = "delete-s";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes the session identified by "
             + "HOUSEHOLD_ID-SESSION_INDEX.\n"
             + "Example: " + COMMAND_WORD + " H000002-2";
@@ -57,20 +57,17 @@ public class DeleteSessionCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        // Find the household
         Optional<Household> householdOpt = model.getHouseholdBook().getHouseholdById(householdId);
         if (householdOpt.isEmpty()) {
             throw new CommandException(String.format(MESSAGE_HOUSEHOLD_NOT_FOUND, householdId));
         }
         Household household = householdOpt.get();
 
-        // Get the session list for that household
         List<Session> sessions = household.getSessions();
         if (sessionIndex < 1 || sessionIndex > sessions.size()) {
             throw new CommandException(String.format(MESSAGE_INVALID_SESSION_INDEX, sessionIndex, householdId));
         }
 
-        // Retrieve the session to delete
         Session sessionToDelete = sessions.get(sessionIndex - 1);
 
         // Use hidden ID to remove from the entire model (household + global session list)

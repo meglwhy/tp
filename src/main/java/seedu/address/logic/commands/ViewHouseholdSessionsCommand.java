@@ -14,7 +14,7 @@ import seedu.address.model.session.Session;
  * Views all sessions for the household identified by the given household id.
  */
 public class ViewHouseholdSessionsCommand extends Command {
-    public static final String COMMAND_WORD = "view-household-sessions";
+    public static final String COMMAND_WORD = "view-h";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Views all sessions for the household identified by the household id.\n"

@@ -35,7 +35,7 @@ import seedu.address.model.session.SessionTime;
  */
 public class EditSessionCommand extends Command {
 
-    public static final String COMMAND_WORD = "edit-session";
+    public static final String COMMAND_WORD = "edit-s";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Edits the session identified by the household ID and session index by updating date, time,"
             + "and optionally a note.\n"
