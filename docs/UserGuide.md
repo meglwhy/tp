@@ -45,7 +45,7 @@ If you're already familiar with similar applications, skip to [Quick Start](#qui
       - [Add a session](#add-a-session)
       - [Edit a session](#edit-a-session)
       - [Delete a session](#delete-a-session)
-      - [View household sessions](#view-h)
+      - [View household sessions](#view-s)
    - [General Commands](#general-commands)
       - [Clear data](#clear-data)
       - [Help](#help)
@@ -89,7 +89,7 @@ The Em-Social interface consists of five main sections:
 3. **Command Box** - Where you type commands
 4. **Result Display** - Shows feedback from your commands
 5. **Message Colours** - Coloured messages help you quickly understand outcomes:
-- ❌ **Error messages** (e.g., "Invalid command") appear in **red**.
+- ❌ **Invalid commands** will be highlighted in **red**.
 
 *These colour cues are designed to reduce the chance of errors and improve the user experience, especially for users working in high-volume environments.*
 
@@ -165,6 +165,7 @@ Edited Household: Household H000001: Tan Family at Blk 30 Geylang Street 29, #06
 ```
 
 > **Warning**: Editing a household to match an existing household will be rejected to prevent duplicate households.
+> **Warning**: Existing values will be overwritten by the input values.
 
 > **Tip**: Use meaningful tags to categorize households for easier filtering later. Common tags might include "elderly", "children", "financial-assistance", or "priority".
 
@@ -283,6 +284,8 @@ Note: Follow-up on medical assistance application
 
 ![edit-session success message](images/edit-session.png)
 
+> **Warning**: Existing values will be overwritten by the input values.
+
 > **Tip**: Use session notes to record key discussion points, action items, or observations during your visit.
 
 ### Delete a session
@@ -302,14 +305,14 @@ Deleted session 1 from household H000001: Session for H000001 on 2025-03-16 at 1
 ```
 
 ### View household sessions
-You can switch to view all existing sessions for a household using the `view-h` command.
+You can switch to view all existing sessions for a household using the `view-s` command.
 ```
-view-h id/HOUSEHOLD_ID
+view-s id/HOUSEHOLD_ID
 ```
 
 Example of usage:
 ```
-view-h id/H000001
+view-s id/H000001
 ```
 
 Expected outcome:
@@ -441,7 +444,7 @@ A: Please submit issues on our [GitHub repository](https://github.com/AY2425S2-C
 | **Add Session**      | `add-s id/ID d/DATE tm/TIME`                               | `add-s id/H000001 d/2025-05-15 tm/14:30`                     |
 | **Edit Session**     | `edit-s id/ID-INDEX d/DATE tm/TIME [n/NOTE]`               | `edit-s id/H000001-1 d/2025-03-16 tm/15:00 n/Follow-up`      |
 | **Delete Session**   | `delete-s id/ID-INDEX`                                     | `delete-s id/H000001-1`                                      |
-| **View Sessions**    | `view-h id/ID`                                  | `view-h id/H000001`                               |
+| **View Sessions**    | `view-s id/ID`                                  | `view-s id/H000001`                               |
 | **Clear Data**       | `clear`                                                          | `clear`                                                            |
 | **Help**             | `help`                                                           | `help`                                                             |
 | **Exit**             | `exit`                                                           | `exit`                                                             |
