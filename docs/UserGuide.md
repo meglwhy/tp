@@ -164,7 +164,7 @@ Expected outcome:
 Edited Household: Household H000001: Tan Family at Blk 30 Geylang Street 29, #06-40 (Contact: 98765432) Tags: [Urgent]
 ```
 
-> **Warning**: Editing a household to match an existing household will be rejected to prevent duplicate households.
+> **Warning**: Editing a household to match an existing household will be rejected to prevent duplicate households.\n
 > **Warning**: Existing values will be overwritten by the input values.
 
 > **Tip**: Use meaningful tags to categorize households for easier filtering later. Common tags might include "elderly", "children", "financial-assistance", or "priority".
