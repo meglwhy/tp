@@ -142,7 +142,7 @@ Use case resumes from step 3 or ends if saving is unsuccessful.
 
 **Main Success Scenario:**
 1. User schedules an engagement session with a specified household.
-2. System performs <u>(**Prevent Double-Booking (U4)**)<u> to prevent scheduling conflicts.
+2. System performs (**Prevent Double-Booking (U4)**) to prevent scheduling conflicts.
 3. If there is no conflict, system saves the session and updates the calendar.
 4. System displays a confirmation message.
 
@@ -330,6 +330,66 @@ Use case resumes from step 2 or ends if the issue persists.
 14. The system must run on machines with at least 2GB RAM, 1GHz CPU, and 200MB disk space.
 
 --------------------------------------------------------------------------------------------------------------------
+## Manual Testing Instructions for Em Social
+
+### Download Em Social:
+Download the latest `em-social.jar` from the Em Social Releases Page.
+
+### Setup:
+Save the downloaded `em-social.jar` file in your preferred home folder.
+
+### Launching and Shutting Down the Application
+
+#### Initial Launch
+
+1. **Open a Terminal:**
+
+    - **Windows:** Press `Win + R`, type `cmd`, and press `Enter`.
+    - **macOS/Linux:** Open your Terminal application.
+
+2. **Navigate to the Application Folder:**
+
+   Change to the folder containing `em-social.jar`:
+   ```bash
+   cd [YOUR_FOLDER_LOCATION]
+Replace [YOUR_FOLDER_LOCATION] with the actual path where the jar file is located.
+
+3. **Run the Application**
+   Launch Em Social by executing:
+    ```bash
+    java -jar em-social.jar
+**Expected:** A graphical user interface (GUI) should appear with sample data loaded.
+
+**Shutdown**
+
+- Type `exit` in the command box to close the application.
+
+- OR click the `File` button and select `Exit` from the dropdown menu.
+
+**Saving window preferences**
+
+1. Resize the window to an optimum size. 
+2. Resize ratio of household panel and session panel.
+
+    
+#### Try out a command - Deleting a session
+
+1. Deleting a session while all household sessions are being shown
+
+    a. Prerequisites: List all sessions for a household using the `view-s` command. It will show all the sessions of that household
+
+    b. Test case: `delete-s id/H000001-1`<br>
+       Expected: The first session from the household with Household ID 1 is deleted. Details of the deleted contact shown in the output box. 
+
+    c. Test case: `delete-s id/H000001-0`<br>
+       Expected: No session is deleted. An error message saying “Session index 0 is invalid for household H000001” is shown.
+
+    d. Other incorrect delete session commands to try: `delete-s`, `delete-s id/Hxxxxxx-m`, `...` (where m is larger than the session list size of that particular household)<br>
+       Expected: Error similar to 1.c
+
+
+---------------------------------------------------------------------------------------------------------------------
+
 
 ## Glossary
 
