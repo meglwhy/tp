@@ -18,9 +18,12 @@ public class SessionDate implements Comparable<SessionDate> {
     public final LocalDate value;
 
     /**
-     * Constructs a {@code SessionDate}.
+     * Constructs a {@code SessionDate} with the specified date string.
+     * The date string must adhere to the expected format defined by {@code FORMATTER}.
      *
      * @param date A valid date string.
+     * @throws NullPointerException If {@code date} is null.
+     * @throws IllegalArgumentException If {@code date} is not in the correct format.
      */
     public SessionDate(String date) {
         requireNonNull(date);
@@ -29,7 +32,11 @@ public class SessionDate implements Comparable<SessionDate> {
     }
 
     /**
-     * Returns true if a given string is a valid date.
+     * Validates if the given string represents a valid date.
+     * The date string must adhere to the expected format defined by {@code FORMATTER}.
+     *
+     * @param test The string to validate.
+     * @return {@code true} if {@code test} is a valid date string; {@code false} otherwise.
      */
     public static boolean isValidDate(String test) {
         try {
