@@ -10,20 +10,24 @@ import seedu.address.model.household.HouseholdId;
 
 /**
  * Parses input arguments and creates a new {@code ViewFullSessionCommand} object.
- *
- * <p>Expected input format: {@code id/HOUSEHOLD_ID-SESSION_INDEX}</p>
- *
- * <p>Example usage: {@code view-full-s id/H000001-2}</p>
  */
 public class ViewFullSessionCommandParser implements Parser<ViewFullSessionCommand> {
-
+    /**
+     * Parses the given {@code String} of arguments in the context of the ViewFullSessionCommand
+     * and returns a ViewFullSessionCommand object for execution.
+     *
+     * @param args The input arguments provided by the user.
+     * @return A ViewFullSessionCommand object with the parsed household ID and session index.
+     * @throws ParseException if the user input does not conform to the expected format or
+     *                        if the household ID or session index is invalid.
+     */
     @Override
     public ViewFullSessionCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ID);
 
-        if (!argMultimap.getValue(PREFIX_ID).isPresent()) {
+        if (argMultimap.getValue(PREFIX_ID).isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ViewFullSessionCommand.MESSAGE_USAGE));
         }

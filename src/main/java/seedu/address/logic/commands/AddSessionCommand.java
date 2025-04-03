@@ -43,7 +43,11 @@ public class AddSessionCommand extends Command {
     private final Session toAdd;
 
     /**
-     * Creates an AddSessionCommand to add the specified {@code Session} to the specified {@code Household}
+     * Creates an {@code AddSessionCommand} to add the specified {@code Session} to the specified {@code Household}.
+     *
+     * @param householdId The ID of the household to which the session will be added. Must not be null.
+     * @param date The date of the session to be added. Must not be null.
+     * @param time The time of the session to be added. Must not be null.
      */
     public AddSessionCommand(HouseholdId householdId, SessionDate date, SessionTime time) {
         requireNonNull(householdId);
@@ -53,7 +57,14 @@ public class AddSessionCommand extends Command {
         this.householdId = householdId;
         this.toAdd = new Session(householdId, date, time);
     }
-
+    /**
+     * Executes the add session command, adding the specified session to the household.
+     *
+     * @param model The model in which the session is to be added. Must not be null.
+     * @return A {@code CommandResult} indicating the result of the add operation.
+     * @throws CommandException If the household does not exist, the session date is in the past,
+     *                          or a conflicting session already exists.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -80,7 +91,13 @@ public class AddSessionCommand extends Command {
         LocalDate today = LocalDate.now();
         return sessionDate.value.isBefore(today);
     }
-
+    /**
+     * Checks if this command is equal to another object.
+     *
+     * @param other The other object to compare with.
+     * @return {@code true} if the other object is the same instance or an equivalent {@code AddSessionCommand};
+     *         {@code false} otherwise.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

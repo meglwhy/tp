@@ -18,8 +18,11 @@ public class AddSessionCommandParser implements Parser<AddSessionCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddSessionCommand
-     * and returns an AddSessionCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * and returns an {@code AddSessionCommand} object for execution.
+     *
+     * @param args The string of arguments to parse. Must contain an ID, date, and time.
+     * @return An {@code AddSessionCommand} object initialized with the parsed session data.
+     * @throws ParseException If the user input does not conform to the expected format or is missing required prefixes.
      */
     public AddSessionCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
@@ -31,9 +34,17 @@ public class AddSessionCommandParser implements Parser<AddSessionCommand> {
                     AddSessionCommand.MESSAGE_USAGE));
         }
 
-        HouseholdId householdId = ParserUtil.parseHouseholdId(argMultimap.getValue(PREFIX_ID).get());
-        SessionDate date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
-        SessionTime time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME).get());
+        HouseholdId householdId = ParserUtil.parseHouseholdId(
+                argMultimap.getValue(PREFIX_ID).orElseThrow(() -> new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddSessionCommand.MESSAGE_USAGE))));
+
+        SessionDate date = ParserUtil.parseDate(
+                argMultimap.getValue(PREFIX_DATE).orElseThrow(() -> new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddSessionCommand.MESSAGE_USAGE))));
+
+        SessionTime time = ParserUtil.parseTime(
+                argMultimap.getValue(PREFIX_TIME).orElseThrow(() -> new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddSessionCommand.MESSAGE_USAGE))));
 
         return new AddSessionCommand(householdId, date, time);
     }

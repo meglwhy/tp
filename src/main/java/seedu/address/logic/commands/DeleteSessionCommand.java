@@ -12,20 +12,7 @@ import seedu.address.model.household.HouseholdId;
 import seedu.address.model.session.Session;
 
 /**
- * Represents a command to delete a specific session from a household.
- * The session is identified using a household ID and a session index.
- *
- * Usage example:
- * <pre>
- *     delete-session H000002-2
- * </pre>
- *
- * This command performs the following checks:
- * - Ensures the household with the given ID exists.
- * - Ensures the session index is valid for the specified household.
- * - Removes the session from both the household and the global session list.
- *
- * Upon successful execution, it returns a message confirming the deleted session.
+ * Deletes a specific session from a household.
  */
 public class DeleteSessionCommand extends Command {
 
@@ -52,7 +39,13 @@ public class DeleteSessionCommand extends Command {
         this.householdId = householdId;
         this.sessionIndex = sessionIndex;
     }
-
+    /**
+     * Executes the command to delete a session from the specified household.
+     *
+     * @param model The model from which the session will be deleted. Must not be null.
+     * @return A {@code CommandResult} indicating the result of the deletion operation.
+     * @throws CommandException If the household does not exist or the session index is invalid.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -76,7 +69,14 @@ public class DeleteSessionCommand extends Command {
         return new CommandResult(String.format(
                 MESSAGE_DELETE_SESSION_SUCCESS, sessionIndex, householdId, sessionToDelete));
     }
-
+    /**
+     * Checks if this {@code DeleteSessionCommand} is equal to another object.
+     *
+     * @param other The other object to compare against.
+     * @return {@code true} if the other object is the same instance or an equivalent
+     *         {@code DeleteSessionCommand} with the same household ID and session index,
+     *         {@code false} otherwise.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this

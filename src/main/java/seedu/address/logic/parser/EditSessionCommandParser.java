@@ -11,9 +11,6 @@ import seedu.address.model.household.HouseholdId;
 
 /**
  * Parses input for the edit-session command.
- * Expected format: "edit-s id/HOUSEHOLD_ID-SESSION_INDEX [d/DATE] [tm/TIME] [n/NOTE]"
- * Example: "edit-s id/H000007-2 d/2025-09-27 tm/19:00"
- * Example with note: "edit-s id/H000007-2 n/Follow-up"
  */
 public class EditSessionCommandParser implements Parser<EditSessionCommand> {
 
@@ -24,32 +21,38 @@ public class EditSessionCommandParser implements Parser<EditSessionCommand> {
 
     public static final String MESSAGE_NO_FIELDS_PROVIDED =
             "At least one field to edit must be provided (date, time, or note).";
-
+    /**
+     * Parses the given {@code String} of arguments in the context of the {@code EditSessionCommand}
+     * and returns an {@code EditSessionCommand} object for execution.
+     *
+     * @param userInput The string representing the user input to be parsed.
+     * @return An {@code EditSessionCommand} object containing the parsed household ID, session index,
+     *         and any optional fields (date, time, note) for editing the session.
+     * @throws ParseException If the user input does not conform to the expected format.
+     */
     @Override
     public EditSessionCommand parse(String userInput) throws ParseException {
         // Tokenize the input using the prefixes.
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(userInput, PREFIX_ID, PREFIX_DATE,
                 PREFIX_TIME, PREFIX_NOTE);
 
-        // The session identifier is required.
         if (!argMultimap.arePrefixesPresent(PREFIX_ID) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(MESSAGE_INVALID_FORMAT);
         }
 
-        // At least one field (date, time, or note) must be provided.
-        if (!argMultimap.getValue(PREFIX_DATE).isPresent()
-                && !argMultimap.getValue(PREFIX_TIME).isPresent()
-                && !argMultimap.getValue(PREFIX_NOTE).isPresent()) {
+        if (argMultimap.getValue(PREFIX_DATE).isEmpty()
+                && argMultimap.getValue(PREFIX_TIME).isEmpty()
+                && argMultimap.getValue(PREFIX_NOTE).isEmpty()) {
             throw new ParseException(MESSAGE_NO_FIELDS_PROVIDED);
         }
 
-        // Extract the session identifier and remove a leading "id/" if present.
-        String sessionIdentifier = argMultimap.getValue(PREFIX_ID).get().trim();
+        String sessionIdentifier = argMultimap.getValue(PREFIX_ID).orElseThrow(() ->
+                new ParseException(MESSAGE_INVALID_FORMAT)).trim();
+
         if (sessionIdentifier.startsWith("id/")) {
             sessionIdentifier = sessionIdentifier.substring(3).trim();
         }
 
-        // Ensure the identifier is in the format "HOUSEHOLD_ID-SESSION_INDEX".
         if (!sessionIdentifier.contains("-")) {
             throw new ParseException(MESSAGE_INVALID_FORMAT);
         }

@@ -53,7 +53,14 @@ public class DeleteHouseholdCommand extends Command {
     public boolean confirmDeletion(Household household) {
         return MainWindow.showDeleteConfirmationDialog(household);
     }
-
+    /**
+     * Executes the command to delete the specified household from the model.
+     *
+     * @param model The model from which the household will be deleted. Must not be null.
+     * @return A {@code CommandResult} indicating the result of the deletion operation.
+     *         Returns a cancellation message if the user declines the confirmation.
+     * @throws CommandException If the household with the specified ID does not exist.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -69,7 +76,13 @@ public class DeleteHouseholdCommand extends Command {
         model.getHouseholdBook().removeHousehold(householdToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_HOUSEHOLD_SUCCESS, householdToDelete));
     }
-
+    /**
+     * Checks if this {@code DeleteHouseholdCommand} is equal to another object.
+     *
+     * @param other The other object to compare against.
+     * @return {@code true} if the other object is the same instance or an equivalent
+     *         {@code DeleteHouseholdCommand} with the same target ID, {@code false} otherwise.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this

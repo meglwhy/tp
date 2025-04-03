@@ -16,17 +16,7 @@ import seedu.address.model.session.SessionTime;
 
 
 /**
- * Represents a command to edit a specific session in a household.
- * The session is identified using a household ID and a session index.
- * Each field (date, time, note) is optional; if not provided, the existing value is retained.
- *
- * Usage examples:
- * <pre>
- *     edit-s H000006-2 d/2025-03-16         // Only update date
- *     edit-s H000006-2 tm/15:00             // Only update time
- *     edit-s H000006-2 n/Follow-up note     // Only update note
- *     edit-s H000006-2 d/2025-03-16 tm/15:00 n/Follow-up note
- * </pre>
+ * Edits a specific session in a household.
  */
 public class EditSessionCommand extends Command {
 
@@ -48,7 +38,7 @@ public class EditSessionCommand extends Command {
 
     private final HouseholdId householdId;
     private final int sessionIndex; // 1-based index
-    // The following fields are optional; if null, the existing value is retained.
+    // Optional fields-retains existing values if null
     private final String newDate;
     private final String newTime;
     private final String newNote;
@@ -67,39 +57,33 @@ public class EditSessionCommand extends Command {
         requireNonNull(householdId);
         this.householdId = householdId;
         this.sessionIndex = sessionIndex;
-        this.newDate = newDate; // may be null
-        this.newTime = newTime; // may be null
-        this.newNote = newNote; // may be null
+        this.newDate = newDate;
+        this.newTime = newTime;
+        this.newNote = newNote;
     }
-
+    /**
+     * Executes the command to edit a session in the model.
+     *
+     * @param model The model containing the session to be edited. Must not be null.
+     * @return A {@code CommandResult} indicating the result of the edit operation.
+     * @throws CommandException If the session index is invalid, a conflicting session is detected,
+     *     or the session cannot be edited.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        // Filter sessions for the given household.
         ObservableList<Session> householdSessions = model.getFilteredSessionList()
                 .filtered(s -> s.getHouseholdId().equals(householdId));
 
         // Sort sessions by date (descending) then time (descending), same as in SessionListPanel.
-        SortedList<Session> sortedSessions = new SortedList<>(householdSessions, (s1, s2) -> {
-            int dateCompare = s2.getDate().compareTo(s1.getDate());
-            if (dateCompare != 0) {
-                return dateCompare;
-            }
-            return s2.getTime().compareTo(s1.getTime());
-        });
-
-        if (sessionIndex < 1 || sessionIndex > sortedSessions.size()) {
-            throw new CommandException(String.format(MESSAGE_INVALID_SESSION_INDEX, sessionIndex, householdId));
-        }
-        Session oldSession = sortedSessions.get(sessionIndex - 1);
+        Session oldSession = getSession(householdSessions);
 
         // Determine candidate values: use new values if provided, otherwise retain the current ones.
         SessionDate candidateDate = (newDate != null) ? new SessionDate(newDate) : oldSession.getDate();
         SessionTime candidateTime = (newTime != null) ? new SessionTime(newTime) : oldSession.getTime();
         boolean noteUpdated = (newNote != null);
 
-        // Create the candidate session with the updated fields.
         Session candidateSession;
         if (noteUpdated) {
             candidateSession = new Session(oldSession.getSessionId(),
@@ -120,18 +104,14 @@ public class EditSessionCommand extends Command {
                     candidateTime);
         }
 
-        // Use HouseholdBook's method to check for any session conflict across all households,
-        // excluding the session being edited.
         Optional<Session> conflict = model.getHouseholdBook().getConflictingSession(candidateSession, oldSession);
         if (conflict.isPresent()) {
             throw new CommandException(String.format(MESSAGE_DUPLICATE_SESSION, conflict.get()));
         }
 
-        // No conflict found: update the session.
         model.getHouseholdBook().removeSessionById(oldSession.getSessionId());
         model.getHouseholdBook().addSessionToHousehold(oldSession.getHouseholdId(), candidateSession);
 
-        // Build and return the success message.
         String successMessage;
         if (noteUpdated) {
             successMessage = String.format(MESSAGE_EDIT_SESSION_WITH_NOTE_SUCCESS,
@@ -141,6 +121,21 @@ public class EditSessionCommand extends Command {
                     candidateDate, candidateTime);
         }
         return new CommandResult(successMessage);
+    }
+
+    private Session getSession(ObservableList<Session> householdSessions) throws CommandException {
+        SortedList<Session> sortedSessions = new SortedList<>(householdSessions, (s1, s2) -> {
+            int dateCompare = s2.getDate().compareTo(s1.getDate());
+            if (dateCompare != 0) {
+                return dateCompare;
+            }
+            return s2.getTime().compareTo(s1.getTime());
+        });
+
+        if (sessionIndex < 1 || sessionIndex > sortedSessions.size()) {
+            throw new CommandException(String.format(MESSAGE_INVALID_SESSION_INDEX, sessionIndex, householdId));
+        }
+        return sortedSessions.get(sessionIndex - 1);
     }
 
 }

@@ -37,12 +37,18 @@ public class ViewHouseholdSessionsCommand extends Command {
         requireNonNull(targetHouseholdId);
         this.targetHouseholdId = targetHouseholdId;
     }
-
+    /**
+     * Executes the command to filter and display sessions belonging to a specific household.
+     *
+     * @param model The model containing the list of households and sessions. Must not be null.
+     * @return A {@code CommandResult} containing a success message with the ID of the household whose sessions
+     *         are being displayed.
+     * @throws CommandException If the household with the given ID cannot be found.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        // Find the household with the given id.
         Household targetHousehold = model.getHouseholdBook().getHouseholdList().stream()
                 .filter(h -> h.getId().equals(targetHouseholdId))
                 .findFirst()
@@ -51,7 +57,6 @@ public class ViewHouseholdSessionsCommand extends Command {
             throw new CommandException("Household not found: " + targetHouseholdId.toString());
         }
 
-        // Update the filtered session list to show only sessions for the specified household.
         Predicate<Session> predicate = session -> session.getHouseholdId().equals(targetHouseholdId);
         model.updateFilteredSessionList(predicate);
 

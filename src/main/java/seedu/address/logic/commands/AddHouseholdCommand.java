@@ -12,6 +12,7 @@ import seedu.address.model.household.Household;
 /**
  * Adds a household to the household book.
  */
+@SuppressWarnings("checkstyle:Regexp")
 public class AddHouseholdCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
@@ -32,19 +33,31 @@ public class AddHouseholdCommand extends Command {
     private final Household toAdd;
 
     /**
-     * Creates an AddHouseholdCommand to add the specified {@code Household}
+     * Creates an {@code AddHouseholdCommand} to add the specified {@code Household}.
+     *
+     * @param household The household to be added.
+     * @throws NullPointerException If {@code household} is null.
      */
     public AddHouseholdCommand(Household household) {
         requireNonNull(household);
         toAdd = household;
     }
     /**
-     * Getter for the household to be added.
+     * Returns the {@code Household} to be added by this command.
+     *
+     * @return The household to be added.
      */
     public Household getHousehold() {
         return toAdd;
     }
-
+    /**
+     * Executes the command to add the specified {@code Household} to the model.
+     *
+     * @param model The model to which the household will be added.
+     * @return A {@code CommandResult} indicating the result of the operation.
+     * @throws CommandException If the household already exists in the model.
+     * @throws NullPointerException If {@code model} is null.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -56,7 +69,13 @@ public class AddHouseholdCommand extends Command {
         model.getHouseholdBook().addHousehold(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
-
+    /**
+     * Checks if this {@code AddHouseholdCommand} is equal to another object.
+     *
+     * @param other The other object to compare against.
+     * @return True if the other object is an {@code AddHouseholdCommand} with the same household to add,
+     *     false otherwise.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

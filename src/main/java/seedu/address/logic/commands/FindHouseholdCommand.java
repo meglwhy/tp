@@ -29,7 +29,7 @@ public class FindHouseholdCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Found %1$d household(s) matching: %2$s";
     public static final String MESSAGE_NO_MATCHING_HOUSEHOLDS = "No households found matching: %1$s";
 
-    // Public for testing
+    // JUnit
     public final HouseholdContainsKeywordsPredicate predicate;
     private final String keywords;
     /**
@@ -51,7 +51,6 @@ public class FindHouseholdCommand extends Command {
 
         this.keywords = trimmedKeywords;
 
-        // Extract keywords, considering phrases inside double quotes as a single keyword
         List<String> parsedKeywords = extractKeywords(trimmedKeywords);
 
         boolean numericSearch = parsedKeywords.stream().allMatch(this::isNumber);
@@ -59,52 +58,56 @@ public class FindHouseholdCommand extends Command {
         this.predicate = new HouseholdContainsKeywordsPredicate(parsedKeywords, numericSearch);
     }
 
-    // Helper method to extract keywords, including handling quoted phrases
     private List<String> extractKeywords(String input) {
         List<String> keywords = new ArrayList<>();
         Matcher matcher = Pattern.compile("\"([^\"]+)\"|(\\S+)").matcher(input);
 
         while (matcher.find()) {
             if (matcher.group(1) != null) {
-                // Found a phrase inside double quotes, add it as a single keyword
+                // Found a phrase inside double quotes
                 keywords.add(matcher.group(1));
             } else {
-                // Found a single word, add it as a keyword
+                // Found a single word
                 keywords.add(matcher.group(2));
             }
         }
         return keywords;
     }
 
-    // Helper method to check if a keyword is a number (e.g., household ID or phone number)
     private boolean isNumber(String keyword) {
         Pattern pattern = Pattern.compile("\\d+"); // Regex to match digits only
         Matcher matcher = pattern.matcher(keyword);
         return matcher.matches();
     }
-
+    /**
+     * Executes the command to find households that match the specified search criteria.
+     *
+     * @param model The model containing the list of households. Must not be null.
+     * @return A {@code CommandResult} containing a success message with the count of matching households
+     *         or a message indicating that no households matched the search criteria.
+     */
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-
-        // Apply the filter to the filtered household list
         model.updateFilteredHouseholdList(predicate);
-
-        // Get the number of households in the filtered list
         int matchingCount = model.getFilteredHouseholdList().size();
-
         if (matchingCount == 0) {
             return new CommandResult(String.format(MESSAGE_NO_MATCHING_HOUSEHOLDS, keywords));
         }
 
-        // Return the result showing how many households match
         return new CommandResult(
                 String.format(MESSAGE_SUCCESS, matchingCount, keywords));
     }
-
+    /**
+     * Checks if this {@code FindHouseholdCommand} is equal to another object.
+     *
+     * @param other The object to compare against.
+     * @return {@code true} if the other object is the same instance or an equivalent
+     *         {@code FindHouseholdCommand} with the same predicate, {@code false} otherwise.
+     */
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
+        return other == this
                 || (other instanceof FindHouseholdCommand // instanceof handles nulls
                 && predicate.equals(((FindHouseholdCommand) other).predicate)); // state check
     }
