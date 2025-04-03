@@ -95,6 +95,17 @@ public class SessionListPanel extends UiPart<Region> {
     }
 
     /**
+     * Selects and scrolls to the session at the specified index in the list view.
+     * @param index The 0-based index of the session to select
+     */
+    public void selectSessionByIndex(int index) {
+        if (index >= 0 && index < sessionListView.getItems().size()) {
+            sessionListView.getSelectionModel().select(index);
+            sessionListView.scrollTo(index);
+        }
+    }
+
+    /**
      * Shows a dialog to enter session details and handles adding a new session.
      */
     private void showAddSessionDialog() {

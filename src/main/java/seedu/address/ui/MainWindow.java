@@ -245,8 +245,7 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandText.trim().startsWith(ViewHouseholdSessionsCommand.COMMAND_WORD)
                     || commandText.trim().startsWith(AddSessionCommand.COMMAND_WORD)
-                    || commandText.trim().startsWith(EditSessionCommand.COMMAND_WORD)
-                    || commandText.trim().startsWith(ViewFullSessionCommand.COMMAND_WORD)) {
+                    || commandText.trim().startsWith(EditSessionCommand.COMMAND_WORD)) {
 
                 String[] parts = commandText.split("\\s+");
                 String targetId = null;
@@ -271,11 +270,12 @@ public class MainWindow extends UiPart<Stage> {
                         String householdIdStr = parts[0];
                         try {
                             int sessionIndex = Integer.parseInt(parts[1]);
+                            householdListPanel.selectHouseholdById(householdIdStr);
+                            sessionListPanel.selectSessionByIndex(sessionIndex - 1);
                             logic.getHouseholdBook()
                                     .getHouseholdById(
                                             seedu.address.model.household.HouseholdId.fromString(householdIdStr))
                                     .ifPresent(household -> {
-                                        // Make sure sessionIndex is valid
                                         if (sessionIndex >= 1 && sessionIndex <= household.getSessions().size()) {
                                             seedu.address.model.session.Session session =
                                                     household.getSessions().get(sessionIndex - 1);
