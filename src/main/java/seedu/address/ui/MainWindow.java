@@ -23,6 +23,7 @@ import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.CliSyntax;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.household.Household;
+import seedu.address.model.session.Session;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -31,13 +32,12 @@ import seedu.address.model.household.Household;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
-
-    private final Logger logger = LogsCenter.getLogger(getClass());
+    private static final Logger logger = LogsCenter.getLogger(MainWindow.class);
 
     private final Stage primaryStage;
     private final Logic logic;
 
-    // Independent Ui parts residing in this Ui container
+    // Independent UI parts
     private HouseholdListPanel householdListPanel;
     private SessionListPanel sessionListPanel;
     private ResultDisplay resultDisplay;
@@ -64,25 +64,18 @@ public class MainWindow extends UiPart<Stage> {
     public MainWindow(Stage primaryStage, Logic logic) {
         super(FXML, primaryStage);
 
-        // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.helpWindow = new HelpWindow();
 
-        // Configure the UI
-        setWindowDefaultSize(logic.getGuiSettings());
-
-        helpWindow = new HelpWindow();
-    }
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
+        configureWindowSize(logic.getGuiSettings());
     }
 
     /**
-     * Fills up all the placeholders of this window.
+     * Sets up and shows all the main UI components in the primary stage.
      */
     void fillInnerParts() {
-        sessionListPanel = new SessionListPanel(logic.getFilteredSessionList(), logic, resultDisplay);
+        sessionListPanel = new SessionListPanel(logic.getFilteredSessionList(), logic, null);
         sessionListPanelPlaceholder.getChildren().add(sessionListPanel.getRoot());
 
         logic.updateFilteredSessionList(session -> false);
@@ -92,31 +85,10 @@ public class MainWindow extends UiPart<Stage> {
         sessionListPanel.setSelectedHousehold("Select household to view sessions", null);
         sessionListPanel.showAddSessionButton(false);
 
-        // Create the HouseholdListPanel and pass the SessionListPanel to it
         householdListPanel = new HouseholdListPanel(logic.getFilteredHouseholdList(), sessionListPanel);
         householdListPanelPlaceholder.getChildren().add(householdListPanel.getRoot());
 
-        // Add selection listener to household list
-        householdListPanel.getListView().getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logic.updateFilteredSessionList(session ->
-                                session.getHouseholdId().equals(newValue.getId()));
-                        // Force refresh the session list panel
-                        sessionListPanel.refresh();
-                        // Set the household name at the top
-                        sessionListPanel.setSelectedHousehold(
-                                newValue.getName().toString(),
-                                newValue.getId().toString()
-                        );
-                        sessionListPanel.showAddSessionButton(true);
-                    } else {
-                        // If no household is selected, clear the session list
-                        logic.updateFilteredSessionList(session -> false);
-                        sessionListPanel.setSelectedHousehold("Select household to view sessions", null);
-                        sessionListPanel.showAddSessionButton(false);
-                    }
-                });
+        setHouseholdSelectionListener();
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -129,10 +101,36 @@ public class MainWindow extends UiPart<Stage> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
+    // ==================== UI Setup Helpers ====================
+
     /**
-     * Sets the default size as 900x700, but overrides with saved {@code guiSettings} if available.
+     * Adds a listener that updates the session list based on which household is selected.
      */
-    private void setWindowDefaultSize(GuiSettings guiSettings) {
+    private void setHouseholdSelectionListener() {
+        householdListPanel.getListView().getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logic.updateFilteredSessionList(session ->
+                                session.getHouseholdId().equals(newValue.getId()));
+                        sessionListPanel.refresh();
+
+                        sessionListPanel.setSelectedHousehold(
+                                newValue.getName().toString(),
+                                newValue.getId().toString()
+                        );
+                        sessionListPanel.showAddSessionButton(true);
+                    } else {
+                        logic.updateFilteredSessionList(session -> false);
+                        sessionListPanel.setSelectedHousehold("Select household to view sessions", null);
+                        sessionListPanel.showAddSessionButton(false);
+                    }
+                });
+    }
+
+    /**
+     * Sets a default window size and position, but respects saved GUI settings if available.
+     */
+    private void configureWindowSize(GuiSettings guiSettings) {
         primaryStage.setWidth(900);
         primaryStage.setHeight(700);
 
@@ -147,8 +145,60 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    // ==================== Window Controls ====================
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    void show() {
+        primaryStage.show();
+    }
+
     /**
-     * Displays a confirmation dialog and returns true if the user confirms.
+     * Closes the application.
+     */
+    @FXML
+    private void handleExit() {
+        GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
+                (int) primaryStage.getX(), (int) primaryStage.getY());
+        logic.setGuiSettings(guiSettings);
+
+        helpWindow.hide();
+        primaryStage.hide();
+    }
+
+    /**
+     * Opens the help window or focuses on it if it's already opened.
+     */
+    @FXML
+    public void handleHelp() {
+        if (!helpWindow.isShowing()) {
+            helpWindow.show();
+        } else {
+            helpWindow.focus();
+        }
+    }
+
+    // ==================== Dialog Helpers ====================
+
+    /**
+     * Displays a pop-up window containing detailed information of a session.
+     */
+    private void showSessionPopup(String sessionDetails) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initOwner(primaryStage);
+        alert.setTitle("Session Details");
+        alert.setHeaderText("Full Session Information");
+        alert.setContentText(sessionDetails);
+
+        // Make the dialog auto-size based on content
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.showAndWait();
+    }
+
+    /**
+     * Displays a clear confirmation dialog and returns true if the user confirms.
      */
     public static boolean showClearConfirmationDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -174,60 +224,10 @@ public class MainWindow extends UiPart<Stage> {
         return result.isPresent() && result.get() == ButtonType.OK;
     }
 
-    /**
-     * Opens the help window or focuses on it if it's already opened.
-     */
-    @FXML
-    public void handleHelp() {
-        if (!helpWindow.isShowing()) {
-            helpWindow.show();
-        } else {
-            helpWindow.focus();
-        }
-    }
-
-    void show() {
-        primaryStage.show();
-    }
-
-    /**
-     * Closes the application.
-     */
-    @FXML
-    private void handleExit() {
-        GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
-        logic.setGuiSettings(guiSettings);
-        helpWindow.hide();
-        primaryStage.hide();
-    }
-
-    /**
-     * Displays a pop-up window containing detailed information of a session.
-     *
-     * <p>This method creates an informational alert dialog that shows full session details provided
-     * in {@code sessionDetails}. The dialog adjusts its size automatically to accommodate the length
-     * of the session details, making it particularly suitable for lengthy notes.</p>
-     *
-     * @param sessionDetails A formatted string containing detailed information about the session.
-     */
-    private void showSessionPopup(String sessionDetails) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.initOwner(primaryStage);
-        alert.setTitle("Session Details");
-        alert.setHeaderText("Full Session Information");
-        alert.setContentText(sessionDetails);
-
-        // Make the dialog expandable and auto-sizing based on notes length
-        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-
-        alert.showAndWait();
-    }
-
+    // ==================== Command Execution ====================
 
     /**
      * Executes the command and returns the result.
-     *
      * @see seedu.address.logic.Logic#execute(String)
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
@@ -237,76 +237,107 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
             ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(commandText, CliSyntax.PREFIX_ID);
-
-
-            if (commandText.trim().startsWith(ViewHouseholdSessionsCommand.COMMAND_WORD)
-                    || commandText.trim().startsWith(AddSessionCommand.COMMAND_WORD)
-                    || commandText.trim().startsWith(EditSessionCommand.COMMAND_WORD)) {
-
-                String[] parts = commandText.split("\\s+");
-                String targetId = null;
-                for (String part : parts) {
-                    if (part.startsWith("id/")) {
-                        targetId = part.substring(3); // remove "id/"
-                        if (targetId.contains("-")) {
-                            targetId = targetId.split("-")[0]; // In case of "H000001-1", just get "H000001"
-                        }
-                        break;
-                    }
-                }
-                if (targetId != null) {
-                    householdListPanel.selectHouseholdById(targetId);
-                }
-            }
-
-            if (commandText.trim().startsWith(ViewFullSessionCommand.COMMAND_WORD)) {
-                argMultimap.getValue(CliSyntax.PREFIX_ID).ifPresent(idValue -> {
-                    String[] parts = idValue.trim().split("-", 2);
-                    if (parts.length == 2) {
-                        String householdIdStr = parts[0];
-                        try {
-                            int sessionIndex = Integer.parseInt(parts[1]);
-                            householdListPanel.selectHouseholdById(householdIdStr);
-                            sessionListPanel.selectSessionByIndex(sessionIndex - 1);
-                            logic.getHouseholdBook()
-                                    .getHouseholdById(
-                                            seedu.address.model.household.HouseholdId.fromString(householdIdStr))
-                                    .ifPresent(household -> {
-                                        if (sessionIndex >= 1 && sessionIndex <= household.getSessions().size()) {
-                                            seedu.address.model.session.Session session =
-                                                    household.getSessions().get(sessionIndex - 1);
-
-                                            String fullDetails = String.format(
-                                                    "Household ID: %s\nDate: %s\nTime: %s\nNote: %s",
-                                                    session.getHouseholdId(),
-                                                    session.getDate(),
-                                                    session.getTime(),
-                                                    session.hasNote() ? session.getNote() : "-"
-                                            );
-
-                                            showSessionPopup(fullDetails);
-                                        }
-                                    });
-                        } catch (NumberFormatException nfe) {
-                            // If parts[1] isn't a valid integer, just ignore or handle gracefully
-                        }
-                    }
-                });
-            }
+            postProcessCommand(commandText, argMultimap);
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
             }
-
             if (commandResult.isExit()) {
                 handleExit();
             }
 
             return commandResult;
+
         } catch (CommandException | ParseException e) {
             logger.info("Invalid command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
         }
     }
+
+    /**
+     * Handles additional UI updates after executing the command (e.g., auto-select household, show session details).
+     */
+    private void postProcessCommand(String commandText, ArgumentMultimap argMultimap) {
+        autoSelectHouseholdIfApplicable(commandText);
+        if (commandText.trim().startsWith(ViewFullSessionCommand.COMMAND_WORD)) {
+            handleViewFullSession(argMultimap);
+        }
+    }
+
+    /**
+     * Selects the relevant household if the command text indicates it (view, add, edit).
+     */
+    private void autoSelectHouseholdIfApplicable(String commandText) {
+        String trimmed = commandText.trim();
+        if (trimmed.startsWith(ViewHouseholdSessionsCommand.COMMAND_WORD)
+                || trimmed.startsWith(AddSessionCommand.COMMAND_WORD)
+                || trimmed.startsWith(EditSessionCommand.COMMAND_WORD)) {
+
+            String targetId = extractHouseholdId(commandText);
+            if (targetId != null) {
+                householdListPanel.selectHouseholdById(targetId);
+            }
+        }
+    }
+
+    /**
+     * Extracts the household ID (e.g. "H000001") from a command text by scanning for "id/..."
+     */
+    private String extractHouseholdId(String commandText) {
+        String[] parts = commandText.split("\\s+");
+        for (String part : parts) {
+            if (part.startsWith("id/")) {
+                String idValue = part.substring(3); // remove "id/"
+                if (idValue.contains("-")) {
+                    return idValue.split("-")[0];
+                }
+                return idValue;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * If the command is "view-full-session", parse householdId-sessionIndex and show the session popup.
+     */
+    private void handleViewFullSession(ArgumentMultimap argMultimap) {
+        argMultimap.getValue(CliSyntax.PREFIX_ID).ifPresent(idValue -> {
+            String[] parts = idValue.trim().split("-", 2);
+            if (parts.length != 2) {
+                return;
+            }
+
+            String householdIdStr = parts[0];
+            try {
+                int sessionIndex = Integer.parseInt(parts[1]);
+                householdListPanel.selectHouseholdById(householdIdStr);
+                sessionListPanel.selectSessionByIndex(sessionIndex - 1);
+
+                logic.getHouseholdBook()
+                        .getHouseholdById(
+                                seedu.address.model.household.HouseholdId.fromString(householdIdStr))
+                        .ifPresent(household -> {
+                            if (sessionIndex < 1 || sessionIndex > household.getSessions().size()) {
+                                return;
+                            }
+                            Session session =
+                                    household.getSessions().get(sessionIndex - 1);
+
+                            String fullDetails = String.format(
+                                    "Household ID: %s\nDate: %s\nTime: %s\nNote: %s",
+                                    session.getHouseholdId(),
+                                    session.getDate(),
+                                    session.getTime(),
+                                    session.hasNote() ? session.getNote() : "-"
+                            );
+                            showSessionPopup(fullDetails);
+                        });
+
+            } catch (NumberFormatException nfe) {
+                // If parts[1] isn't a valid integer, do nothing or log if desired
+            }
+        });
+    }
+
 }
