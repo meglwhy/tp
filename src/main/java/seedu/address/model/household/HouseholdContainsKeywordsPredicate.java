@@ -21,7 +21,13 @@ public class HouseholdContainsKeywordsPredicate implements Predicate<Household> 
         this.keywords = keywords;
         this.isNumberSearch = isNumberSearch;
     }
-
+    /**
+     * Tests a {@code Household} to determine if it matches the search criteria.
+     * The matching criteria vary based on whether the search is by number or by keywords.
+     *
+     * @param household The household to test against.
+     * @return true if the household matches the search criteria, false otherwise.
+     */
     @Override
     public boolean test(Household household) {
         if (isNumberSearch) {
@@ -36,7 +42,13 @@ public class HouseholdContainsKeywordsPredicate implements Predicate<Household> 
                             .anyMatch(field -> field.toLowerCase().contains(keyword.toLowerCase())));
         }
     }
-
+    /**
+     * Tests a {@code Household} against the search keywords based on numbers.
+     * Matches if the household ID or contact number contains any of the keywords.
+     *
+     * @param household The household to test against.
+     * @return true if the household's ID or contact number contains any of the keywords, false otherwise.
+     */
     private boolean testByNumber(Household household) {
         // Test if any of the numbers (household ID or phone numbers) match the keyword
         String householdId = household.getId().toString(); // Assuming Household has a getId method
@@ -45,7 +57,13 @@ public class HouseholdContainsKeywordsPredicate implements Predicate<Household> 
         return keywords.stream()
                 .anyMatch(keyword -> householdId.contains(keyword) || phoneNumber.contains(keyword));
     }
-
+    /**
+     * Checks equality between this predicate and another object.
+     * Two predicates are equal if they have the same set of keywords.
+     *
+     * @param other The other object to compare against.
+     * @return true if both objects are identical or have equivalent keyword sets, false otherwise.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

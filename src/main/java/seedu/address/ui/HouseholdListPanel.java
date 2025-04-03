@@ -20,8 +20,6 @@ public class HouseholdListPanel extends UiPart<Region> {
     @FXML
     private ListView<Household> householdListView;
 
-    private final SessionListPanel sessionListPanel;
-
     /**
      * Constructs a {@code HouseholdListPanel} with the given list of households.
      *
@@ -35,7 +33,6 @@ public class HouseholdListPanel extends UiPart<Region> {
         super(FXML);
         assert householdList != null : "Household list must not be null";
         assert sessionListPanel != null : "SessionListPanel must not be null";
-        this.sessionListPanel = sessionListPanel;
         householdListView.setItems(householdList);
         householdListView.setCellFactory(listView -> new HouseholdListViewCell());
 

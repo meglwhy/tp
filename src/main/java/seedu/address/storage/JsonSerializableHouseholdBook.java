@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -47,10 +46,10 @@ public class JsonSerializableHouseholdBook {
     public JsonSerializableHouseholdBook(ReadOnlyHouseholdBook source) {
         households.addAll(source.getHouseholdList().stream()
                 .map(JsonAdaptedHousehold::new)
-                .collect(Collectors.toList()));
+                .toList());
         sessions.addAll(source.getSessionList().stream()
                 .map(JsonAdaptedSession::new)
-                .collect(Collectors.toList()));
+                .toList());
     }
 
     /**
@@ -59,42 +58,36 @@ public class JsonSerializableHouseholdBook {
      * @throws IllegalValueException if there were any data constraints violated.
      */
     public ReadOnlyHouseholdBook toModelType() throws IllegalValueException {
-        // First, convert all households to check for duplicates
+        // Check for duplicates
         List<Household> householdList = new ArrayList<>();
         for (JsonAdaptedHousehold jsonAdaptedHousehold : households) {
             householdList.add(jsonAdaptedHousehold.toModelType());
         }
-        // Check for duplicate households (by ID, name, address, or contact)
         Set<HouseholdId> ids = new HashSet<>();
         Set<String> names = new HashSet<>();
         Set<String> addresses = new HashSet<>();
         Set<String> contacts = new HashSet<>();
         for (Household household : householdList) {
-            // Check for duplicate IDs
             if (ids.contains(household.getId())) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_HOUSEHOLD);
             }
             ids.add(household.getId());
-            // Check for duplicate names
             String name = household.getName().toString();
             if (names.contains(name)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_HOUSEHOLD);
             }
             names.add(name);
-            // Check for duplicate addresses
             String address = household.getAddress().toString();
             if (addresses.contains(address)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_HOUSEHOLD);
             }
             addresses.add(address);
-            // Check for duplicate contacts
             String contact = household.getContact().toString();
             if (contacts.contains(contact)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_HOUSEHOLD);
             }
             contacts.add(contact);
         }
-        // Create the household book and add households
         HouseholdBook householdBook = new HouseholdBook();
         for (Household household : householdList) {
             householdBook.addHousehold(household);
@@ -104,7 +97,6 @@ public class JsonSerializableHouseholdBook {
         for (JsonAdaptedSession jsonAdaptedSession : sessions) {
             sessionList.add(jsonAdaptedSession.toModelType());
         }
-        // Check for duplicate session IDs
         Set<String> sessionIds = new HashSet<>();
         for (Session session : sessionList) {
             if (sessionIds.contains(session.getSessionId())) {
@@ -112,7 +104,6 @@ public class JsonSerializableHouseholdBook {
             }
             sessionIds.add(session.getSessionId());
         }
-        // Add sessions
         for (Session session : sessionList) {
             householdBook.addSessionToHousehold(session.getHouseholdId(), session);
         }

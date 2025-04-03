@@ -12,18 +12,22 @@ public class Name {
     public static final String MESSAGE_CONSTRAINTS =
             "Names should only contain alphanumeric characters and spaces, and it should not be blank";
 
-    /*
-     * The first character of the name must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
+    /**
+     * Regular expression for validating names.
+     * A valid name must start with an alphanumeric character and may contain
+     * alphanumeric characters and spaces thereafter.
+     * The first character must not be a whitespace to prevent blank inputs.
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String VALIDATION_REGEX = "\\p{Alnum}[\\p{Alnum} ]*";
 
     public final String fullName;
 
     /**
-     * Constructs a {@code Name}.
+     * Constructs a {@code Name} with the specified valid name.
      *
-     * @param name A valid name.
+     * @param name A valid name that satisfies the {@code VALIDATION_REGEX}.
+     * @throws NullPointerException If {@code name} is null.
+     * @throws IllegalArgumentException If {@code name} does not satisfy {@code VALIDATION_REGEX}.
      */
     public Name(String name) {
         requireNonNull(name);
@@ -32,7 +36,11 @@ public class Name {
     }
 
     /**
-     * Returns true if a given string is a valid name.
+     * Validates the given string as a potential name.
+     * Returns true if the string matches the {@code VALIDATION_REGEX}.
+     *
+     * @param test The string to validate.
+     * @return true if the given string is a valid name, false otherwise.
      */
     public static boolean isValidName(String test) {
         return test.matches(VALIDATION_REGEX);

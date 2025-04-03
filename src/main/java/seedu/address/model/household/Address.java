@@ -16,7 +16,7 @@ public class Address {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String VALIDATION_REGEX = "\\S.*";
 
     public final String value;
 
@@ -24,6 +24,8 @@ public class Address {
      * Constructs an {@code Address}.
      *
      * @param address A valid address.
+     * @throws NullPointerException if {@code address} is null.
+     * @throws IllegalArgumentException if the {@code address} is invalid.
      */
     public Address(String address) {
         requireNonNull(address);
@@ -32,7 +34,10 @@ public class Address {
     }
 
     /**
-     * Returns true if a given string is a valid address.
+     * Returns true if the given string is a valid address.
+     *
+     * @param test The string to test.
+     * @return True if the input matches the validation regex; false otherwise.
      */
     public static boolean isValidAddress(String test) {
         return test.matches(VALIDATION_REGEX);

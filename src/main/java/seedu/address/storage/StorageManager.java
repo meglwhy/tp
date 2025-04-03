@@ -21,8 +21,8 @@ import seedu.address.model.session.Session;
 public class StorageManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private HouseholdBookStorage householdBookStorage;
-    private UserPrefsStorage userPrefsStorage;
+    private final HouseholdBookStorage householdBookStorage;
+    private final UserPrefsStorage userPrefsStorage;
 
     /**
      * Creates a {@code StorageManager} with the given {@code HouseholdBookStorage} and {@code UserPrefStorage}.
@@ -134,10 +134,7 @@ public class StorageManager implements Storage {
             String[] timeParts = session.getTime().toString().split(":");
             int hours = Integer.parseInt(timeParts[0]);
             int minutes = Integer.parseInt(timeParts[1]);
-            if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
-                return false;
-            }
-            return true;
+            return hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59;
         } catch (Exception e) {
             // Any exception means invalid data
             logger.warning("Exception during session validation: " + e.getMessage());

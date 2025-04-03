@@ -97,7 +97,6 @@ public class SessionCard extends UiPart<Region> {
         grid.setVgap(10);
         grid.add(new Label("Household ID:"), 0, 0);
 
-        // Original values
         String originalDate = session.getDate().toString();
         String originalTime = session.getTime().toString();
         String originalNote = session.hasNote() ? session.getNote().toString() : "";
@@ -164,7 +163,6 @@ public class SessionCard extends UiPart<Region> {
             try {
                 CommandResult result = logic.execute(editCommand);
                 refreshCallback.run();
-                // Show appropriate message based on what changed
                 if (dateOrTimeChanged && noteChanged) {
                     showInfoDialog("Session Updated",
                             "Successfully updated date, time, and note:\n" + result.getFeedbackToUser());
@@ -179,7 +177,6 @@ public class SessionCard extends UiPart<Region> {
                 showErrorDialog("Failed to Update Session", e.getMessage());
             }
         } else {
-            // If neither changed, do nothing (no commands).
             showInfoDialog("No Changes Detected", "No new date/time or note entered.");
         }
     }

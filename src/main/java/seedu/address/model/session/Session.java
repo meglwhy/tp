@@ -7,11 +7,11 @@ import java.util.UUID;
 import seedu.address.model.household.HouseholdId;
 
 /**
- * Represents a Session in the household book.
- * Guarantees: details are present and not null, field values are validated.
+ * Represents a session associated with a specific household.
+ * Each session is uniquely identified by a {@code sessionId}.
+ * A session can optionally have a {@code SessionNote}.
  */
 public class Session {
-    // For validation of session ID
     public static final String MESSAGE_CONSTRAINTS_SESSION_ID =
             "Session ID should be a valid UUID format";
 
@@ -22,7 +22,13 @@ public class Session {
     private SessionNote note;
 
     /**
-     * Creates a Session object without a note.
+     * Creates a {@code Session} without a note using a specific session ID.
+     *
+     * @param sessionId Unique identifier for this session.
+     * @param householdId The household associated with this session.
+     * @param date The date of the session.
+     * @param time The time of the session.
+     * @throws NullPointerException If any argument is null.
      */
     public Session(String sessionId, HouseholdId householdId, SessionDate date, SessionTime time) {
         requireNonNull(sessionId);
@@ -37,7 +43,14 @@ public class Session {
     }
 
     /**
-     * Creates a Session object with a note.
+     * Creates a {@code Session} with a note using a specific session ID.
+     *
+     * @param sessionId Unique identifier for this session.
+     * @param householdId The household associated with this session.
+     * @param date The date of the session.
+     * @param time The time of the session.
+     * @param note An optional note for this session.
+     * @throws NullPointerException If any required argument is null.
      */
     public Session(String sessionId, HouseholdId householdId, SessionDate date, SessionTime time, SessionNote note) {
         this(sessionId, householdId, date, time);
@@ -45,28 +58,52 @@ public class Session {
     }
 
     /**
-     * Creates a new Session with a generated sessionId without a note.
+     * Creates a {@code Session} without a note and auto-generates a session ID.
+     *
+     * @param householdId The household associated with this session.
+     * @param date The date of the session.
+     * @param time The time of the session.
+     * @throws NullPointerException If any argument is null.
      */
     public Session(HouseholdId householdId, SessionDate date, SessionTime time) {
         this(UUID.randomUUID().toString(), householdId, date, time);
     }
 
     /**
-     * Creates a new Session with a generated sessionId with a note.
+     * Creates a {@code Session} with a note and auto-generates a session ID.
+     *
+     * @param householdId The household associated with this session.
+     * @param date The date of the session.
+     * @param time The time of the session.
+     * @param note An optional note for this session.
+     * @throws NullPointerException If any required argument is null.
      */
     public Session(HouseholdId householdId, SessionDate date, SessionTime time, SessionNote note) {
         this(UUID.randomUUID().toString(), householdId, date, time, note);
     }
 
     /**
-     * Creates a Session with a specific UUID string for testing purposes.
+     * Creates a {@code Session} without a note using a specific UUID for testing purposes.
+     *
+     * @param uuid The UUID used to create the session ID.
+     * @param householdId The household associated with this session.
+     * @param date The date of the session.
+     * @param time The time of the session.
+     * @throws NullPointerException If any argument is null.
      */
     public Session(UUID uuid, HouseholdId householdId, SessionDate date, SessionTime time) {
         this(uuid.toString(), householdId, date, time);
     }
 
     /**
-     * Creates a Session with a specific UUID string and note for testing purposes.
+     * Creates a {@code Session} with a note using a specific UUID for testing purposes.
+     *
+     * @param uuid The UUID used to create the session ID.
+     * @param householdId The household associated with this session.
+     * @param date The date of the session.
+     * @param time The time of the session.
+     * @param note An optional note for this session.
+     * @throws NullPointerException If any required argument is null.
      */
     public Session(UUID uuid, HouseholdId householdId, SessionDate date, SessionTime time, SessionNote note) {
         this(uuid.toString(), householdId, date, time, note);
@@ -101,7 +138,10 @@ public class Session {
     }
 
     /**
-     * Returns a copy of this session with the given note.
+     * Creates a copy of this session with a new note.
+     *
+     * @param noteText The text of the new note.
+     * @return A new session instance with the specified note.
      */
     public Session withNote(String noteText) {
         return new Session(
@@ -122,11 +162,6 @@ public class Session {
                 hasNote() ? ": " + note.toString() : "");
     }
 
-    /**
-     * Sessions are uniquely identified by their sessionId.
-     * Using date/time for equals can cause unexpected removal or indexing issues
-     * if multiple sessions share the same date/time. So we rely on sessionId alone.
-     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {

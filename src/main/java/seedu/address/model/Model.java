@@ -15,19 +15,19 @@ public interface Model {
     /** Returns the HouseholdBook */
     HouseholdBook getHouseholdBook();
 
-    /** Returns the user prefs' GUI settings. */
+    /** Returns the user prefs GUI settings. */
     GuiSettings getGuiSettings();
 
-    /** Sets the user prefs' GUI settings. */
+    /** Sets the user prefs GUI settings. */
     void setGuiSettings(GuiSettings guiSettings);
 
     /** Returns the user prefs */
     ReadOnlyUserPrefs getUserPrefs();
 
-    /** Returns the user prefs' household book file path. */
+    /** Returns the user prefs household book file path. */
     Path getHouseholdBookFilePath();
 
-    /** Sets the user prefs' household book file path. */
+    /** Sets the user prefs household book file path. */
     void setHouseholdBookFilePath(Path householdBookFilePath);
 
     /** Returns an unmodifiable view of the filtered household list */
