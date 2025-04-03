@@ -58,19 +58,15 @@ public class JsonAdaptedSession {
      * @throws IllegalValueException if there were any data constraints violated in the adapted session.
      */
     public Session toModelType() throws IllegalValueException {
-        // Session ID validation
         if (sessionId == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "SessionId"));
         }
-
-        // Validate UUID format
         try {
             UUID.fromString(sessionId);
         } catch (IllegalArgumentException e) {
             throw new IllegalValueException(Session.MESSAGE_CONSTRAINTS_SESSION_ID);
         }
 
-        // Household ID validation
         if (householdId == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                 HouseholdId.class.getSimpleName()));
@@ -80,7 +76,6 @@ public class JsonAdaptedSession {
         }
         final HouseholdId modelHouseholdId = new HouseholdId(householdId);
 
-        // Date validation
         if (date == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                 SessionDate.class.getSimpleName()));
@@ -90,7 +85,6 @@ public class JsonAdaptedSession {
         }
         final SessionDate modelDate = new SessionDate(date);
 
-        // Time validation
         if (time == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                 SessionTime.class.getSimpleName()));
@@ -100,10 +94,8 @@ public class JsonAdaptedSession {
         }
         final SessionTime modelTime = new SessionTime(time);
 
-        // Note is optional
         final SessionNote modelNote = note != null ? new SessionNote(note) : null;
 
-        // Create session with the specified UUID
         UUID uuid = UUID.fromString(sessionId);
         if (modelNote == null) {
             return new Session(uuid, modelHouseholdId, modelDate, modelTime);

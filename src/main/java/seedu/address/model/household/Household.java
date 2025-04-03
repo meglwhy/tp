@@ -16,8 +16,6 @@ import seedu.address.model.tag.Tag;
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Household {
-
-    // Comparator to sort sessions by date (descending), then time (descending)
     private static final Comparator<Session> SESSION_COMPARATOR = (s1, s2) -> {
         int dateCompare = s2.getDate().compareTo(s1.getDate()); // Newest date first
         if (dateCompare != 0) {
@@ -33,16 +31,28 @@ public class Household {
     private final Set<Tag> tags;
 
     /**
-     * Creates a Household object with an auto-generated ID.
+     * Creates a {@code Household} object with an auto-generated ID.
      * All fields except tags must be non-null.
+     *
+     * @param name The household's name.
+     * @param address The household's address.
+     * @param contact The household's contact number.
+     * @throws NullPointerException if any of the parameters are null.
      */
     public Household(Name name, Address address, Contact contact) {
         this(name, address, contact, HouseholdId.generateNewId(), new HashSet<>());
     }
 
     /**
-     * Creates a Household object with a specific ID and tags.
+     * Creates a {@code Household} object with a specific ID and tags.
      * This constructor should only be used when loading data from storage.
+     *
+     * @param name The household's name.
+     * @param address The household's address.
+     * @param contact The household's contact number.
+     * @param id The unique identifier for the household.
+     * @param tags The set of tags associated with the household.
+     * @throws NullPointerException if any of the parameters are null.
      */
     public Household(Name name, Address address, Contact contact, HouseholdId id, Set<Tag> tags) {
         requireNonNull(name);
@@ -73,11 +83,6 @@ public class Household {
         return id;
     }
 
-
-    /**
-     * Returns the actual (sorted) sessions list.
-     * The list is kept sorted using the defined comparator.
-     */
     public ObservableList<Session> getSessions() {
         // Sort in place so that the underlying list is also sorted.
         FXCollections.sort(sessions, SESSION_COMPARATOR);
@@ -90,6 +95,9 @@ public class Household {
 
     /**
      * Adds a session to this household.
+     *
+     * @param session The session to add.
+     * @throws NullPointerException if the session is null.
      */
     public void addSession(Session session) {
         requireNonNull(session);
@@ -97,21 +105,21 @@ public class Household {
     }
 
     /**
-     * Returns true if both households have the same identifying fields.
-     * This defines if adding/editing would result in duplicates.
+     * Compares this household to another object.
+     * Returns true if both households have the same identifying fields, defining duplication.
+     *
+     * @param other The object to compare to.
+     * @return true if the two households are considered equal, false otherwise.
      */
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
         }
 
-        if (!(other instanceof Household)) {
+        if (!(other instanceof Household otherHousehold)) {
             return false;
         }
-
-        Household otherHousehold = (Household) other;
 
         return this.getId().equals(otherHousehold.getId())
                 || this.getName().toString().equalsIgnoreCase(otherHousehold.getName().toString())

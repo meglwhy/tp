@@ -9,7 +9,7 @@ import javafx.scene.layout.Region;
 import seedu.address.model.household.Household;
 
 /**
- * An UI component that displays information of a {@code Household}.
+ * A UI component that displays information of a {@code Household}.
  */
 public class HouseholdCard extends UiPart<Region> {
 

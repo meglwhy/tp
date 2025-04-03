@@ -34,14 +34,14 @@ public class MainWindow extends UiPart<Stage> {
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
-    private Stage primaryStage;
-    private Logic logic;
+    private final Stage primaryStage;
+    private final Logic logic;
 
     // Independent Ui parts residing in this Ui container
     private HouseholdListPanel householdListPanel;
     private SessionListPanel sessionListPanel;
     private ResultDisplay resultDisplay;
-    private HelpWindow helpWindow;
+    private final HelpWindow helpWindow;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -101,7 +101,6 @@ public class MainWindow extends UiPart<Stage> {
         householdListPanel.getListView().getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        // Filter sessions to show only those belonging to the selected household
                         logic.updateFilteredSessionList(session ->
                                 session.getHouseholdId().equals(newValue.getId()));
                         // Force refresh the session list panel
@@ -111,14 +110,11 @@ public class MainWindow extends UiPart<Stage> {
                                 newValue.getName().toString(),
                                 newValue.getId().toString()
                         );
-                        // Show the addSessionButton
                         sessionListPanel.showAddSessionButton(true);
                     } else {
                         // If no household is selected, clear the session list
                         logic.updateFilteredSessionList(session -> false);
-                        // Indicate that no household is selected
                         sessionListPanel.setSelectedHousehold("Select household to view sessions", null);
-                        // Hide the addSessionButton
                         sessionListPanel.showAddSessionButton(false);
                     }
                 });

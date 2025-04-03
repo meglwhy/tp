@@ -7,9 +7,6 @@ package seedu.address.model.session;
 public class Index {
     private final int zeroBasedIndex;
 
-    /**
-     * Creates an {@code Index} using a zero-based index.
-     */
     private Index(int zeroBasedIndex) {
         if (zeroBasedIndex < 0) {
             throw new IndexOutOfBoundsException();
@@ -17,16 +14,10 @@ public class Index {
         this.zeroBasedIndex = zeroBasedIndex;
     }
 
-    /**
-     * Creates an {@code Index} using a one-based index.
-     */
     public static Index fromOneBased(int oneBasedIndex) {
         return new Index(oneBasedIndex - 1);
     }
 
-    /**
-     * Creates an {@code Index} using a zero-based index.
-     */
     public static Index fromZeroBased(int zeroBasedIndex) {
         return new Index(zeroBasedIndex);
     }

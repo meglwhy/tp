@@ -21,7 +21,7 @@ public class JsonHouseholdBookStorage implements HouseholdBookStorage {
 
     private static final Logger logger = LogsCenter.getLogger(JsonHouseholdBookStorage.class);
 
-    private Path filePath;
+    private final Path filePath;
 
     public JsonHouseholdBookStorage(Path filePath) {
         this.filePath = filePath;
@@ -49,7 +49,7 @@ public class JsonHouseholdBookStorage implements HouseholdBookStorage {
 
         Optional<JsonSerializableHouseholdBook> jsonHouseholdBook = JsonUtil.readJsonFile(
                 filePath, JsonSerializableHouseholdBook.class);
-        if (!jsonHouseholdBook.isPresent()) {
+        if (jsonHouseholdBook.isEmpty()) {
             return Optional.empty();
         }
 

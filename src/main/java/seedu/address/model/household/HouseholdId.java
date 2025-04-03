@@ -15,22 +15,32 @@ public class HouseholdId {
     public final String value;
 
     /**
-     * Constructs a new {@code HouseholdId}.
-     * Public for tests.
+     * Constructs a new {@code HouseholdId} with the specified value.
+     * Primarily used for testing purposes to create a HouseholdId with a specific value.
+     *
+     * @param value The ID value to be assigned.
      */
     public HouseholdId(String value) {
         this.value = value;
     }
 
     /**
-     * Creates a new HouseholdId with auto-generated ID.
+     * Creates a new {@code HouseholdId} with an auto-generated ID value.
+     * The ID is generated based on an incrementing counter to ensure uniqueness.
+     *
+     * @return A new {@code HouseholdId} with a unique, auto-generated value.
      */
     public static HouseholdId generateNewId() {
         return new HouseholdId(String.format("H%06d", ++idCounter));
     }
 
     /**
-     * Creates a HouseholdId from an existing ID string.
+     * Creates a {@code HouseholdId} from the given ID string.
+     * The ID counter is updated to ensure subsequent generated IDs are unique.
+     *
+     * @param id The ID string to create a {@code HouseholdId} from.
+     * @return A new {@code HouseholdId} with the specified ID value.
+     * @throws NullPointerException if the given ID is null.
      */
     public static HouseholdId fromString(String id) {
         requireNonNull(id);
@@ -46,7 +56,11 @@ public class HouseholdId {
     }
 
     /**
-     * Returns true if a given string is a valid household ID.
+     * Validates whether a given string is a valid household ID.
+     * A valid ID must match the defined validation pattern.
+     *
+     * @param test The string to validate.
+     * @return true if the string is a valid household ID, false otherwise.
      */
     public static boolean isValidId(String test) {
         return test != null && test.matches(VALIDATION_REGEX);

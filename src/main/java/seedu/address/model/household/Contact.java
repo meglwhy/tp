@@ -15,9 +15,11 @@ public class Contact {
     public final String value;
 
     /**
-     * Constructs a {@code Contact}.
+     * Constructs a {@code Contact} with the specified contact number.
      *
      * @param contact A valid contact number.
+     * @throws NullPointerException if the provided contact is null.
+     * @throws IllegalArgumentException if the provided contact is invalid according to {@link #isValidContact(String)}.
      */
     public Contact(String contact) {
         requireNonNull(contact);
@@ -26,7 +28,10 @@ public class Contact {
     }
 
     /**
-     * Returns true if a given string is a valid contact number.
+     * Returns true if the given string is a valid contact number based on the specified validation regex.
+     *
+     * @param test The string to validate.
+     * @return true if the string matches the validation regex; false otherwise.
      */
     public static boolean isValidContact(String test) {
         return test.matches(VALIDATION_REGEX);
