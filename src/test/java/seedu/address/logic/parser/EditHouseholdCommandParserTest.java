@@ -31,10 +31,7 @@ public class EditHouseholdCommandParserTest {
     public void parse_missingHouseholdId_throwsParseException() {
         String userInput = "n/John p/98765432 a/123 Street";
 
-        // Missing household ID, should throw ParseException
-        ParseException thrown = assertThrows(ParseException.class, () -> {
-            parser.parse(userInput);
-        });
+        ParseException thrown = assertThrows(ParseException.class, () -> parser.parse(userInput));
 
         assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditHouseholdCommand.MESSAGE_USAGE),
                 thrown.getMessage());
@@ -44,13 +41,11 @@ public class EditHouseholdCommandParserTest {
     public void parse_validFields_createsEditHouseholdCommand() throws ParseException {
         String userInput = " id/H000001 n/John p/98765432 a/123 Street t/Friends t/Family";
 
-        // Create the expected Name, Contact, Address, and Tag objects
         Name name = new Name("John");
         Contact contact = new Contact("98765432");
         Address address = new Address("123 Street");
         Set<Tag> tags = Set.of(new Tag("Friends"), new Tag("Family"));
 
-        // Create an EditHouseholdCommandDescriptor and set fields individually
         EditHouseholdCommand.EditHouseholdDescriptor descriptor = new EditHouseholdCommand.EditHouseholdDescriptor();
         descriptor.setName(name);
         descriptor.setContact(contact);
@@ -62,10 +57,8 @@ public class EditHouseholdCommandParserTest {
                 descriptor
         );
 
-        // Parse the input
         EditHouseholdCommand result = parser.parse(userInput);
 
-        // Assert that the result matches the expected command
         assertEquals(expectedCommand, result);
     }
 
@@ -75,7 +68,6 @@ public class EditHouseholdCommandParserTest {
 
         ParseException thrown = assertThrows(ParseException.class, () -> parser.parse(userInput));
 
-        // Ensure the thrown message matches the expected full formatted string
         assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditHouseholdCommand.MESSAGE_USAGE),
                 thrown.getMessage());
     }
@@ -84,10 +76,7 @@ public class EditHouseholdCommandParserTest {
     public void parse_invalidPhoneFormat_throwsParseException() {
         String userInput = "id/H000001 n/John p/invalidPhone a/123 Street";
 
-        // Invalid phone number format, should throw ParseException
-        ParseException thrown = assertThrows(ParseException.class, () -> {
-            parser.parse(userInput);
-        });
+        ParseException thrown = assertThrows(ParseException.class, () -> parser.parse(userInput));
 
         assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditHouseholdCommand.MESSAGE_USAGE),
                 thrown.getMessage());
@@ -97,10 +86,7 @@ public class EditHouseholdCommandParserTest {
     public void parse_invalidAddressFormat_throwsParseException() {
         String userInput = "id/H000001 n/John p/98765432 a/invalidAddress";
 
-        // Invalid address format, should throw ParseException
-        ParseException thrown = assertThrows(ParseException.class, () -> {
-            parser.parse(userInput);
-        });
+        ParseException thrown = assertThrows(ParseException.class, () -> parser.parse(userInput));
 
         assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditHouseholdCommand.MESSAGE_USAGE),
                 thrown.getMessage());

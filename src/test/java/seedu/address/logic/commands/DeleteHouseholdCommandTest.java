@@ -1,9 +1,8 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -40,8 +39,6 @@ public class DeleteHouseholdCommandTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         targetId = new HouseholdId("H000001");
-
-        // Mock the behavior of the model and household book
         when(model.getHouseholdBook()).thenReturn(householdBook);
     }
 
@@ -52,9 +49,7 @@ public class DeleteHouseholdCommandTest {
         // Create a spy of DeleteHouseholdCommand to mock showConfirmationDialog
         DeleteHouseholdCommand deleteCommand = Mockito.spy(new DeleteHouseholdCommand(targetId));
 
-        // Mock the showConfirmationDialog to return true (confirm deletion)
         doReturn(true).when(deleteCommand).confirmDeletion(householdToDelete);
-
         CommandResult result = deleteCommand.execute(model);
         assertEquals(String.format(DeleteHouseholdCommand.MESSAGE_DELETE_HOUSEHOLD_SUCCESS, householdToDelete),
                 result.getFeedbackToUser());
@@ -77,9 +72,7 @@ public class DeleteHouseholdCommandTest {
         // Create a spy of DeleteHouseholdCommand to mock showConfirmationDialog
         DeleteHouseholdCommand deleteCommand = Mockito.spy(new DeleteHouseholdCommand(targetId));
 
-        // Mock the showConfirmationDialog to return false (cancel deletion)
         doReturn(false).when(deleteCommand).confirmDeletion(householdToDelete);
-
         CommandResult result = deleteCommand.execute(model);
 
         assertEquals(DeleteHouseholdCommand.MESSAGE_CANCELLED, result.getFeedbackToUser());
@@ -89,9 +82,7 @@ public class DeleteHouseholdCommandTest {
     @Test
     public void execute_invalidHouseholdId_throwsCommandException() {
         HouseholdId invalidId = new HouseholdId("H000003");
-
         when(householdBook.getHouseholdById(invalidId)).thenReturn(Optional.empty());
-
         DeleteHouseholdCommand deleteCommand = new DeleteHouseholdCommand(invalidId);
 
         assertThrows(CommandException.class, () -> deleteCommand.execute(model));
@@ -105,9 +96,7 @@ public class DeleteHouseholdCommandTest {
         DeleteHouseholdCommand command1 = new DeleteHouseholdCommand(anotherId);
         DeleteHouseholdCommand command2 = new DeleteHouseholdCommand(anotherId);
         DeleteHouseholdCommand command3 = new DeleteHouseholdCommand(differentId);
-        assertTrue(command1.equals(command1));
-        assertTrue(command1.equals(command2));
-        // Different target ID, should not be equal
-        assertFalse(command1.equals(command3));
+        assertEquals(command1, command2);
+        assertNotEquals(command1, command3);
     }
 }

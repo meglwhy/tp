@@ -26,8 +26,6 @@ class DeleteSessionCommandTest {
     private Model model;
     private HouseholdBook householdBook;
     private HouseholdId householdId;
-    private Household household;
-    private Session session;
 
     @BeforeEach
     void setUp() {
@@ -37,15 +35,12 @@ class DeleteSessionCommandTest {
 
         householdId = new HouseholdId("H000002");
 
-        // Create a dummy session using a mock.
-        session = mock(Session.class);
+        Session session = mock(Session.class);
         when(session.getSessionId()).thenReturn("S0001");
 
-        // Create an ObservableList for sessions
         ObservableList<Session> sessions = FXCollections.observableArrayList(session);
 
-        // Create a dummy household returning the ObservableList.
-        household = mock(Household.class);
+        Household household = mock(Household.class);
         when(household.getSessions()).thenReturn(sessions);
 
         when(householdBook.getHouseholdById(householdId)).thenReturn(Optional.of(household));

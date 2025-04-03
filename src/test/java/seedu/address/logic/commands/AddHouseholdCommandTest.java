@@ -1,9 +1,8 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -28,14 +27,11 @@ class AddHouseholdCommandTest {
 
     @BeforeEach
     void setUp() {
-        // Create mocks for Model and HouseholdBook
         model = mock(Model.class);
         householdBook = mock(HouseholdBook.class);
 
-        // Set up the mocked model to return the mocked household book
         when(model.getHouseholdBook()).thenReturn(householdBook);
 
-        // Create sample Household objects for testing
         validHousehold = new Household(new Name("Smith Family"),
                 new Address("123 Main St"),
                 new Contact("98765432"));
@@ -46,28 +42,18 @@ class AddHouseholdCommandTest {
 
     @Test
     void execute_validHousehold_addsHouseholdToModel() throws CommandException {
-        // Set up mock behavior for no duplicate household
         when(householdBook.hasHousehold(validHousehold)).thenReturn(false);
-
-        // Create the AddHouseholdCommand
         AddHouseholdCommand addHouseholdCommand = new AddHouseholdCommand(validHousehold);
-
-        // Execute the command
         CommandResult result = addHouseholdCommand.execute(model);
-
-        // Verify that addHousehold is called once and with correct parameter
         verify(householdBook).addHousehold(validHousehold);
 
-        // Verify the result
         assertEquals(String.format(AddHouseholdCommand.MESSAGE_SUCCESS, validHousehold), result.getFeedbackToUser());
     }
 
     @Test
     void execute_duplicateHousehold_throwsCommandException() {
         when(householdBook.hasHousehold(duplicateHousehold)).thenReturn(true);
-
         AddHouseholdCommand addHouseholdCommand = new AddHouseholdCommand(duplicateHousehold);
-
         CommandException exception = assertThrows(CommandException.class, () -> addHouseholdCommand.execute(model));
 
         assertEquals(AddHouseholdCommand.MESSAGE_DUPLICATE_HOUSEHOLD, exception.getMessage());
@@ -78,7 +64,7 @@ class AddHouseholdCommandTest {
         AddHouseholdCommand addHouseholdCommand1 = new AddHouseholdCommand(validHousehold);
         AddHouseholdCommand addHouseholdCommand2 = new AddHouseholdCommand(validHousehold);
 
-        assertTrue(addHouseholdCommand1.equals(addHouseholdCommand2));
+        assertEquals(addHouseholdCommand1, addHouseholdCommand2);
     }
 
     @Test
@@ -88,15 +74,14 @@ class AddHouseholdCommandTest {
         Household completelyDifferentHousehold = new Household(new Name("Johnson Family"), new Address("456 Elm St"),
                 new Contact("82345678"));
 
-        assertFalse(validHousehold.equals(completelyDifferentHousehold));
+        assertNotEquals(validHousehold, completelyDifferentHousehold);
     }
 
     @Test
     void equals_nullObject_returnsFalse() {
         AddHouseholdCommand addHouseholdCommand = new AddHouseholdCommand(validHousehold);
 
-        // Test inequality with null
-        assertFalse(addHouseholdCommand.equals(null));
+        assertNotEquals(null, addHouseholdCommand);
     }
 
     @Test
@@ -104,6 +89,6 @@ class AddHouseholdCommandTest {
         AddHouseholdCommand addHouseholdCommand = new AddHouseholdCommand(validHousehold);
 
         // Test inequality with different class type
-        assertFalse(addHouseholdCommand.equals(new Object()));
+        assertNotEquals(new Object(), addHouseholdCommand);
     }
 }

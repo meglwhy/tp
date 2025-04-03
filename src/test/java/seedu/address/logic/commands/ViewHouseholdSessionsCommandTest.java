@@ -23,7 +23,6 @@ class ViewHouseholdSessionsCommandTest {
     private Model model;
     private HouseholdBook householdBook;
     private HouseholdId householdId;
-    private Household household;
 
     @BeforeEach
     void setUp() {
@@ -32,7 +31,7 @@ class ViewHouseholdSessionsCommandTest {
         when(model.getHouseholdBook()).thenReturn(householdBook);
 
         householdId = new HouseholdId("H000007");
-        household = mock(Household.class);
+        Household household = mock(Household.class);
         when(household.getId()).thenReturn(householdId);
         // Return an ObservableList for the household list.
         ObservableList<Household> households = FXCollections.observableArrayList(household);

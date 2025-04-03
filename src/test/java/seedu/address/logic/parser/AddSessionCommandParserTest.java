@@ -24,9 +24,6 @@ public class AddSessionCommandParserTest {
         parser = new AddSessionCommandParser();
     }
 
-    /**
-     * Helper method to retrieve a private field value via reflection.
-     */
     private <T> T getField(Object obj, String fieldName, Class<T> clazz) {
         try {
             Field field = obj.getClass().getDeclaredField(fieldName);

@@ -16,13 +16,9 @@ public class FindHouseholdCommandParserTest {
 
     @Test
     public void parse_validInput_returnsFindHouseholdCommand() throws ParseException {
-        // Arrange
         String userInput = "John Family";
-
-        // Act
         FindHouseholdCommand result = parser.parse(userInput);
 
-        // Assert
         try {
             assertEquals(new FindHouseholdCommand("John Family"), result);
         } catch (CommandException e) {
@@ -32,26 +28,17 @@ public class FindHouseholdCommandParserTest {
 
     @Test
     public void parse_emptyInput_throwsParseException() {
-        // Arrange
         String userInput = "";
-
-        // Act & Assert
-        ParseException thrown = assertThrows(ParseException.class, () -> {
-            parser.parse(userInput);
-        });
+        ParseException thrown = assertThrows(ParseException.class, () -> parser.parse(userInput));
         assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindHouseholdCommand.MESSAGE_USAGE),
                 thrown.getMessage());
     }
 
     @Test
     public void parse_multipleSpacesBetweenKeywords_returnsFindHouseholdCommand() throws ParseException {
-        // Arrange
         String userInput = "  John    Family  ";
-
-        // Act
         FindHouseholdCommand result = parser.parse(userInput);
 
-        // Assert
         try {
             assertEquals(new FindHouseholdCommand("John Family"), result);
         } catch (CommandException e) {
@@ -61,13 +48,9 @@ public class FindHouseholdCommandParserTest {
 
     @Test
     public void parse_validInputWithMultipleKeywords_returnsFindHouseholdCommand() throws ParseException {
-        // Arrange
         String userInput = "John Family Friends";
-
-        // Act
         FindHouseholdCommand result = parser.parse(userInput);
 
-        // Assert
         try {
             assertEquals(new FindHouseholdCommand("John Family Friends"), result);
         } catch (CommandException e) {
@@ -77,36 +60,29 @@ public class FindHouseholdCommandParserTest {
 
     @Test
     public void parse_invalidInput_returnsFindHouseholdCommand() {
-        // Arrange
         String userInput = "!!!";
-        FindHouseholdCommand expectedCommand = null;
+        FindHouseholdCommand expectedCommand;
         try {
             expectedCommand = new FindHouseholdCommand("!!!");
         } catch (CommandException e) {
             throw new RuntimeException(e);
         }
 
-        // Act
-        FindHouseholdCommand result = null;
+        FindHouseholdCommand result;
         try {
             result = parser.parse(userInput);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
 
-        // Assert
         assertEquals(expectedCommand, result);
     }
 
     @Test
     public void parse_inputWithExtraSpacesBeforeAndAfter_keywordsAreTrimmed() throws ParseException {
-        // Arrange
         String userInput = "   John   Family   ";
-
-        // Act
         FindHouseholdCommand result = parser.parse(userInput);
 
-        // Assert
         try {
             assertEquals(new FindHouseholdCommand("John Family"), result);
         } catch (CommandException e) {
