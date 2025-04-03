@@ -11,18 +11,17 @@ public class SessionNote {
     public static final String MESSAGE_CONSTRAINTS =
             "Notes can take any values, and it should not be blank";
 
-    /*
-     * The first character of the note must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
     public static final String VALIDATION_REGEX = "\\S.*";
 
     public final String value;
 
     /**
-     * Constructs a {@code SessionNote}.
+     * Constructs a {@code SessionNote} with the specified note content.
+     * The note must satisfy the validation criteria defined by {@code VALIDATION_REGEX}.
      *
-     * @param note A valid note.
+     * @param note A valid note string.
+     * @throws NullPointerException If {@code note} is null.
+     * @throws IllegalArgumentException If {@code note} does not meet validation criteria.
      */
     public SessionNote(String note) {
         requireNonNull(note);
@@ -31,7 +30,11 @@ public class SessionNote {
     }
 
     /**
-     * Returns true if a given string is a valid note.
+     * Validates if the given string meets the criteria for a valid note.
+     * The validation criteria are defined by {@code VALIDATION_REGEX}.
+     *
+     * @param test The string to validate.
+     * @return {@code true} if {@code test} satisfies the validation criteria; {@code false} otherwise.
      */
     public static boolean isValidNote(String test) {
         return test.matches(VALIDATION_REGEX);

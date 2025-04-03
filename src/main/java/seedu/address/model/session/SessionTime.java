@@ -18,9 +18,12 @@ public class SessionTime implements Comparable<SessionTime> {
     public final LocalTime value;
 
     /**
-     * Constructs a {@code SessionTime}.
+     * Constructs a {@code SessionTime} with the specified time string.
+     * The time string must adhere to the expected format defined by {@code FORMATTER}.
      *
      * @param time A valid time string.
+     * @throws NullPointerException If {@code time} is null.
+     * @throws IllegalArgumentException If {@code time} is not in the correct format.
      */
     public SessionTime(String time) {
         requireNonNull(time);
@@ -29,7 +32,11 @@ public class SessionTime implements Comparable<SessionTime> {
     }
 
     /**
-     * Returns true if a given string is a valid time.
+     * Validates if the given string represents a valid time.
+     * The time string must adhere to the expected format defined by {@code FORMATTER}.
+     *
+     * @param test The string to validate.
+     * @return {@code true} if {@code test} is a valid time string; {@code false} otherwise.
      */
     public static boolean isValidTime(String test) {
         try {
