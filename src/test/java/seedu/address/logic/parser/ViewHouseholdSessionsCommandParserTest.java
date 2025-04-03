@@ -21,9 +21,6 @@ public class ViewHouseholdSessionsCommandParserTest {
         parser = new ViewHouseholdSessionsCommandParser();
     }
 
-    /**
-     * Helper method to retrieve a private field value via reflection.
-     */
     private <T> T getField(Object obj, String fieldName, Class<T> clazz) {
         try {
             Field field = obj.getClass().getDeclaredField(fieldName);
@@ -46,7 +43,6 @@ public class ViewHouseholdSessionsCommandParserTest {
 
     @Test
     public void parse_invalidInput_throwsParseException() {
-        // Empty input.
         String userInput = "";
         assertThrows(ParseException.class, () -> parser.parse(userInput));
     }

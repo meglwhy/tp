@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.model.Model;
 
-// A simple Model stub that minimally implements Model.
 class ExitCommandTest {
 
     private static class ModelStub implements Model {

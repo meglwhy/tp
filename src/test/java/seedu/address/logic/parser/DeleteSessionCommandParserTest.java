@@ -41,16 +41,14 @@ public class DeleteSessionCommandParserTest {
         int expectedSessionIndex = 2;
 
         DeleteSessionCommand resultCommand = parser.parse(userInput);
-        // Verify householdId field.
         assertEquals(expectedHouseholdId, getField(resultCommand, "householdId", HouseholdId.class));
-        // Retrieve sessionIndex as an Integer and then compare.
         assertEquals(expectedSessionIndex,
                 getField(resultCommand, "sessionIndex", Integer.class).intValue());
     }
 
     @Test
     public void parse_invalidFormat_throwsParseException() {
-        // Input missing hyphen.
+        // Missing hyphen.
         String userInput = " id/H0000012";
         assertThrows(ParseException.class, () -> parser.parse(userInput));
     }

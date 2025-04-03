@@ -52,7 +52,6 @@ class HelpCommandTest {
         HelpCommand command = new HelpCommand();
         CommandResult result = command.execute(new ModelStub());
         assertEquals(HelpCommand.SHOWING_HELP_MESSAGE, result.getFeedbackToUser());
-        // Check that the help flag is true and exit flag is false.
         assertTrue(result.isShowHelp());
         assertFalse(result.isExit());
     }

@@ -22,7 +22,6 @@ class DeleteHouseholdCommandParserTest {
 
     @Test
     void parse_validArgs_returnsDeleteHouseholdCommand() throws ParseException {
-        // Valid input with household id
         String userInput = " " + PREFIX_ID + "H000001";
 
         HouseholdId expectedHouseholdId = new HouseholdId("H000001");
@@ -35,7 +34,6 @@ class DeleteHouseholdCommandParserTest {
 
     @Test
     void parse_missingId_throwsParseException() {
-        // Input with missing household ID
         String userInput = " " + PREFIX_ID;
 
         assertThrows(ParseException.class, () -> parser.parse(userInput));
@@ -43,7 +41,6 @@ class DeleteHouseholdCommandParserTest {
 
     @Test
     void parse_extraParameters_throwsParseException() {
-        // Input with extra parameters (should be invalid)
         String userInput = " " + PREFIX_ID + "H000001 extraParam";
 
         assertThrows(ParseException.class, () -> parser.parse(userInput));
@@ -51,7 +48,6 @@ class DeleteHouseholdCommandParserTest {
 
     @Test
     void parse_emptyArgs_throwsParseException() {
-        // Empty input, should throw ParseException
         String userInput = "";
 
         assertThrows(ParseException.class, () -> parser.parse(userInput));
@@ -59,7 +55,6 @@ class DeleteHouseholdCommandParserTest {
 
     @Test
     void parse_invalidHouseholdId_throwsParseException() {
-        // Invalid household ID format
         String userInput = " " + PREFIX_ID + "invalid-id";
 
         assertThrows(ParseException.class, () -> parser.parse(userInput));

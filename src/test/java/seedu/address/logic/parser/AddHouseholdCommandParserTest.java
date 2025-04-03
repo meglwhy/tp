@@ -54,13 +54,13 @@ class AddHouseholdCommandParserTest {
 
     @Test
     public void parse_invalidName_throwsParseException() {
-        String userInput = " n/!@# a/123 Main St p/98765432"; // Invalid name format
+        String userInput = " n/!@# a/123 Main St p/98765432";
         assertThrows(ParseException.class, () -> parser.parse(userInput));
     }
 
     @Test
     public void parse_invalidPhone_throwsParseException() {
-        String userInput = " n/John Doe a/123 Main St p/abcd1234"; // Invalid phone number format
+        String userInput = " n/John Doe a/123 Main St p/abcd1234";
         assertThrows(ParseException.class, () -> parser.parse(userInput));
     }
 
