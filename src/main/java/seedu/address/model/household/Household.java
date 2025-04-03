@@ -2,6 +2,7 @@ package seedu.address.model.household;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,15 @@ import seedu.address.model.tag.Tag;
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Household {
+
+    // Comparator to sort sessions by date (descending), then time (descending)
+    private static final Comparator<Session> SESSION_COMPARATOR = (s1, s2) -> {
+        int dateCompare = s2.getDate().compareTo(s1.getDate()); // Newest date first
+        if (dateCompare != 0) {
+            return dateCompare;
+        }
+        return s2.getTime().compareTo(s1.getTime()); // Newest time first
+    };
     private final Name name;
     private final Address address;
     private final Contact contact;
@@ -63,8 +73,14 @@ public class Household {
         return id;
     }
 
+
+    /**
+     * Returns the actual (sorted) sessions list.
+     * The list is kept sorted using the defined comparator.
+     */
     public ObservableList<Session> getSessions() {
-        // Make sure we return the ACTUAL list, not a copy
+        // Sort in place so that the underlying list is also sorted.
+        FXCollections.sort(sessions, SESSION_COMPARATOR);
         return sessions;
     }
 
@@ -78,19 +94,6 @@ public class Household {
     public void addSession(Session session) {
         requireNonNull(session);
         sessions.add(session);
-    }
-
-    /**
-     * Updates the old session with the new session.
-     * The old session must exist in this household.
-     */
-    public void updateSession(Session oldSession, Session newSession) {
-        requireNonNull(oldSession);
-        requireNonNull(newSession);
-        int index = sessions.indexOf(oldSession);
-        if (index != -1) {
-            sessions.set(index, newSession);
-        }
     }
 
     /**
