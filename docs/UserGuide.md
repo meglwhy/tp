@@ -32,9 +32,6 @@ If you're already familiar with similar applications, skip to [Quick Start](#qui
    - [Introduction](#introduction)
    - [Quick Start](#quick-start)
    - [User Interface Overview](#user-interface-overview)
-   - [Command Syntax Guide](#command-syntax-guide)
-      - [Parameter Reference](#parameter-reference)
-      - [Special Syntax](#special-syntax)
    - [Household Management](#household-management)
       - [Add a household](#add-a-household)
       - [Edit a household](#edit-a-household)
@@ -95,44 +92,20 @@ The Em-Social interface consists of five main sections:
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Command Syntax Guide
-Before using the commands, please understand these conventions:
-
-### Parameter Reference
-All commands use the following format:
-`command-name prefix/PARAMETER [optional-prefix/OPTIONAL_PARAMETER]...`
-
-| Parameter                       | Flag  | Meaning                               | Valid Examples                    |
-|---------------------------------|-------|---------------------------------------|-----------------------------------|
-| `n/HOUSEHOLD_NAME`              | `n/`  | Name of household (e.g, family name)  | `n/Tan Family`, `n/Lee Household` |
-| `a/ADDRESS`                     | `a/`  | Household address                     | `a/Blk 30 Geylang St, #06-40`     |
-| `p/PHONE_NUMBER`                | `p/`  | 8-digit Singapore phone number        | `p/91234567`, `p/62221234`        |
-| `id/HOUSEHOLD_ID`               | `id/` | Unique household ID                   | `id/H000001`, `id/H000123`        |
-| `id/HOUSEHOLD_ID-SESSION_INDEX` | `id/` | Combined household ID + session index | `id/H000001-1`, `id/H000123-3`    |
-| `d/DATE`                        | `d/`  | Date in YYYY-MM-DD format             | `d/2025-03-15`, `d/2025-12-31`    |
-| `tm/TIME`                       | `tm/` | Time in 24-hour HH:MM format          | `tm/09:00`, `tm/14:30`            |
-| `t/TAG`                         | `t/`  | Category label (no spaces)            | `t/elderly`, `t/financial_aid`    |
-| `n/NOTE`                        | `n/`  | Session notes (free text)             | `n/Medical follow-up scheduled`   |
-
-
-### Special Syntax
-| Symbol          | Meaning                                  | Example                          |
-|-----------------|------------------------------------------|----------------------------------|
-| `[ ]`           | Optional parameter                       | `[t/TAG]`                        |
-| `...`           | Can repeat multiple times                | `[t/TAG]...`                     |
-| `" "`           | Exact phrase matching in searches        | `find "Tan Family"`              |
-| UPPERCASE       | Replace with actual value                | `n/NAME` → `n/Tan Family`        |
-
---------------------------------------------------------------------------------------------------------------------
-
 ## Household Management
 Households are the core entities in Em-Social. Each household represents a family or living unit that you work with.
 
 ### Add a household
 You can add a new household with the `add` command.
 ```
-add n/HOUSEHOLD_NAME a/ADDRESS p/PHONE_NUMBER
+add n/HOUSEHOLD_NAME a/ADDRESS p/PHONE_NUMBER [t/TAG]...
 ```
+
+Parameters:
+- `n/HOUSEHOLD_NAME`: Name of the household (e.g., family name)
+- `a/ADDRESS`: Physical address of the household
+- `p/PHONE_NUMBER`: Contact number for the household
+- `[t/TAG]...`: Optional tags to categorize the household (e.g., elderly, priority)
 
 Example of usage:
 ```
@@ -148,12 +121,20 @@ New household added: Household H000004: Ng Family at Blk 44 Bedok North Street, 
 
 > **Tip**: Use the edit command below to categorize households using tags.
 
+---
 
 ### Edit a household
 You can modify household details with the `edit` command.
 ```
 edit id/HOUSEHOLD_ID [n/HOUSEHOLD_NAME] [a/ADDRESS] [p/PHONE_NUMBER] [t/TAG]...
 ```
+
+Parameters:
+- `id/HOUSEHOLD_ID`: The household ID (e.g., H000001)
+- `[n/HOUSEHOLD_NAME]`: Optional new name for the household
+- `[a/ADDRESS]`: Optional new address
+- `[p/PHONE_NUMBER]`: Optional new contact number
+- `[t/TAG]...`: Optional tags (will replace all existing tags)
 
 Example of usage:
 ```
@@ -170,6 +151,8 @@ Edited Household: Household H000001: Tan Family at Blk 30 Geylang Street 29, #06
 > **Warning**: Existing values will be overwritten by the input values.
 
 > **Tip**: Use meaningful tags to categorize households for easier filtering later. Common tags might include "elderly", "children", "financial-assistance", or "priority".
+
+---
 
 ### Delete a household
 You can remove a household with the `delete` command.
@@ -192,6 +175,7 @@ Deleted Household: Household H000004: Ng Family at Blk 44 Bedok North Street, #1
 
 > **Warning**: Deleting a household will also delete all associated sessions. This action cannot be undone.
 
+---
 
 ### Find households
 You can search for households with the `find` command.
@@ -203,6 +187,10 @@ Use double quotes to search for a key phrase.
 find KEYWORD [MORE_KEYWORDS]...
 ```
 
+Parameters:
+- `KEYWORD`: Search term to match against household names, addresses, or tags
+- `""`: (double quotes) for exact phrase matching (e.g "Tan Family")
+
 Example of usage:
 ```
 find Tan Lee
@@ -212,6 +200,8 @@ Expected outcome:
 ```
 Found 2 household(s) matching: Tan Lee
 ```
+
+![find-without-quotes](images/find-without-quotes.png)
 
 > **Tip**: Use double quotes for exact phrase matching: `"Tan Family"`
 
@@ -225,8 +215,12 @@ Expected outcome (with phrase matching):
 1 households found:
 1. Tan Family (ID: H000001)
 ```
+
+![find-with-quotes](images/find-with-quotes.png)
+
 > **Tip**: The search is case-insensitive and matches partial words. For example, "Tan" will match "Tan Family" and "Tanaka".
 
+---
 
 ### List all households
 You can view all households with the `list` command.
@@ -253,17 +247,27 @@ You can schedule a session with the `add-s` command.
 add-s id/HOUSEHOLD_ID d/DATE tm/TIME
 ```
 
+Parameters:
+- `id/HOUSEHOLD_ID`: The household ID (e.g., H000001)
+- `d/DATE`: Date in YYYY-MM-DD format
+- `tm/TIME`: Time in 24-hour format (HH:MM)
+
 Example of usage:
 ```
 add-s id/H000001 d/2025-05-15 tm/14:30
 ```
+Similarly, you can also use the GUI:
+
+![add-session-gui](images/add-session-gui.png)
 
 Expected outcome:
 ```
-New session added to household H000012: Session for H000012 on 2025-05-15 at 14:30
+New session added to household H000001: Session for H000001 on 2025-05-15 at 14:30
 ```
 
 > **Warning**: The system will prevent double-booking if you already have another session scheduled at the same time.
+
+---
 
 ### Edit a session
 You can modify a session with the `edit-s` command.
@@ -271,17 +275,27 @@ You can modify a session with the `edit-s` command.
 edit-s id/HOUSEHOLD_ID-SESSION_INDEX d/DATE tm/TIME [n/NOTE]
 ```
 
+Parameters:
+- `id/HOUSEHOLD_ID-SESSION_INDEX`: Household ID and session index (e.g., H000001-1)
+- `d/DATE`: New date in YYYY-MM-DD format
+- `tm/TIME`: New time in 24-hour format (HH:MM)
+- `[n/NOTE]`: Optional note about the session
+
 Example of usage (with note):
 ```
-edit-s id/H000003-1 d/2025-03-16 tm/15:00 n/Follow-up on medical assistance application
+edit-s id/H000003-1 d/2025-03-16 tm/15:00 n/Follow-up required
 ```
+
+Similarly, you can also use the GUI:
+
+![edit-session-gui](images/edit-session-gui.png)
 
 Expected outcome:
 ```
 Edited session:
 Date: 2025-03-16
 Time: 15:00
-Note: Follow-up on medical assistance application
+Note: Follow-up required
 ```
 
 ![edit-session success message](images/edit-session.png)
@@ -290,11 +304,16 @@ Note: Follow-up on medical assistance application
 
 > **Tip**: Use session notes to record key discussion points, action items, or observations during your visit.
 
+---
+
 ### Delete a session
 You can remove a session with the `delete-s` command.
 ```
 delete-s id/HOUSEHOLD_ID-SESSION_INDEX
 ```
+
+Parameters:
+- `id/HOUSEHOLD_ID-SESSION_INDEX`: Household ID and session index (e.g., H000001-1)
 
 Example of usage:
 ```
@@ -306,11 +325,39 @@ Expected outcome:
 Deleted session 1 from household H000001: Session for H000001 on 2025-03-16 at 15:00
 ```
 
+---
+### View full session
+You can view the full session details using the `view-full-s` command.
+
+```
+view-full-s id/HOUSEHOLD_ID-SESSION_INDEX
+```
+
+Parameters:
+- `id/HOUSEHOLD_ID-SESSION_INDEX`: Household ID and session index (e.g., H000001-1)
+
+Example of usage:
+```
+view-full-s id/H000003-1
+```
+
+Expected outcome:
+```
+Viewing session 1 in full.
+```
+
+![view-full-session_outcome](images/view-full-session.png)
+
+---
+
 ### View household sessions
 You can switch to view all existing sessions for a household using the `view-s` command.
 ```
 view-s id/HOUSEHOLD_ID
 ```
+
+Parameters:
+- `id/HOUSEHOLD_ID`: The household ID (e.g., H000001)
 
 Example of usage:
 ```
@@ -344,17 +391,29 @@ All entries have been cleared.
 
 > **Warning**: This action will delete ALL households and sessions. It cannot be undone.
 
+---
+
 ### Help
 You can view a summary of available commands with the `help` command.
 ```
 help
 ```
 
+Similarly, you can use the UI button:
+
+![help-button](images/help.png)
+
+---
+
 ### Exiting the program
 You can exit Em-Social with the `exit` command.
 ```
 exit
 ```
+
+Similarly, you can use the UI button:
+
+![exit-button](images/exit.png)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -416,19 +475,21 @@ A: Please submit issues on our [GitHub repository](https://github.com/AY2425S2-C
 
 ## Glossary
 
-* **Household**: A family or living unit that receives social services, represented as a single entity in Em-Social.
-* **Household ID**: A unique identifier (e.g, H000001) for each household.
-* **Session**: A scheduled appointment between a social worker and a household for follow-up, assistance, or other social services.
-* **Session Index**: The number assigned to each session for a household, used in commands like `edit-s` or `delete-s`.
-* **Tag**: A keyword or label assigned to a household record to categorize or identify it easily.
-* **Duplicate Household**: A household entry containing name, address, or contact information that already exists in another household entry.
-* **Double-Booking**: A scheduling conflict where two sessions are assigned to the same time slot, which Em-Social prevents automatically.
-* **Case Notes**: Detailed information recorded during or after a session, documenting observations, actions taken, and follow-up items.
-* **Command Box**: The text input area at the bottom of the application where you type commands.
-* **Confirmation Dialog**: A popup window that appears before irreversible actions.
-* **Result Display**: The area that shows feedback after executing a command.
-* **Household Panel**: The left section of the interface that displays the list of households.
-* **Session Panel**: The right section of the interface that shows sessions for the selected household.
+| Term                    | Definition                                                                                                             |
+|-------------------------|------------------------------------------------------------------------------------------------------------------------|
+| **Household**           | A family or living unit that receives social services, represented as a single entity in Em-Social.                    |
+| **Household ID**        | A unique identifier (e.g., H000001) for each household.                                                                |
+| **Session**             | A scheduled appointment between a social worker and a household for follow-up, assistance, or other social services.   |
+| **Session Index**       | The number assigned to each session for a household, used in commands like `edit-s` or `delete-s`.                     |
+| **Tag**                 | A keyword or label assigned to a household record to categorize or identify it easily.                                 |
+| **Duplicate Household** | A household entry containing name, address, or contact information that already exists in another household entry.     |
+| **Double-Booking**      | A scheduling conflict where two sessions are assigned to the same time slot, which Em-Social prevents automatically.   |
+| **Case Notes**          | Detailed information recorded during or after a session, documenting observations, actions taken, and follow-up items. |
+| **Command Box**         | The text input area at the bottom of the application where you type commands.                                          |
+| **Confirmation Dialog** | A popup window that appears before irreversible actions.                                                               |
+| **Result Display**      | The area that shows feedback after executing a command.                                                                |
+| **Household Panel**     | The left section of the interface that displays the list of households.                                                |
+| **Session Panel**       | The right section of the interface that shows sessions for the selected household.                                     |
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -436,22 +497,32 @@ A: Please submit issues on our [GitHub repository](https://github.com/AY2425S2-C
 
 <div class="wide-table">  <!-- Added container for better table control -->
 
-| Action               | Command Format                                                   | Examples                                                           |
-|----------------------|------------------------------------------------------------------|--------------------------------------------------------------------|
+| Action               | Command Format                                         | Examples                                                 |
+|----------------------|--------------------------------------------------------|----------------------------------------------------------|
 | **Add Household**    | `add n/NAME a/ADDRESS p/PHONE [t/TAG]...`              | `add n/Tan Family a/Blk 30 Geylang p/91234567 t/elderly` |
 | **Edit Household**   | `edit id/ID [n/NAME] [a/ADDRESS] [p/PHONE] [t/TAG]...` | `edit id/H000001 n/Lim Family p/87654321`                |
 | **Delete Household** | `delete id/ID`                                         | `delete id/H000001`                                      |
-| **List Households**  | `list`                                                | `list`                                                  |
+| **List Households**  | `list`                                                 | `list`                                                   |
 | **Find Households**  | `find KEYWORD [MORE_KEYWORDS]...`                      | `find "Tan Lee"`                                         |
-| **Add Session**      | `add-s id/ID d/DATE tm/TIME`                               | `add-s id/H000001 d/2025-05-15 tm/14:30`                     |
-| **Edit Session**     | `edit-s id/ID-INDEX d/DATE tm/TIME [n/NOTE]`               | `edit-s id/H000001-1 d/2025-03-16 tm/15:00 n/Follow-up`      |
-| **Delete Session**   | `delete-s id/ID-INDEX`                                     | `delete-s id/H000001-1`                                      |
-| **View Sessions**    | `view-s id/ID`                                  | `view-s id/H000001`                               |
-| **Clear Data**       | `clear`                                                          | `clear`                                                            |
-| **Help**             | `help`                                                           | `help`                                                             |
-| **Exit**             | `exit`                                                           | `exit`                                                             |
-> **Note:** All command names and prefixes must be entered in lower case.
+| **Add Session**      | `add-s id/ID d/DATE tm/TIME`                           | `add-s id/H000001 d/2025-05-15 tm/14:30`                 |
+| **Edit Session**     | `edit-s id/ID-INDEX d/DATE tm/TIME [n/NOTE]`           | `edit-s id/H000001-1 d/2025-03-16 tm/15:00 n/Follow-up`  |
+| **Delete Session**   | `delete-s id/ID-INDEX`                                 | `delete-s id/H000001-1`                                  |
+| **View Sessions**    | `view-s id/ID`                                         | `view-s id/H000001`                                      |
+| **Clear Data**       | `clear`                                                | `clear`                                                  |
+| **Help**             | `help`                                                 | `help`                                                   |
+| **Exit**             | `exit`                                                 | `exit`                                                   |
+<div style="
+    background: rgba(231, 245, 255, 0.4);
+    border-left: 4px solid #4dabf7;
+    padding: 1px 12px;
+    margin: 8px 0;
+    border-radius: 0 4px 4px 0;
+">
 
+**ℹ️ Note:** 
+All command names and prefixes must be entered in lower case.
+
+</div>
 </div>
 
 > **Legend**:

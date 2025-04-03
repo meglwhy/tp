@@ -12,7 +12,7 @@
            text="Select household to view sessions"
            HBox.hgrow="ALWAYS"
            maxWidth="Infinity"
-           styleClass="truncated-label"/>
+    />
 
     <Button fx:id="addSessionButton"
             text="Add Session"
