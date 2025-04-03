@@ -41,16 +41,18 @@ public class SessionListPanel extends UiPart<Region> {
     private ListView<Session> sessionListView;
 
     private final Logic logic;
+    private ResultDisplay resultDisplay;
     private String selectedHouseholdId = null;
 
     /**
      * Creates a {@code SessionListPanel} with the given {@code ObservableList} and {@code Logic}.
      */
-    public SessionListPanel(ObservableList<Session> sessionList, Logic logic) {
+    public SessionListPanel(ObservableList<Session> sessionList, Logic logic, ResultDisplay resultDisplay) {
         super(FXML);
         assert sessionList != null : "Session list must not be null";
         assert logic != null : "Logic must not be null";
         this.logic = logic;
+        this.resultDisplay = resultDisplay;
 
         // Sort sessions by date (descending), then time (descending)
         SortedList<Session> sortedSessions = new SortedList<>(sessionList, (
@@ -77,6 +79,30 @@ public class SessionListPanel extends UiPart<Region> {
         selectedHouseholdLabel.setText(householdName);
         this.selectedHouseholdId = householdId;
         addSessionButton.setVisible(true);
+    }
+
+    /**
+     * Sets the {@link ResultDisplay} component that will be used to show command feedback.
+     * This method establishes the connection between the session operations (add/edit)
+     * and the main application's result display area.
+     *
+     * @param resultDisplay The ResultDisplay instance to use for showing command feedback.
+     *                      Cannot be {@code null} for proper operation.
+     * @see ResultDisplay
+     */
+    public void setResultDisplay(ResultDisplay resultDisplay) {
+        this.resultDisplay = resultDisplay;
+    }
+
+    /**
+     * Selects and scrolls to the session at the specified index in the list view.
+     * @param index The 0-based index of the session to select
+     */
+    public void selectSessionByIndex(int index) {
+        if (index >= 0 && index < sessionListView.getItems().size()) {
+            sessionListView.getSelectionModel().select(index);
+            sessionListView.scrollTo(index);
+        }
     }
 
     /**
@@ -141,6 +167,9 @@ public class SessionListPanel extends UiPart<Region> {
                     AddSessionCommand.COMMAND_WORD, householdId, date, time);
 
             CommandResult result = logic.execute(command);
+            if (resultDisplay != null) { // Safety check
+                resultDisplay.setFeedbackToUser(result.getFeedbackToUser());
+            }
             logger.info("Added new session: " + result.getFeedbackToUser());
             refresh();
             assert sessionListView.getItems() != null : "Session list should be refreshed and not null";
@@ -174,7 +203,7 @@ public class SessionListPanel extends UiPart<Region> {
                 setStyle("-fx-background-color: white");
             } else {
                 setGraphic(new SessionCard(session, getIndex() + 1,
-                        logic, SessionListPanel.this::refresh).getRoot());
+                        logic, SessionListPanel.this::refresh, resultDisplay).getRoot());
                 if (getIndex() % 2 == 0) {
                     setStyle("-fx-background-color: #FFFFFF;"); // white
                 } else {

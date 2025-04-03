@@ -82,8 +82,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        // Create the SessionListPanel first
-        sessionListPanel = new SessionListPanel(logic.getFilteredSessionList(), logic);
+        sessionListPanel = new SessionListPanel(logic.getFilteredSessionList(), logic, resultDisplay);
         sessionListPanelPlaceholder.getChildren().add(sessionListPanel.getRoot());
 
         logic.updateFilteredSessionList(session -> false);
@@ -121,6 +120,7 @@ public class MainWindow extends UiPart<Stage> {
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+        sessionListPanel.setResultDisplay(resultDisplay);
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getHouseholdBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
@@ -241,8 +241,7 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandText.trim().startsWith(ViewHouseholdSessionsCommand.COMMAND_WORD)
                     || commandText.trim().startsWith(AddSessionCommand.COMMAND_WORD)
-                    || commandText.trim().startsWith(EditSessionCommand.COMMAND_WORD)
-                    || commandText.trim().startsWith(ViewFullSessionCommand.COMMAND_WORD)) {
+                    || commandText.trim().startsWith(EditSessionCommand.COMMAND_WORD)) {
 
                 String[] parts = commandText.split("\\s+");
                 String targetId = null;
@@ -267,11 +266,12 @@ public class MainWindow extends UiPart<Stage> {
                         String householdIdStr = parts[0];
                         try {
                             int sessionIndex = Integer.parseInt(parts[1]);
+                            householdListPanel.selectHouseholdById(householdIdStr);
+                            sessionListPanel.selectSessionByIndex(sessionIndex - 1);
                             logic.getHouseholdBook()
                                     .getHouseholdById(
                                             seedu.address.model.household.HouseholdId.fromString(householdIdStr))
                                     .ifPresent(household -> {
-                                        // Make sure sessionIndex is valid
                                         if (sessionIndex >= 1 && sessionIndex <= household.getSessions().size()) {
                                             seedu.address.model.session.Session session =
                                                     household.getSessions().get(sessionIndex - 1);
@@ -281,7 +281,7 @@ public class MainWindow extends UiPart<Stage> {
                                                     session.getHouseholdId(),
                                                     session.getDate(),
                                                     session.getTime(),
-                                                    session.hasNote() ? session.getNote() : "No note"
+                                                    session.hasNote() ? session.getNote() : "-"
                                             );
 
                                             showSessionPopup(fullDetails);

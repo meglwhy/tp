@@ -41,6 +41,7 @@ public class SessionCard extends UiPart<Region> {
 
     private final Logic logic;
     private final Runnable refreshCallback;
+    private ResultDisplay resultDisplay;
 
     /**
      * Constructs a {@code SessionCard} with the specified session, displayed index, and logic instance.
@@ -53,7 +54,8 @@ public class SessionCard extends UiPart<Region> {
      * @param displayedIndex The index at which the session appears in the list, used to display its position.
      * @param logic The {@code Logic} instance used to manage and process session-related operations.
      */
-    public SessionCard(Session session, int displayedIndex, Logic logic, Runnable refreshCallback) {
+    public SessionCard(Session session, int displayedIndex, Logic logic,
+                       Runnable refreshCallback, ResultDisplay resultDisplay) {
         super(FXML);
         assert session != null : "Session must not be null";
         assert logic != null : "Logic must not be null";
@@ -61,6 +63,7 @@ public class SessionCard extends UiPart<Region> {
         this.session = session;
         this.logic = logic;
         this.refreshCallback = refreshCallback;
+        this.resultDisplay = resultDisplay;
         householdId.setText("Household ID: " + session.getHouseholdId().toString());
         id.setText("Session " + displayedIndex + " ");
         date.setText("Date: " + session.getDate().toString());
@@ -144,17 +147,14 @@ public class SessionCard extends UiPart<Region> {
         boolean dateOrTimeChanged = !newDate.equals(oldDate) || !newTime.equals(oldTime);
         boolean noteChanged = !newNote.equals(oldNote);
 
-        // If either date/time or note changed, use edit-s command
         if (dateOrTimeChanged || noteChanged) {
             String editCommand;
-            // If note changed, include it in the command
             if (noteChanged) {
                 editCommand = String.format(
                         "%s id/%s-%d d/%s tm/%s n/%s",
                         EditSessionCommand.COMMAND_WORD, householdIdStr, index, newDate, newTime, newNote
                 );
             } else {
-                // Only date/time changed
                 editCommand = String.format(
                         "%s id/%s-%d d/%s tm/%s",
                         EditSessionCommand.COMMAND_WORD, householdIdStr, index, newDate, newTime
@@ -162,6 +162,9 @@ public class SessionCard extends UiPart<Region> {
             }
             try {
                 CommandResult result = logic.execute(editCommand);
+                if (resultDisplay != null) {
+                    resultDisplay.setFeedbackToUser(result.getFeedbackToUser());
+                }
                 refreshCallback.run();
                 if (dateOrTimeChanged && noteChanged) {
                     showInfoDialog("Session Updated",

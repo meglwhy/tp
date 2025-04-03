@@ -8,7 +8,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.household.Household;
 import seedu.address.model.household.HouseholdId;
-import seedu.address.model.session.Session;
 
 /**
  * Command to display full session details in a pop-up window.
@@ -22,7 +21,7 @@ public class ViewFullSessionCommand extends Command {
 
     public static final String MESSAGE_HOUSEHOLD_NOT_FOUND = "No household found with ID %s.";
     public static final String MESSAGE_INVALID_SESSION_INDEX = "Invalid session index %d for household %s.";
-    public static final String MESSAGE_SUCCESS = "Viewing session %s in full.";
+    public static final String MESSAGE_SUCCESS = "Viewing session %s of %s in full.";
 
     private final HouseholdId householdId;
     private final int sessionIndex;
@@ -60,14 +59,6 @@ public class ViewFullSessionCommand extends Command {
             throw new CommandException(String.format(MESSAGE_INVALID_SESSION_INDEX, sessionIndex, householdId));
         }
 
-        Session session = household.getSessions().get(sessionIndex - 1);
-
-        String fullDetails = String.format("Household ID: %s\nDate: %s\nTime: %s\nNote: %s",
-                session.getHouseholdId(),
-                session.getDate(),
-                session.getTime(),
-                session.hasNote() ? session.getNote() : "No note");
-
-        return new CommandResult(String.format(MESSAGE_SUCCESS, sessionIndex));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, sessionIndex, householdId));
     }
 }
