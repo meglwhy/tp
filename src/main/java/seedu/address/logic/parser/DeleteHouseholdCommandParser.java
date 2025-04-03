@@ -15,12 +15,14 @@ public class DeleteHouseholdCommandParser implements Parser<DeleteHouseholdComma
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteHouseholdCommand
      * and returns a DeleteHouseholdCommand object for execution.
+     * @param args The arguments string to be parsed.
+     * @return A {@code DeleteHouseholdCommand} object containing the parsed {@code HouseholdId}.
      * @throws ParseException if the user input does not conform the expected format
      */
     public DeleteHouseholdCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ID);
 
-        if (!argMultimap.getValue(PREFIX_ID).isPresent() || !argMultimap.getPreamble().isEmpty()) {
+        if (argMultimap.getValue(PREFIX_ID).isEmpty() || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteHouseholdCommand.MESSAGE_USAGE));
         }

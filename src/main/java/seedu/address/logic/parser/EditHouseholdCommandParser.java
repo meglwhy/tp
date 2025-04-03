@@ -23,18 +23,20 @@ import seedu.address.model.tag.Tag;
  * Parses input arguments and creates a new EditHouseholdCommand object
  */
 public class EditHouseholdCommandParser implements Parser<EditHouseholdCommand> {
-
     /**
-     * Parses the given {@code String} of arguments in the context of the EditHouseholdCommand
-     * and returns an EditHouseholdCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Parses the given {@code String} of arguments in the context of the {@code EditHouseholdCommand}
+     * and returns an {@code EditHouseholdCommand} object for execution.
+     *
+     * @param args The string representing the user input to be parsed.
+     * @return An {@code EditHouseholdCommand} object containing the parsed household ID and descriptor for editing.
+     * @throws ParseException If the user input does not conform to the expected format.
      */
     public EditHouseholdCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_ID, PREFIX_NAME, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_TAG);
 
-        if (!argMultimap.getValue(PREFIX_ID).isPresent()) {
+        if (argMultimap.getValue(PREFIX_ID).isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EditHouseholdCommand.MESSAGE_USAGE));
         }
@@ -63,13 +65,10 @@ public class EditHouseholdCommandParser implements Parser<EditHouseholdCommand> 
             }
             editHouseholdDescriptor.setAddress(ParserUtil.parseAddress(address));
         }
-
-        // Check for empty tags
         if (argMultimap.getAllValues(PREFIX_TAG).stream().anyMatch(String::isEmpty)) {
             throw new ParseException("Tags cannot be empty.");
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editHouseholdDescriptor::setTags);
-
         if (!editHouseholdDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditHouseholdCommand.MESSAGE_NOT_EDITED);
         }
@@ -81,6 +80,10 @@ public class EditHouseholdCommandParser implements Parser<EditHouseholdCommand> 
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
      * If {@code tags} contain only one empty string, it will be parsed into a
      * {@code Set<Tag>} containing zero tags.
+     *
+     * @param tags The collection of tags to be parsed.
+     * @return An {@code Optional<Set<Tag>>} containing the parsed tags, or an empty optional if no tags were provided.
+     * @throws ParseException If the tags cannot be parsed into a valid set of tags.
      */
     private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws ParseException {
         assert tags != null;

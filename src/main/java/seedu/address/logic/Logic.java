@@ -40,12 +40,12 @@ public interface Logic {
     /** Updates the filter of the filtered household list to filter by the given predicate */
     void updateFilteredHouseholdList(Predicate<Household> predicate);
 
-    /** Returns the user prefs' household book file path */
+    /** Returns the user prefs household book file path */
     Path getHouseholdBookFilePath();
 
-    /** Returns the user prefs' GUI settings */
+    /** Returns the user prefs GUI settings */
     GuiSettings getGuiSettings();
 
-    /** Set the user prefs' GUI settings */
+    /** Set the user prefs GUI settings */
     void setGuiSettings(GuiSettings guiSettings);
 }

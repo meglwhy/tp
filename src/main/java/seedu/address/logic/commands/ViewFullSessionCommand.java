@@ -39,7 +39,13 @@ public class ViewFullSessionCommand extends Command {
         this.householdId = householdId;
         this.sessionIndex = sessionIndex;
     }
-
+    /**
+     * Executes the command to display the details of a session within a specified household.
+     *
+     * @param model The model containing the list of households. Must not be null.
+     * @return A {@code CommandResult} containing the details of the specified session.
+     * @throws CommandException If the household cannot be found or if the session index is invalid.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);

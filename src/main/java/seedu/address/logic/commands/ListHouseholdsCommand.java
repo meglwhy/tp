@@ -14,18 +14,19 @@ public class ListHouseholdsCommand extends Command {
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "Listed all households.";
-
+    /**
+     * Executes the command to display the total number of households in the model.
+     *
+     * @param model The model containing the list of households. Must not be null.
+     * @return A {@code CommandResult} containing a success message with the total count of households.
+     */
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-
-        // Get the entire list of households
         model.updateFilteredHouseholdList(unused -> true); // No filter, show all
 
-        // Get the number of households in the entire list
         int householdCount = model.getFilteredHouseholdList().size();
 
-        // Return the result showing all households
         return new CommandResult(
                 String.format(MESSAGE_SUCCESS + "\nTotal households: %d", householdCount));
     }

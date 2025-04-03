@@ -20,8 +20,11 @@ public class AddHouseholdCommandParser implements Parser<AddHouseholdCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddHouseholdCommand
-     * and returns an AddHouseholdCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * and returns an {@code AddHouseholdCommand} object for execution.
+     *
+     * @param args The string of arguments to parse. Must contain a name, address, and contact.
+     * @return An {@code AddHouseholdCommand} object initialized with the parsed household data.
+     * @throws ParseException If the user input does not conform to the expected format or is missing required prefixes.
      */
     public AddHouseholdCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
@@ -33,9 +36,15 @@ public class AddHouseholdCommandParser implements Parser<AddHouseholdCommand> {
                     AddHouseholdCommand.MESSAGE_USAGE));
         }
 
-        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
-        Contact contact = ParserUtil.parseContact(argMultimap.getValue(PREFIX_PHONE).get());
+        Name name = ParserUtil.parseName(
+                argMultimap.getValue(PREFIX_NAME).orElseThrow(() -> new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddHouseholdCommand.MESSAGE_USAGE))));
+        Address address = ParserUtil.parseAddress(
+                argMultimap.getValue(PREFIX_ADDRESS).orElseThrow(() -> new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddHouseholdCommand.MESSAGE_USAGE))));
+        Contact contact = ParserUtil.parseContact(
+                argMultimap.getValue(PREFIX_PHONE).orElseThrow(() -> new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddHouseholdCommand.MESSAGE_USAGE))));
 
         Household household = new Household(name, address, contact);
 

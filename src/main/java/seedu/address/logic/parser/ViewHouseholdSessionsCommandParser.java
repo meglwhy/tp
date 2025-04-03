@@ -18,12 +18,11 @@ public class ViewHouseholdSessionsCommandParser implements Parser<ViewHouseholdS
      */
     public ViewHouseholdSessionsCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty() || !trimmedArgs.startsWith("id/")) {
+        if (!trimmedArgs.startsWith("id/")) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ViewHouseholdSessionsCommand.MESSAGE_USAGE));
         }
 
-        // Remove the "id/" prefix and trim extra spaces.
         String idValue = trimmedArgs.substring(3).trim();
         if (idValue.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,

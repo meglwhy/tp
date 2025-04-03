@@ -24,7 +24,6 @@ import seedu.address.model.tag.Tag;
  * Edits the details of an existing household in the household book.
  */
 public class EditHouseholdCommand extends Command {
-
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the household identified "
@@ -52,8 +51,10 @@ public class EditHouseholdCommand extends Command {
     private final EditHouseholdDescriptor editHouseholdDescriptor;
 
     /**
-     * @param householdId ID of the household in the filtered household list to edit
-     * @param editHouseholdDescriptor details to edit the household with
+     * Creates an {@code EditHouseholdCommand} to edit the specified {@code Household}.
+     *
+     * @param householdId ID of the household in the filtered household list to edit. Must not be null.
+     * @param editHouseholdDescriptor Details to edit the household with. Must not be null.
      */
     public EditHouseholdCommand(HouseholdId householdId, EditHouseholdDescriptor editHouseholdDescriptor) {
         requireNonNull(householdId);
@@ -62,7 +63,13 @@ public class EditHouseholdCommand extends Command {
         this.householdId = householdId;
         this.editHouseholdDescriptor = new EditHouseholdDescriptor(editHouseholdDescriptor);
     }
-
+    /**
+     * Executes the command to edit the specified household in the model.
+     *
+     * @param householdBook The model containing the household to be edited. Must not be null.
+     * @return A {@code CommandResult} indicating the result of the edit operation.
+     * @throws CommandException If the household ID does not exist or the edited household would be a duplicate.
+     */
     @Override
     public CommandResult execute(Model householdBook) throws CommandException {
         requireNonNull(householdBook);
@@ -81,10 +88,13 @@ public class EditHouseholdCommand extends Command {
         householdBook.getHouseholdBook().updateHousehold(householdToEdit, editedHousehold);
         return new CommandResult(String.format(MESSAGE_EDIT_HOUSEHOLD_SUCCESS, editedHousehold));
     }
-
     /**
      * Creates and returns a {@code Household} with the details of {@code householdToEdit}
-     * edited with {@code editHouseholdDescriptor}.
+     * edited using {@code editHouseholdDescriptor}.
+     *
+     * @param householdToEdit The original household to be edited. Must not be null.
+     * @param editHouseholdDescriptor The descriptor containing new values for household attributes. Must not be null.
+     * @return A new {@code Household} with updated details.
      */
     private static Household createEditedHousehold(Household householdToEdit,
                                                  EditHouseholdDescriptor editHouseholdDescriptor) {
@@ -97,7 +107,14 @@ public class EditHouseholdCommand extends Command {
 
         return new Household(updatedName, updatedAddress, updatedContact, householdToEdit.getId(), updatedTags);
     }
-
+    /**
+     * Checks if this {@code EditHouseholdCommand} is equal to another object.
+     *
+     * @param other The other object to compare against.
+     * @return {@code true} if the other object is the same instance or an equivalent
+     *         {@code EditHouseholdCommand} with the same household ID and edit descriptor,
+     *         {@code false} otherwise.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -119,7 +136,9 @@ public class EditHouseholdCommand extends Command {
         public EditHouseholdDescriptor() {}
 
         /**
-         * Copy constructor.
+         * Creates a copy of the given {@code EditHouseholdDescriptor}.
+         *
+         * @param toCopy The descriptor to copy from. Must not be null.
          */
         public EditHouseholdDescriptor(EditHouseholdDescriptor toCopy) {
             setName(toCopy.name);
@@ -128,9 +147,6 @@ public class EditHouseholdCommand extends Command {
             setTags(toCopy.tags);
         }
 
-        /**
-         * Returns true if at least one field is edited.
-         */
         public boolean isAnyFieldEdited() {
             return name != null || address != null || contact != null || tags != null;
         }
@@ -167,17 +183,23 @@ public class EditHouseholdCommand extends Command {
             this.tags = (tags != null) ? new HashSet<>(tags) : null;
         }
 
+        /**
+         * Checks if this {@code EditHouseholdDescriptor} is equal to another object.
+         *
+         * @param other The other object to compare against.
+         * @return {@code true} if the other object is the same instance or an equivalent
+         *         {@code EditHouseholdDescriptor} with identical values for all fields,
+         *         {@code false} otherwise.
+         */
         @Override
         public boolean equals(Object other) {
             if (other == this) {
                 return true;
             }
 
-            if (!(other instanceof EditHouseholdDescriptor)) {
+            if (!(other instanceof EditHouseholdDescriptor e)) {
                 return false;
             }
-
-            EditHouseholdDescriptor e = (EditHouseholdDescriptor) other;
 
             return getName().equals(e.getName())
                     && getAddress().equals(e.getAddress())
