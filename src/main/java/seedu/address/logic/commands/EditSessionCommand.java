@@ -5,9 +5,9 @@ import static java.util.Objects.requireNonNull;
 import java.util.Optional;
 
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.household.Household;
 import seedu.address.model.household.HouseholdId;
 import seedu.address.model.session.Session;
 import seedu.address.model.session.SessionDate;
@@ -73,17 +73,27 @@ public class EditSessionCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        ObservableList<Session> householdSessions = model.getFilteredSessionList()
-                .filtered(s -> s.getHouseholdId().equals(householdId));
+        // Get the household
+        Household household = model.getHouseholdBook().getHouseholdById(householdId)
+                .orElseThrow(() -> new CommandException(String.format(MESSAGE_HOUSEHOLD_NOT_FOUND, householdId)));
 
-        // Sort sessions by date (descending) then time (descending), same as in SessionListPanel.
-        Session oldSession = getSession(householdSessions);
+        // Get the sessions from the household (already sorted by date and time)
+        ObservableList<Session> householdSessions = household.getSessions();
 
-        // Determine candidate values: use new values if provided, otherwise retain the current ones.
+        // Check if session index is valid
+        if (sessionIndex < 1 || sessionIndex > householdSessions.size()) {
+            throw new CommandException(String.format(MESSAGE_INVALID_SESSION_INDEX, sessionIndex, householdId));
+        }
+
+        // Get the session to edit
+        Session oldSession = householdSessions.get(sessionIndex - 1);
+
+        // Determine candidate values: use new values if provided, otherwise retain the current ones
         SessionDate candidateDate = (newDate != null) ? new SessionDate(newDate) : oldSession.getDate();
         SessionTime candidateTime = (newTime != null) ? new SessionTime(newTime) : oldSession.getTime();
         boolean noteUpdated = (newNote != null);
 
+        // Create the candidate session
         Session candidateSession;
         if (noteUpdated) {
             candidateSession = new Session(oldSession.getSessionId(),
@@ -104,14 +114,17 @@ public class EditSessionCommand extends Command {
                     candidateTime);
         }
 
+        // Check for conflicts
         Optional<Session> conflict = model.getHouseholdBook().getConflictingSession(candidateSession, oldSession);
         if (conflict.isPresent()) {
             throw new CommandException(String.format(MESSAGE_DUPLICATE_SESSION, conflict.get()));
         }
 
+        // Update the session
         model.getHouseholdBook().removeSessionById(oldSession.getSessionId());
         model.getHouseholdBook().addSessionToHousehold(oldSession.getHouseholdId(), candidateSession);
 
+        // Generate success message
         String successMessage;
         if (noteUpdated) {
             successMessage = String.format(MESSAGE_EDIT_SESSION_WITH_NOTE_SUCCESS,
@@ -122,22 +135,6 @@ public class EditSessionCommand extends Command {
         }
         return new CommandResult(successMessage);
     }
-
-    private Session getSession(ObservableList<Session> householdSessions) throws CommandException {
-        SortedList<Session> sortedSessions = new SortedList<>(householdSessions, (s1, s2) -> {
-            int dateCompare = s2.getDate().compareTo(s1.getDate());
-            if (dateCompare != 0) {
-                return dateCompare;
-            }
-            return s2.getTime().compareTo(s1.getTime());
-        });
-
-        if (sessionIndex < 1 || sessionIndex > sortedSessions.size()) {
-            throw new CommandException(String.format(MESSAGE_INVALID_SESSION_INDEX, sessionIndex, householdId));
-        }
-        return sortedSessions.get(sessionIndex - 1);
-    }
-
 }
 
 
