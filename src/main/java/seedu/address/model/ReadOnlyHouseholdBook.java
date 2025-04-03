@@ -27,12 +27,6 @@ public interface ReadOnlyHouseholdBook {
      * Returns true if a household with the same identity as {@code household} exists in the household book.
      */
     boolean hasHousehold(Household household);
-
-    /**
-     * Returns true if a session with the same identity as {@code session} exists in the household book.
-     */
-    boolean hasSession(Session session);
-
     /**
      * Returns an unmodifiable list of all sessions across all households.
      */
