@@ -82,8 +82,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        // Create the SessionListPanel first
-        sessionListPanel = new SessionListPanel(logic.getFilteredSessionList(), logic);
+        sessionListPanel = new SessionListPanel(logic.getFilteredSessionList(), logic, resultDisplay);
         sessionListPanelPlaceholder.getChildren().add(sessionListPanel.getRoot());
 
         logic.updateFilteredSessionList(session -> false);
@@ -125,6 +124,7 @@ public class MainWindow extends UiPart<Stage> {
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+        sessionListPanel.setResultDisplay(resultDisplay);
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getHouseholdBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
@@ -285,7 +285,7 @@ public class MainWindow extends UiPart<Stage> {
                                                     session.getHouseholdId(),
                                                     session.getDate(),
                                                     session.getTime(),
-                                                    session.hasNote() ? session.getNote() : "No note"
+                                                    session.hasNote() ? session.getNote() : "-"
                                             );
 
                                             showSessionPopup(fullDetails);
