@@ -6,15 +6,12 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.household.Address;
 import seedu.address.model.household.Contact;
 import seedu.address.model.household.HouseholdId;
 import seedu.address.model.household.Name;
 import seedu.address.model.session.SessionDate;
-import seedu.address.model.session.SessionNote;
 import seedu.address.model.session.SessionTime;
 import seedu.address.model.tag.Tag;
 
@@ -24,20 +21,6 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-
-    /**
-     * Parses {@code oneBasedIndex} into an {@code Index} and returns it.
-     * Leading and trailing whitespaces will be trimmed.
-     * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
-     */
-    public static Index parseIndex(String oneBasedIndex) throws ParseException {
-        String trimmedIndex = oneBasedIndex.trim();
-        if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
-            throw new ParseException(MESSAGE_INVALID_INDEX);
-        }
-        return Index.fromOneBased(Integer.parseInt(trimmedIndex));
-    }
-
     /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
@@ -153,20 +136,5 @@ public class ParserUtil {
             throw new ParseException(SessionTime.MESSAGE_CONSTRAINTS);
         }
         return new SessionTime(trimmedTime);
-    }
-
-    /**
-     * Parses a {@code String note} into a {@code SessionNote}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code note} is invalid.
-     */
-    public static SessionNote parseNote(String note) throws ParseException {
-        requireNonNull(note);
-        String trimmedNote = note.trim();
-        if (!SessionNote.isValidNote(trimmedNote)) {
-            throw new ParseException(SessionNote.MESSAGE_CONSTRAINTS);
-        }
-        return new SessionNote(trimmedNote);
     }
 }
