@@ -29,7 +29,7 @@ public class AddSessionCommand extends Command {
             + PREFIX_TIME + "TIME (in HH:mm)\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_ID + "H000001 "
-            + PREFIX_DATE + "2025-03-15 "
+            + PREFIX_DATE + "2025-05-15 "
             + PREFIX_TIME + "14:30";
 
     public static final String MESSAGE_SUCCESS = "New session added to household %1$s: %2$s";

@@ -2,8 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -14,6 +13,7 @@ import seedu.address.model.session.Session;
 import seedu.address.model.session.SessionDate;
 import seedu.address.model.session.SessionNote;
 import seedu.address.model.session.SessionTime;
+
 
 /**
  * Represents a command to edit a specific session in a household.
@@ -80,7 +80,7 @@ public class EditSessionCommand extends Command {
         ObservableList<Session> householdSessions = model.getFilteredSessionList()
                 .filtered(s -> s.getHouseholdId().equals(householdId));
 
-        // Sort sessions by date (descending) then time (descending), same as SessionListPanel.
+        // Sort sessions by date (descending) then time (descending), same as in SessionListPanel.
         SortedList<Session> sortedSessions = new SortedList<>(householdSessions, (s1, s2) -> {
             int dateCompare = s2.getDate().compareTo(s1.getDate());
             if (dateCompare != 0) {
@@ -94,11 +94,9 @@ public class EditSessionCommand extends Command {
         }
         Session oldSession = sortedSessions.get(sessionIndex - 1);
 
-        // Determine candidate values: use new values if provided, otherwise use the current session's values.
+        // Determine candidate values: use new values if provided, otherwise retain the current ones.
         SessionDate candidateDate = (newDate != null) ? new SessionDate(newDate) : oldSession.getDate();
         SessionTime candidateTime = (newTime != null) ? new SessionTime(newTime) : oldSession.getTime();
-
-        // For note, update only if a new note is provided.
         boolean noteUpdated = (newNote != null);
 
         // Create the candidate session with the updated fields.
@@ -122,23 +120,18 @@ public class EditSessionCommand extends Command {
                     candidateTime);
         }
 
-        // Create a copy of the session list and remove the session being edited to avoid self-conflict.
-        List<Session> otherSessions = new ArrayList<>(householdSessions);
-        otherSessions.removeIf(s -> s.getSessionId().equals(oldSession.getSessionId()));
-
-        // Check for any conflict: another session with the same date and time.
-        for (Session s : otherSessions) {
-            if (s.getDate().equals(candidateSession.getDate())
-                    && s.getTime().equals(candidateSession.getTime())) {
-                throw new CommandException(String.format(MESSAGE_DUPLICATE_SESSION, s));
-            }
+        // Use HouseholdBook's method to check for any session conflict across all households,
+        // excluding the session being edited.
+        Optional<Session> conflict = model.getHouseholdBook().getConflictingSession(candidateSession, oldSession);
+        if (conflict.isPresent()) {
+            throw new CommandException(String.format(MESSAGE_DUPLICATE_SESSION, conflict.get()));
         }
 
-        // No conflict: update the session.
+        // No conflict found: update the session.
         model.getHouseholdBook().removeSessionById(oldSession.getSessionId());
         model.getHouseholdBook().addSessionToHousehold(oldSession.getHouseholdId(), candidateSession);
 
-        // Build the success message based on the fields updated.
+        // Build and return the success message.
         String successMessage;
         if (noteUpdated) {
             successMessage = String.format(MESSAGE_EDIT_SESSION_WITH_NOTE_SUCCESS,
