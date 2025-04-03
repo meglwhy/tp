@@ -7,10 +7,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
 import seedu.address.logic.commands.EditSessionCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.household.HouseholdId;
 
 /**
- * Parses input for the edit-session command.
+ * Parses input for the edit-s command.
  */
 public class EditSessionCommandParser implements Parser<EditSessionCommand> {
 
@@ -21,18 +20,9 @@ public class EditSessionCommandParser implements Parser<EditSessionCommand> {
 
     public static final String MESSAGE_NO_FIELDS_PROVIDED =
             "At least one field to edit must be provided (date, time, or note).";
-    /**
-     * Parses the given {@code String} of arguments in the context of the {@code EditSessionCommand}
-     * and returns an {@code EditSessionCommand} object for execution.
-     *
-     * @param userInput The string representing the user input to be parsed.
-     * @return An {@code EditSessionCommand} object containing the parsed household ID, session index,
-     *         and any optional fields (date, time, note) for editing the session.
-     * @throws ParseException If the user input does not conform to the expected format.
-     */
+
     @Override
     public EditSessionCommand parse(String userInput) throws ParseException {
-        // Tokenize the input using the prefixes.
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(userInput, PREFIX_ID, PREFIX_DATE,
                 PREFIX_TIME, PREFIX_NOTE);
 
@@ -46,62 +36,30 @@ public class EditSessionCommandParser implements Parser<EditSessionCommand> {
             throw new ParseException(MESSAGE_NO_FIELDS_PROVIDED);
         }
 
-        String sessionIdentifier = argMultimap.getValue(PREFIX_ID).orElseThrow(() ->
-                new ParseException(MESSAGE_INVALID_FORMAT)).trim();
+        // Use the helper to parse the session identifier.
+        SessionIdentifier sessionIdentifier = SessionParserUtil.parseSessionIdentifier(
+                argMultimap.getValue(PREFIX_ID).orElseThrow(() -> new ParseException(MESSAGE_INVALID_FORMAT)).trim()
+        );
 
-        if (sessionIdentifier.startsWith("id/")) {
-            sessionIdentifier = sessionIdentifier.substring(3).trim();
-        }
+        // Validate optional fields: trim and check if empty if provided.
+        String datePart = getValidatedField(argMultimap.getValue(PREFIX_DATE), "Date provided is empty.");
+        String timePart = getValidatedField(argMultimap.getValue(PREFIX_TIME), "Time provided is empty.");
+        String notePart = getValidatedField(argMultimap.getValue(PREFIX_NOTE), "Note provided is empty.");
 
-        if (!sessionIdentifier.contains("-")) {
-            throw new ParseException(MESSAGE_INVALID_FORMAT);
-        }
-        String[] parts = sessionIdentifier.split("-", 2);
-        if (parts.length < 2) {
-            throw new ParseException(MESSAGE_INVALID_FORMAT);
-        }
-        String householdIdStr = parts[0].trim();
-        String sessionIndexStr = parts[1].trim();
+        return new EditSessionCommand(sessionIdentifier.getHouseholdId(), sessionIdentifier.getSessionIndex(),
+                datePart, timePart, notePart);
+    }
 
-        if (!HouseholdId.isValidId(householdIdStr)) {
-            throw new ParseException("Invalid household ID: " + householdIdStr);
-        }
-        HouseholdId householdId = HouseholdId.fromString(householdIdStr);
-
-        int sessionIndex;
-        try {
-            sessionIndex = Integer.parseInt(sessionIndexStr);
-        } catch (NumberFormatException e) {
-            throw new ParseException("Session index must be an integer: " + sessionIndexStr);
-        }
-
-        // Optional fields: if present, trim and validate that they are not empty.
-        String datePart = argMultimap.getValue(PREFIX_DATE).orElse(null);
-        if (datePart != null) {
-            datePart = datePart.trim();
-            if (datePart.isEmpty()) {
-                throw new ParseException("Date provided is empty.");
+    private String getValidatedField(java.util.Optional<String> field, String errorMessage) throws ParseException {
+        if (field.isPresent()) {
+            String value = field.get().trim();
+            if (value.isEmpty()) {
+                throw new ParseException(errorMessage);
             }
+            return value;
         }
-
-        String timePart = argMultimap.getValue(PREFIX_TIME).orElse(null);
-        if (timePart != null) {
-            timePart = timePart.trim();
-            if (timePart.isEmpty()) {
-                throw new ParseException("Time provided is empty.");
-            }
-        }
-
-        String notePart = argMultimap.getValue(PREFIX_NOTE).orElse(null);
-        if (notePart != null) {
-            notePart = notePart.trim();
-            if (notePart.isEmpty()) {
-                throw new ParseException("Note provided is empty.");
-            }
-        }
-
-        // Create the command with the parsed values. Any optional field not provided will be null.
-        return new EditSessionCommand(householdId, sessionIndex, datePart, timePart, notePart);
+        return null;
     }
 }
+
 
