@@ -34,8 +34,8 @@ public class JsonSerializableHouseholdBook {
     @JsonCreator
     public JsonSerializableHouseholdBook(@JsonProperty("households") List<JsonAdaptedHousehold> households,
                                          @JsonProperty("sessions") List<JsonAdaptedSession> sessions) {
-        this.households.addAll(households);
-        this.sessions.addAll(sessions);
+        this.households.addAll(households == null ? new ArrayList<>() : households);
+        this.sessions.addAll(sessions == null ? new ArrayList<>() : sessions);
     }
 
     /**

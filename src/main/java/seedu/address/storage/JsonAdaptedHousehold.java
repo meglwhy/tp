@@ -20,7 +20,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Jackson-friendly version of {@link Household}.
  */
-class JsonAdaptedHousehold {
+public class JsonAdaptedHousehold {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Household's %s field is missing!";
 
