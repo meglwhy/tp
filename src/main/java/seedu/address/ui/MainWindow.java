@@ -101,8 +101,6 @@ public class MainWindow extends UiPart<Stage> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
-    // ==================== UI Setup Helpers ====================
-
     /**
      * Adds a listener that updates the session list based on which household is selected.
      */
@@ -145,8 +143,6 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
-    // ==================== Window Controls ====================
-
     public Stage getPrimaryStage() {
         return primaryStage;
     }
@@ -179,8 +175,6 @@ public class MainWindow extends UiPart<Stage> {
             helpWindow.focus();
         }
     }
-
-    // ==================== Dialog Helpers ====================
 
     /**
      * Displays a pop-up window containing detailed information of a session.
@@ -223,8 +217,6 @@ public class MainWindow extends UiPart<Stage> {
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
     }
-
-    // ==================== Command Execution ====================
 
     /**
      * Executes the command and returns the result.
