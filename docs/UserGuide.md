@@ -6,8 +6,8 @@ pageNav: 3
 # Em-Social User Guide
 
 ## Introduction
-Welcome to Em-Social, a specialized management software designed for **streamlining scheduling logistics and household data management**.
-Em-Social thereby frees you up to focus on what matters most – supporting the communities you serve.
+Welcome to **Em-Social**, a **desktop application** designed to streamline **scheduling** and **household management** for social service workers!
+Built for **fast, efficient use** via a Command Line Interface (CLI), Em-Social lets you **organise, categorise, and access your schedules and household records** with unmatched speed and precision.
 
 ### Who is Em-Social for?
 Em-Social is designed specifically for social workers in **Singapore** who:
@@ -16,6 +16,8 @@ Em-Social is designed specifically for social workers in **Singapore** who:
 3. Require a **simple** way to maintain case notes and follow-ups
 4. Work in community service centers or family service centers
 5. Need a **lightweight** solution that works offline
+
+Em-Social thereby frees you up to focus on what matters most: **supporting the communities you serve!**
 
 ### Assumptions about our users
 We assume our users:
@@ -54,24 +56,52 @@ If you're already familiar with similar applications, skip to [Quick Start](#qui
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick Start
+# Quick Start
 
-1. Ensure you have Java 17 or above installed on your computer by opening the terminal application on your computer and enter:
-   ```
+1. **Ensure Java is Installed**  
+   Make sure you have Java `17` or a newer version installed on your computer. To check your Java version, open your terminal and type:
+   ```bash
    java -version
    ```
-   If you require installation, refer to this [Java Installation Guide](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html)
+   If Java is not installed or you have an older version, download and install the latest version from [this link](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html).
 
-2. Download the [latest release of Em-Social](https://github.com/AY2425S2-CS2103T-F10-2/tp/releases) from the releases page.
+2. **Download Em-Social**  
+   Download the latest release of Em-Social from the [Em-Social releases page](https://github.com/AY2425S2-CS2103T-F10-2/tp/releases). Look for the latest `em-social.jar` file in the list of assets.
 
-3. Run it from the command line using:
-   ```
+3. **Save the Downloaded File**  
+   Move the downloaded `em-social.jar` file to the folder where you want to keep Em-Social. This could be your Desktop or a dedicated folder for the application.
+
+4. **Open a Command Terminal**  
+   Open a command terminal on your computer:
+    - **Windows:** Press `Win + R`, type `cmd`, and press `Enter`.
+    - **macOS:** Press `Cmd + Space`, type `Terminal`, and press `Enter`.
+    - **Linux:** Press `Ctrl + Alt + T`.
+
+5. **Navigate to the Application Folder**  
+   In your terminal, navigate to the folder where you saved the `em-social.jar` file using the `cd` command. For example:
+    - **Windows:**
+      ```bash
+      cd C:\Users\YourName\Desktop\Em-Social
+      ```
+    - **macOS/Linux:**
+      ```bash
+      cd /Users/YourName/Desktop/Em-Social
+      ```
+
+6. **Run Em-Social**  
+   Launch the application by typing the following command in the terminal and pressing `Enter`:
+   ```bash
    java -jar em-social.jar
    ```
+   Within a few seconds, a graphical user interface (GUI) should appear. The application will start with sample data to help you get familiar with its features.
 
-4. The application will start with sample data to help you get familiar with the interface.
+7. **Get Started with Commands**  
+   Once the application is running, type `help` in the command box and press `Enter` to see a list of available commands.Some command examples:
+    - **`list`**: Lists all households.
+    - **`add`**: Adds a new household.
+    - **`edit`**: Edits an existing household.
 
-5. Type `help` in the command box and press Enter to see available commands.
+Now you're ready to start using Em-Social!
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -220,6 +250,8 @@ Expected outcome (with phrase matching):
 
 > **Tip**: The search is case-insensitive and matches partial words. For example, "Tan" will match "Tan Family" and "Tanaka".
 
+> **Tip**: Use the [list](#list-all-households) command to refresh your view after searching or filtering.
+
 ---
 
 ### List all households
@@ -234,7 +266,6 @@ Listed all households.
 Total households: 4
 ```
 
-> **Tip**: Use this command to refresh your view after searching or filtering.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -347,6 +378,8 @@ Viewing session 1 in full.
 ```
 
 ![view-full-session_outcome](images/view-full-session.png)
+
+> **Tip**: Use this command to view your session notes elaborately
 
 ---
 
