@@ -122,9 +122,7 @@ public class Household {
         }
 
         return this.getId().equals(otherHousehold.getId())
-                || this.getName().toString().equalsIgnoreCase(otherHousehold.getName().toString())
-                || this.getAddress().toString().equalsIgnoreCase(otherHousehold.getAddress().toString())
-                || this.getContact().toString().equals(otherHousehold.getContact().toString());
+                || this.getAddress().toString().equalsIgnoreCase(otherHousehold.getAddress().toString());
     }
 
     @Override
