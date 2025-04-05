@@ -128,14 +128,13 @@ Households are the core entities in Em-Social. Each household represents a famil
 ### Add a household
 You can add a new household with the `add` command.
 ```
-add n/HOUSEHOLD_NAME a/ADDRESS p/PHONE_NUMBER [t/TAG]...
+add n/HOUSEHOLD_NAME a/ADDRESS p/PHONE_NUMBER
 ```
 
 Parameters:
 - `n/HOUSEHOLD_NAME`: Name of the household (e.g., family name)
 - `a/ADDRESS`: Physical address of the household
 - `p/PHONE_NUMBER`: Contact number for the household
-- `[t/TAG]...`: Optional tags to categorize the household (e.g., elderly, priority)
 
 Example of usage:
 ```
@@ -532,7 +531,7 @@ A: Please submit issues on our [GitHub repository](https://github.com/AY2425S2-C
 
 | Action               | Command Format                                         | Examples                                                 |
 |----------------------|--------------------------------------------------------|----------------------------------------------------------|
-| **Add Household**    | `add n/NAME a/ADDRESS p/PHONE [t/TAG]...`              | `add n/Tan Family a/Blk 30 Geylang p/91234567 t/elderly` |
+| **Add Household**    | `add n/NAME a/ADDRESS p/PHONE`                         | `add n/Tan Family a/Blk 30 Geylang p/91234567`           |
 | **Edit Household**   | `edit id/ID [n/NAME] [a/ADDRESS] [p/PHONE] [t/TAG]...` | `edit id/H000001 n/Lim Family p/87654321`                |
 | **Delete Household** | `delete id/ID`                                         | `delete id/H000001`                                      |
 | **List Households**  | `list`                                                 | `list`                                                   |
