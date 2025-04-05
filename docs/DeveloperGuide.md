@@ -56,7 +56,7 @@ Priorities: High (must have) - `* * *`, Medium (good to have) - `* *`, Low (unli
 **User Story:** As a social service worker, I can add notes to a session so that I can document important details about household visits.
 
 **Conditions of Satisfaction:**
-- I can write session notes when creating or updating a session.
+- I can write session notes when editing a session.
 - Notes are saved and linked to the session for future reference.
 
 ### Search Household Records [`* *`]
@@ -100,13 +100,6 @@ Priorities: High (must have) - `* * *`, Medium (good to have) - `* *`, Low (unli
 **Conditions of Satisfaction:**
 - The system provides a help command.
 - The help menu explains how to use available features.
-
-### Receive Session Notification [`* *`]
-**User Story:** As a social service worker, I receive notifications for upcoming sessions so that I am reminded of my appointments.
-
-**Conditions of Satisfaction:**
-- The system sends reminders for scheduled sessions.
-- Notifications appear in-app or via email.
 
 --------------------------------------------------------------------------------------------------------------------
 ## Use cases
