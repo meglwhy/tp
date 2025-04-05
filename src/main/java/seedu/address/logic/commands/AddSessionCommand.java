@@ -22,7 +22,7 @@ public class AddSessionCommand extends Command {
 
     public static final String COMMAND_WORD = "add-s";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a session to a household. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a session to a household.\n"
             + "Parameters: "
             + PREFIX_ID + "HOUSEHOLD_ID "
             + PREFIX_DATE + "DATE (in YYYY-MM-DD) "

@@ -17,7 +17,7 @@ public class AddHouseholdCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a household to the household book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a household to the household book.\n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_ADDRESS + "ADDRESS "
