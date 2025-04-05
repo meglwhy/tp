@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.SessionUtils.isPastDateTime;
 
 import java.util.Optional;
 
@@ -93,7 +94,10 @@ public class EditSessionCommand extends Command {
         SessionTime candidateTime = (newTime != null) ? new SessionTime(newTime) : oldSession.getTime();
         boolean noteUpdated = (newNote != null);
 
-        // Create the candidate session
+        if (isPastDateTime(candidateDate, candidateTime)) {
+            throw new CommandException("Cannot edit session to a past date or time.");
+        }
+
         Session candidateSession;
         if (noteUpdated) {
             candidateSession = new Session(oldSession.getSessionId(),

@@ -5,9 +5,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
+import seedu.address.commons.util.SessionUtils;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.household.HouseholdId;
@@ -36,7 +36,7 @@ public class AddSessionCommand extends Command {
     public static final String MESSAGE_DUPLICATE_SESSION =
             "This time slot is already booked.\n"
             + "Existing session: %1$s";
-    public static final String MESSAGE_PAST_DATE = "Session date cannot be in the past";
+    public static final String MESSAGE_PAST_DATE = "Cannot add session to a past date or time.";
     public static final String MESSAGE_HOUSEHOLD_NOT_FOUND = "No household found with this ID";
 
     private final HouseholdId householdId;
@@ -73,7 +73,7 @@ public class AddSessionCommand extends Command {
             throw new CommandException(MESSAGE_HOUSEHOLD_NOT_FOUND);
         }
 
-        if (isPastDate(toAdd.getDate())) {
+        if (SessionUtils.isPastDateTime(toAdd.getDate(), toAdd.getTime())) {
             throw new CommandException(MESSAGE_PAST_DATE);
         }
 
@@ -87,10 +87,6 @@ public class AddSessionCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, householdId, toAdd));
     }
 
-    private boolean isPastDate(SessionDate sessionDate) {
-        LocalDate today = LocalDate.now();
-        return sessionDate.value.isBefore(today);
-    }
     /**
      * Checks if this command is equal to another object.
      *
