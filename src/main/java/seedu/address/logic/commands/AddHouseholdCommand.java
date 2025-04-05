@@ -28,8 +28,7 @@ public class AddHouseholdCommand extends Command {
             + PREFIX_PHONE + "98765432";
 
     public static final String MESSAGE_SUCCESS = "New household added: %1$s";
-    public static final String MESSAGE_DUPLICATE_HOUSEHOLD = "This is a duplicate address.";
-
+    public static final String MESSAGE_DUPLICATE_HOUSEHOLD = "This is a duplicate name, address or contact number.";
     private final Household toAdd;
 
     /**
