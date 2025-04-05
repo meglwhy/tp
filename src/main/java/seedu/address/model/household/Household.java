@@ -126,7 +126,6 @@ public class Household {
                 || this.getAddress().toString().equalsIgnoreCase(otherHousehold.getAddress().toString())
                 || this.getContact().toString().equals(otherHousehold.getContact().toString());
     }
-
     @Override
     public int hashCode() {
         return id.hashCode();
