@@ -30,21 +30,23 @@ We assume our users:
 
 If you're already familiar with similar applications, skip to [Quick Start](#quick-start) for setup instructions.
 
+## Table of Contents
 - [Em-Social User Guide](#em-social-user-guide)
    - [Introduction](#introduction)
    - [Quick Start](#quick-start)
    - [User Interface Overview](#user-interface-overview)
    - [Household Management](#household-management)
-      - [Add a household](#add-a-household)
-      - [Edit a household](#edit-a-household)
-      - [Delete a household](#delete-a-household)
-      - [Find households](#find-households)
-      - [List all households](#list-all-households)
+      - [Add a household](#add-a-household): `add`
+      - [Edit a household](#edit-a-household): `edit`
+      - [Delete a household](#delete-a-household): `delete`
+      - [Find households](#find-households): `find`
+      - [List all households](#list-all-households): `list`
    - [Session Management](#session-management)
-      - [Add a session](#add-a-session)
-      - [Edit a session](#edit-a-session)
-      - [Delete a session](#delete-a-session)
-      - [View household sessions](#view-s)
+      - [Add a session](#add-a-session): `add-s`
+      - [Edit a session](#edit-a-session): `edit-s`
+      - [Delete a session](#delete-a-session): `delete-s`
+      - [View full session](#view-full-session): `view-full-s`
+      - [View household sessions](#view-s): `view-s`
    - [General Commands](#general-commands)
       - [Clear data](#clear-data)
       - [Help](#help)
@@ -56,7 +58,7 @@ If you're already familiar with similar applications, skip to [Quick Start](#qui
 
 --------------------------------------------------------------------------------------------------------------------
 
-# Quick Start
+## Quick Start
 
 1. **Ensure Java is Installed**  
    Make sure you have Java `17` or a newer version installed on your computer. To check your Java version, open your terminal and type:
@@ -115,12 +117,29 @@ The Em-Social interface consists of five main sections:
 2. **Session Panel** - Shows sessions for the selected household
 3. **Command Box** - Where you type commands
 4. **Result Display** - Shows feedback from your commands
-5. **Message Colours** - Coloured messages help you quickly understand outcomes:
-- ❌ **Invalid commands** will be highlighted in **red**.
-
-*These colour cues are designed to reduce the chance of errors and improve the user experience, especially for users working in high-volume environments.*
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="border-left: 4px solid #007ACC; padding: 0.75em 1em; background-color: #f0f8ff;">
+
+🔍 <strong>Before We Begin:</strong>
+
+<ul>
+  <li>For commands that do not take in parameters (<code>help</code>, <code>list</code>, <code>clear</code>, <code>exit</code>), additional text after the command will be <strong>ignored</strong>.<br>
+  <em>e.g.</em> <code>help 123</code> will be processed as <code>help</code></li>
+
+  <li>For commands that do take in parameters, multiple instances of the same parameter are allowed. With the exception of tags, Em-Social will only process the <strong>last instance</strong> of the parameter. Multiple tags are allowed.<br>
+  <em>e.g.</em> <code>add n/johnson n/robinson a/Tanglin Road p/91283882</code> will result in <code>robinson</code> being added as the household name, not <code>johnson</code></li>
+
+  <li>To safeguard against accidental typos, double command words will result in the <strong>initial command</strong> being processed.<br>
+  <em>e.g.</em> <code>edit edit id/H000001 n/Johnson</code> will be processed as <code>edit id/H000001 n/Johnson</code><br>
+  <em>e.g.</em> <code>add edit n/Robertson a/Robinson Quay p/91283844</code> will be processed as <code>add n/Robertson a/Robinson Quay p/91283844</code></li>
+
+  <li>If a specific parameter is erroneous, the rest of the command will be ignored and the initial error will be displayed to you.<br>
+  <em>e.g.</em> <code>add n/bert$ a/ p/</code> will return the error <code>Names may only contain alphanumeric characters or spaces, slashes (/), apostrophes ('), and dashes (-).</code> even though the empty <code>a/</code> and <code>p/</code> fields are also invalid.</li>
+</ul>
+
+</div>
 
 ## Household Management
 Households are the core entities in Em-Social. Each household represents a family or living unit that you work with.
@@ -148,7 +167,13 @@ New household added: Household H000004: Ng Family at Blk 44 Bedok North Street, 
 
 ![add-household success message](images/add-household.png)
 
-> **Tip**: Use the edit command below to categorize households using tags.
+Examples accommodating unique names and different phone number formats:
+```
+add n/Conor O'Brien a/Charleson Road p/81277882
+add n/Viknesh s/o Balakrishnan a/24 Nassim Hill p/62930129
+```
+
+> **Tip**: Utilize the edit command **below** to categorize households added with tags.
 
 ---
 
@@ -209,7 +234,7 @@ Deleted Household: Household H000004: Ng Family at Blk 44 Bedok North Street, #1
 ### Find households
 You can search for households with the `find` command.
 Use double quotes to search for a key phrase.
-> **Note**: You cannot search for session content (including notes) using this command.
+> **Note**: You **cannot** search for session content (including notes) or household IDs using this command.
 
 
 ```
@@ -286,7 +311,7 @@ Example of usage:
 ```
 add-s id/H000001 d/2025-05-15 tm/14:30
 ```
-Similarly, you can also use the GUI:
+Similarly, you can use the GUI:
 
 ![add-session-gui](images/add-session-gui.png)
 
@@ -300,7 +325,8 @@ New session added to household H000001: Session for H000001 on 2025-05-15 at 14:
 ---
 
 ### Edit a session
-You can modify a session with the `edit-s` command.
+You can modify a session with the `edit-s` command.  
+*Internal whitespaces between the ```HOUSEHOLD_ID``` and ```SESSION_INDEX``` will be trimmed.*  
 ```
 edit-s id/HOUSEHOLD_ID-SESSION_INDEX d/DATE tm/TIME [n/NOTE]
 ```
@@ -357,8 +383,7 @@ Deleted session 1 from household H000001: Session for H000001 on 2025-03-16 at 1
 
 ---
 ### View full session
-You can view the full session details using the `view-full-s` command.
-
+You can view the full session details using the `view-full-s` command. *Internal whitespaces between the ```HOUSEHOLD_ID``` and ```SESSION_INDEX``` will be trimmed.*
 ```
 view-full-s id/HOUSEHOLD_ID-SESSION_INDEX
 ```
@@ -383,7 +408,7 @@ Viewing session 1 in full.
 ---
 
 ### View household sessions
-You can switch to view all existing sessions for a household using the `view-s` command.
+You can switch to view **all** existing sessions for a household using the `view-s` command.
 ```
 view-s id/HOUSEHOLD_ID
 ```
@@ -408,7 +433,7 @@ Viewing sessions for household: H000001
 ## General Commands
 
 ### Clear data
-You can clear all household and session data with the `clear` command.
+You can clear **all** household and session data with the `clear` command.
 ```
 clear
 ```
@@ -482,23 +507,32 @@ Em-Social performs certain actions that cannot be undone once confirmed. Please 
 
 ## Frequently Asked Questions
 
-**Q: Can I import data from other case management systems?**
+**Q: Can I import data from other case management systems?**  
 A: Currently, Em-Social doesn't support direct imports. You'll need to manually enter household information.
 
-**Q: How many households can Em-Social handle?**
+**Q: How many households can Em-Social handle?**  
 A: Em-Social can efficiently manage hundreds of households, though performance may decrease with extremely large datasets (1000+).
 
-**Q: Is my data secure?**
+**Q: Is my data secure?**  
 A: Em-Social stores all data locally on your computer. No data is sent to external servers. For sensitive data, ensure your computer is secured with a password and consider encrypting your drive.
 
-**Q: Can multiple social workers use Em-Social simultaneously?**
+**Q: Can multiple social workers use Em-Social simultaneously?**  
 A: Em-Social is designed for individual use. For team settings, each social worker should use their own instance of the application.
 
-**Q: What happens if I accidentally delete a household?**
+**Q: What happens if I accidentally delete a household?**  
 A: Unfortunately, there's no built-in recovery for deleted households. This is why Em-Social asks for confirmation before deletion. Consider regular backups of your data file.
 
-**Q: Can I customize the fields for households?**
-A: The current version has fixed fields. Future versions may include customizable fields based on user feedback.
+**Q: Why am I unable to create multiple households with the same name?**  
+A: By preventing households with the same name or phone number from being saved, Em-Social ensures you save household details while **minimizing ambiguity**.  
+For example, should you want to create multiple households named "John Lim", consider a more descriptive name such as "John Punggol" and "John Serangoon".  
+As such, we aim to avoid the edge case where a single individual might have two households enrolled in a similar social work program.
+*Note: This follows a similar convention that mobile contact applications follow.*
+
+**Q: Why am I able to edit sessions to past dates?**
+A: We understand that there are times when sessions with the households may be rearranged and not recorded Em-Social provides this functionality to  
+
+**Q: Why am I able to add sessions one minute apart?**
+A: What the session is depends on you! Because your sessions could vary from giving out hampers, a quick check in with the household or a more extensive session, we leave the duration to you!
 
 **Q: How do I report bugs or request features?**
 A: Please submit issues on our [GitHub repository](https://github.com/AY2425S2-CS2103T-F10-2/tp/issues).
