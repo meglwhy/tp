@@ -111,7 +111,7 @@ Priorities: High (must have) - `* * *`, Medium (good to have) - `* *`, Low (unli
 --------------------------------------------------------------------------------------------------------------------
 ## Use cases
 
-(For all use cases below, the **System** is the `Em-Social` and the **Actor** is the `Social Service Worker`, unless specified otherwise)
+(For all use cases below, the **System** is `Em-Social` and the **Actor** is the `Social Service Worker`, unless specified otherwise)
 
 ### Use Case: U1. Create Household Record
 
