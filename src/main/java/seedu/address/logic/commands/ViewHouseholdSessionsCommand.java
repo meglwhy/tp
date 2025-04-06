@@ -19,7 +19,7 @@ public class ViewHouseholdSessionsCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Views all sessions for the household identified by the household id.\n"
             + "Parameters: id/HOUSEHOLD_ID\n"
-            + "Example: " + COMMAND_WORD + " id/H000007";
+            + "Example: " + COMMAND_WORD + " id/H000001";
 
     public static final String MESSAGE_VIEW_SUCCESS = "Viewing sessions for household: %s";
 

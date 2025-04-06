@@ -20,7 +20,7 @@ public class HelpWindow extends UiPart<Stage> {
                     + "2. edit id/HOUSEHOLD_ID [n/NAME] [a/ADDRESS] [p/CONTACT] [t/TAG]...\n"
                     + "3. view-s id/HOUSEHOLD_ID\n"
                     + "4. add-s id/HOUSEHOLD_ID d/DATE (in YYYY-MM-DD) tm/TIME (in HH:mm)\n"
-                    + "5. edit-s id/HOUSEHOLD_ID-SESSION_INDEX d/DATE tm/TIME [n/Follow up]\n"
+                    + "5. edit-s id/HOUSEHOLD_ID-SESSION_INDEX [d/DATE] [tm/TIME] [n/Follow up]\n"
                     + "6. view-full-s id/HOUSEHOLD_ID-SESSION_INDEX\n"
                     + "7. delete-s id/HOUSEHOLD_ID-SESSION_INDEX\n"
                     + "8. list\n"
