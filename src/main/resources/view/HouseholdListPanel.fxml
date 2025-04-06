@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.StackPane?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <ListView fx:id="householdListView" VBox.vgrow="ALWAYS" />
-</VBox>
+<StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <ScrollPane fx:id="householdScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="AS_NEEDED"
+              vbarPolicy="AS_NEEDED" StackPane.alignment="TOP_LEFT" maxWidth="Infinity" maxHeight="Infinity">
+    <ListView fx:id="householdListView" />
+  </ScrollPane>
+</StackPane>
