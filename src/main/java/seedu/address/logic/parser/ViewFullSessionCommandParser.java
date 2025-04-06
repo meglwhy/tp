@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
 
 import seedu.address.logic.commands.ViewFullSessionCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.household.HouseholdId;
 
 /**
  * Parses input arguments and creates a new {@code ViewFullSessionCommand} object.
@@ -32,30 +31,8 @@ public class ViewFullSessionCommandParser implements Parser<ViewFullSessionComma
                     ViewFullSessionCommand.MESSAGE_USAGE));
         }
 
-        String sessionIdentifier = argMultimap.getValue(PREFIX_ID).get().trim();
-        String[] parts = sessionIdentifier.split("-", 2);
-
-        if (parts.length < 2) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ViewFullSessionCommand.MESSAGE_USAGE));
-        }
-
-        String householdIdStr = parts[0].trim();
-        String sessionIndexStr = parts[1].trim();
-
-        if (!HouseholdId.isValidId(householdIdStr)) {
-            throw new ParseException("Invalid household ID: " + householdIdStr);
-        }
-
-        HouseholdId householdId = HouseholdId.fromString(householdIdStr);
-
-        int sessionIndex;
-        try {
-            sessionIndex = Integer.parseInt(sessionIndexStr);
-        } catch (NumberFormatException e) {
-            throw new ParseException("Session index must be an integer: " + sessionIndexStr);
-        }
-
-        return new ViewFullSessionCommand(householdId, sessionIndex);
+        SessionIdentifier parsed = SessionParserUtil.parseSessionIdentifier(
+                argMultimap.getValue(PREFIX_ID).get());
+        return new ViewFullSessionCommand(parsed.getHouseholdId(), parsed.getSessionIndex());
     }
 }
