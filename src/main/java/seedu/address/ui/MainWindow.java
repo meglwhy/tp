@@ -18,11 +18,10 @@ import seedu.address.logic.commands.EditSessionCommand;
 import seedu.address.logic.commands.ViewFullSessionCommand;
 import seedu.address.logic.commands.ViewHouseholdSessionsCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.ArgumentMultimap;
-import seedu.address.logic.parser.ArgumentTokenizer;
-import seedu.address.logic.parser.CliSyntax;
+import seedu.address.logic.parser.*;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.household.Household;
+import seedu.address.model.household.HouseholdId;
 import seedu.address.model.session.Session;
 
 /**
@@ -161,7 +160,6 @@ public class MainWindow extends UiPart<Stage> {
         logic.setGuiSettings(guiSettings);
 
         helpWindow.hide();
-        primaryStage.hide();
     }
 
     /**
@@ -280,11 +278,10 @@ public class MainWindow extends UiPart<Stage> {
         String[] parts = commandText.split("\\s+");
         for (String part : parts) {
             if (part.startsWith("id/")) {
-                String idValue = part.substring(3); // remove "id/"
-                if (idValue.contains("-")) {
-                    return idValue.split("-")[0];
-                }
-                return idValue;
+                try {
+                    return SessionParserUtil.parseSessionIdentifier(part)
+                            .getHouseholdId().toString();
+                } catch (ParseException ignored) {}
             }
         }
         return null;
@@ -295,27 +292,22 @@ public class MainWindow extends UiPart<Stage> {
      */
     private void handleViewFullSession(ArgumentMultimap argMultimap) {
         argMultimap.getValue(CliSyntax.PREFIX_ID).ifPresent(idValue -> {
-            String[] parts = idValue.trim().split("-", 2);
-            if (parts.length != 2) {
-                return;
-            }
-
-            String householdIdStr = parts[0];
             try {
-                int sessionIndex = Integer.parseInt(parts[1]);
-                householdListPanel.selectHouseholdById(householdIdStr);
+                SessionIdentifier parsed = SessionParserUtil.parseSessionIdentifier(idValue);
+                HouseholdId householdId = parsed.getHouseholdId();
+                int sessionIndex = parsed.getSessionIndex();
+
+                householdListPanel.selectHouseholdById(householdId.toString());
                 sessionListPanel.selectSessionByIndex(sessionIndex - 1);
 
                 logic.getHouseholdBook()
-                        .getHouseholdById(
-                                seedu.address.model.household.HouseholdId.fromString(householdIdStr))
+                        .getHouseholdById(householdId)
                         .ifPresent(household -> {
                             if (sessionIndex < 1 || sessionIndex > household.getSessions().size()) {
                                 return;
                             }
-                            Session session =
-                                    household.getSessions().get(sessionIndex - 1);
 
+                            Session session = household.getSessions().get(sessionIndex - 1);
                             String fullDetails = String.format(
                                     "Household ID: %s\nDate: %s\nTime: %s\nNote: %s",
                                     session.getHouseholdId(),
@@ -326,7 +318,7 @@ public class MainWindow extends UiPart<Stage> {
                             showSessionPopup(fullDetails);
                         });
 
-            } catch (NumberFormatException nfe) {
+            } catch (ParseException ignored) {
                 // If parts[1] isn't a valid integer, do nothing or log if desired
             }
         });
