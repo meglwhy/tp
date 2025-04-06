@@ -6,10 +6,10 @@ pageNav: 3
 # Em-Social User Guide
 
 ## 👋 Introduction
-Welcome to **Em-Social**, a **desktop application** designed to streamline **scheduling** and **household management** for social service workers!
-Built for **fast, efficient use** via a Command Line Interface (CLI), Em-Social lets you **organise, categorise, and access your schedules and household records** with unmatched speed and precision.  
+Welcome to **Em-Social**, a desktop application designed to streamline **scheduling** and **household management** for **social service workers**!
+Through a Command Line Interface (CLI), Em-Social lets you seamlessly **organise, categorise, and access your schedules and household records**.  
 
-### Who is Em-Social for?
+### Key Benefits
 Em-Social is designed specifically for social workers in **Singapore** who:
 1. 📂 Manage **multiple** household cases simultaneously
 2. 📆 Need to schedule and track **regular** home visits
@@ -89,7 +89,7 @@ Em-Social thereby frees you up to focus on what matters most: **supporting the c
    ```
    Within a few seconds, a graphical user interface (GUI) should appear. The application will start with sample data to help you get familiar with its features.
 
-7. **Get Started with Commands**  
+7. **Running Your First Commands**  
    Once the application is running, type `help` in the command box and press `Enter` to see a list of available commands.Some command examples:
     - **`list`**: Lists all households.
     - **`add`**: Adds a new household.
@@ -203,7 +203,7 @@ Existing values will be <strong>overwritten</strong> by the input values.
 </div>
 
 <div style="background-color: #e6ffed; padding: 10px; border-left: 5px solid #2ecc71; margin-bottom: 10px;">
-💡<strong>Tip:</strong> Use meaningful tags to categorize households for easier filtering later. Common tags might include "elderly" or "priority".
+💡<strong>Tip:</strong> Add <strong>meaningful tags</strong> to categorize households for easier filtering later. Common tags might include "elderly" or "priority".
 </div>
   
 
@@ -345,7 +345,7 @@ Parameters:
 - `id/HOUSEHOLD_ID-SESSION_INDEX`: Household ID and session index (e.g., H000001-1)
 - `d/DATE`: New date in YYYY-MM-DD format
 - `tm/TIME`: New time in 24-hour format (HH:MM)
-- `[n/NOTE]`: Optional note about the session
+- `[n/NOTE]`: For adding an optional note about the session
 
 Example of usage (with note):
 ```
@@ -371,7 +371,7 @@ Note: Follow-up required
 </div>
 
 <div style="background-color: #e6ffed; padding: 10px; border-left: 5px solid #2ecc71; margin-bottom: 10px;">
-💡<strong>Tip:</strong> Use session notes to record key discussion points, action items, or observations during your visit.
+💡<strong>Tip:</strong> Add <strong>session notes</strong> to record key discussion points, action items, or observations during your visit.
 </div>
   
 
