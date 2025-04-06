@@ -18,7 +18,11 @@ import seedu.address.logic.commands.EditSessionCommand;
 import seedu.address.logic.commands.ViewFullSessionCommand;
 import seedu.address.logic.commands.ViewHouseholdSessionsCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.*;
+import seedu.address.logic.parser.ArgumentMultimap;
+import seedu.address.logic.parser.ArgumentTokenizer;
+import seedu.address.logic.parser.CliSyntax;
+import seedu.address.logic.parser.SessionIdentifier;
+import seedu.address.logic.parser.SessionParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.household.Household;
 import seedu.address.model.household.HouseholdId;
@@ -281,7 +285,9 @@ public class MainWindow extends UiPart<Stage> {
                 try {
                     return SessionParserUtil.parseSessionIdentifier(part)
                             .getHouseholdId().toString();
-                } catch (ParseException ignored) {}
+                } catch (ParseException ignored) {
+                    //ignored
+                }
             }
         }
         return null;

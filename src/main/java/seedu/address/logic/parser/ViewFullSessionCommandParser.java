@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
 
 import seedu.address.logic.commands.ViewFullSessionCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.household.HouseholdId;
 
 /**
  * Parses input arguments and creates a new {@code ViewFullSessionCommand} object.
