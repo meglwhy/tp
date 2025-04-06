@@ -16,6 +16,7 @@ import java.util.Set;
 import seedu.address.logic.commands.EditHouseholdCommand;
 import seedu.address.logic.commands.EditHouseholdCommand.EditHouseholdDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Model;
 import seedu.address.model.household.HouseholdId;
 import seedu.address.model.tag.Tag;
 
@@ -23,6 +24,11 @@ import seedu.address.model.tag.Tag;
  * Parses input arguments and creates a new EditHouseholdCommand object
  */
 public class EditHouseholdCommandParser implements Parser<EditHouseholdCommand> {
+    private final Model model;
+
+    public EditHouseholdCommandParser(Model model) {
+        this.model = model;
+    }
     /**
      * Parses the given {@code String} of arguments in the context of the {@code EditHouseholdCommand}
      * and returns an {@code EditHouseholdCommand} object for execution.
@@ -42,6 +48,9 @@ public class EditHouseholdCommandParser implements Parser<EditHouseholdCommand> 
         }
 
         HouseholdId householdId = ParserUtil.parseHouseholdId(argMultimap.getValue(PREFIX_ID).get());
+        if (model.getHouseholdBook().getHouseholdById(householdId).isEmpty()) {
+            throw new ParseException(String.format(EditHouseholdCommand.MESSAGE_HOUSEHOLD_NOT_FOUND, householdId));
+        }
         EditHouseholdDescriptor editHouseholdDescriptor = new EditHouseholdDescriptor();
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {

@@ -3,9 +3,15 @@ package seedu.address.logic.parser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.AddHouseholdCommand;
@@ -18,10 +24,29 @@ import seedu.address.logic.commands.FindHouseholdCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListHouseholdsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.HouseholdBook;
+import seedu.address.model.Model;
+import seedu.address.model.household.Household;
+import seedu.address.model.household.HouseholdId;
 
 public class HouseholdBookParserTest {
+    private HouseholdBookParser parser;
+    private Model mockModel;
+    private HouseholdBook mockHouseholdBook;
 
-    private final HouseholdBookParser parser = new HouseholdBookParser();
+    @BeforeEach
+    public void setUp() {
+        mockModel = mock(Model.class);
+        mockHouseholdBook = mock(HouseholdBook.class);
+        parser = new HouseholdBookParser(mockModel);
+
+        // Set up return value for model.getHouseholdBook()
+        when(mockModel.getHouseholdBook()).thenReturn(mockHouseholdBook);
+
+        // Set up return value for householdBook.getHouseholdById(...)
+        Household mockHousehold = mock(Household.class);
+        when(mockHouseholdBook.getHouseholdById(any(HouseholdId.class))).thenReturn(Optional.of(mockHousehold));
+    }
 
     @Test
     public void parseCommand_clearCommand_returnsClearCommand() throws Exception {

@@ -21,16 +21,17 @@ import seedu.address.logic.commands.ListHouseholdsCommand;
 import seedu.address.logic.commands.ViewFullSessionCommand;
 import seedu.address.logic.commands.ViewHouseholdSessionsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-
+import seedu.address.model.Model;
 /**
  * Parses user input for the household management system.
  */
 public class HouseholdBookParser {
-    /**
-     * Used for initial separation of command word and args.
-     */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+    private final Model model;
 
+    public HouseholdBookParser(Model model) {
+        this.model = model;
+    }
     /**
      * Parses user input into command for execution.
      *
@@ -55,7 +56,7 @@ public class HouseholdBookParser {
             return new AddSessionCommandParser().parse(arguments);
         }
         case EditHouseholdCommand.COMMAND_WORD -> {
-            return new EditHouseholdCommandParser().parse(arguments);
+            return new EditHouseholdCommandParser(model).parse(arguments);
         }
         case EditSessionCommand.COMMAND_WORD -> {
             return new EditSessionCommandParser().parse(arguments);
