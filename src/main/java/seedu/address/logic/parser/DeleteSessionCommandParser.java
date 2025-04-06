@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import java.util.Optional;
 
 import seedu.address.logic.commands.DeleteSessionCommand;
@@ -10,10 +12,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class DeleteSessionCommandParser implements Parser<DeleteSessionCommand> {
 
-    public static final String MESSAGE_INVALID_FORMAT =
-            "Invalid format! Usage: delete-s id/<HOUSEHOLD_ID-SESSION_INDEX>\n"
-                    + "Example: delete-s id/H000002-2";
-
     private static final Prefix PREFIX_ID = new Prefix("id/");
 
     @Override
@@ -21,12 +19,12 @@ public class DeleteSessionCommandParser implements Parser<DeleteSessionCommand> 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(userInput, PREFIX_ID);
 
         if (!argMultimap.arePrefixesPresent(PREFIX_ID) || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(MESSAGE_INVALID_FORMAT);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteSessionCommand.MESSAGE_USAGE));
         }
 
         Optional<String> idAndIndexOpt = argMultimap.getValue(PREFIX_ID);
         if (idAndIndexOpt.isEmpty()) {
-            throw new ParseException(MESSAGE_INVALID_FORMAT);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteSessionCommand.MESSAGE_USAGE));
         }
 
         // Use the helper to parse the session identifier.

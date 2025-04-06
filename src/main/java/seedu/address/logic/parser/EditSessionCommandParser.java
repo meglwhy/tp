@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
@@ -13,33 +14,27 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class EditSessionCommandParser implements Parser<EditSessionCommand> {
 
-    public static final String MESSAGE_INVALID_FORMAT =
-            "Invalid format! Usage: edit-s id/<HOUSEHOLD_ID-SESSION_INDEX> [d/DATE] [tm/TIME] [n/NOTE]\n"
-                    + "Example: edit-s id/H000007-2 d/2025-09-27 tm/19:00\n"
-                    + "Example with note: edit-s id/H000007-2 n/Follow-up";
-
-    public static final String MESSAGE_NO_FIELDS_PROVIDED =
-            "At least one field to edit must be provided (date, time, or note).";
-
     @Override
     public EditSessionCommand parse(String userInput) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(userInput, PREFIX_ID, PREFIX_DATE,
                 PREFIX_TIME, PREFIX_NOTE);
 
         if (!argMultimap.arePrefixesPresent(PREFIX_ID) || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(MESSAGE_INVALID_FORMAT);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditSessionCommand.MESSAGE_USAGE));
         }
 
         if (argMultimap.getValue(PREFIX_DATE).isEmpty()
                 && argMultimap.getValue(PREFIX_TIME).isEmpty()
                 && argMultimap.getValue(PREFIX_NOTE).isEmpty()) {
-            throw new ParseException(MESSAGE_NO_FIELDS_PROVIDED);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditSessionCommand.MESSAGE_USAGE));
         }
 
         // Use the helper to parse the session identifier.
         SessionIdentifier sessionIdentifier = SessionParserUtil.parseSessionIdentifier(
-                argMultimap.getValue(PREFIX_ID).orElseThrow(() -> new ParseException(MESSAGE_INVALID_FORMAT)).trim()
-        );
+                argMultimap.getValue(PREFIX_ID).orElseThrow(() -> {
+                    return new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                            EditSessionCommand.MESSAGE_USAGE));
+                }).trim());
 
         // Validate optional fields: trim and check if empty if provided.
         String datePart = getValidatedField(argMultimap.getValue(PREFIX_DATE), "Date provided is empty.");
