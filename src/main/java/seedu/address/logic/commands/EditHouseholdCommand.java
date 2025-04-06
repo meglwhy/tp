@@ -88,25 +88,38 @@ public class EditHouseholdCommand extends Command {
         householdBook.getHouseholdBook().updateHousehold(householdToEdit, editedHousehold);
         return new CommandResult(String.format(MESSAGE_EDIT_HOUSEHOLD_SUCCESS, editedHousehold));
     }
+
     /**
-     * Creates and returns a {@code Household} with the details of {@code householdToEdit}
-     * edited using {@code editHouseholdDescriptor}.
+     * Creates a new {@code Household} instance with updated details based on the provided
+     * {@code EditHouseholdDescriptor}. If a field in the descriptor is not specified,
+     * the corresponding value from the original household is retained.
      *
-     * @param householdToEdit The original household to be edited. Must not be null.
-     * @param editHouseholdDescriptor The descriptor containing new values for household attributes. Must not be null.
-     * @return A new {@code Household} with updated details.
+     * This method also copies all existing sessions from the original household to the
+     * newly created household.
+     *
+     *
+     * @param householdToEdit the original {@code Household} to be edited; must not be {@code null}
+     * @param descriptor the {@code EditHouseholdDescriptor} containing the updated details; may provide optional
+     *                   new values for name, contact, address, and tags
+     * @return a new {@code Household} instance with updated fields and copied sessions
      */
-    private static Household createEditedHousehold(Household householdToEdit,
-                                                 EditHouseholdDescriptor editHouseholdDescriptor) {
+    public Household createEditedHousehold(Household householdToEdit, EditHouseholdDescriptor descriptor) {
         assert householdToEdit != null;
+        Name updatedName = descriptor.getName().orElse(householdToEdit.getName());
+        Contact updatedContact = descriptor.getContact().orElse(householdToEdit.getContact());
+        Address updatedAddress = descriptor.getAddress().orElse(householdToEdit.getAddress());
+        Set<Tag> updatedTags = descriptor.getTags().orElse(householdToEdit.getTags());
 
-        Name updatedName = editHouseholdDescriptor.getName().orElse(householdToEdit.getName());
-        Address updatedAddress = editHouseholdDescriptor.getAddress().orElse(householdToEdit.getAddress());
-        Contact updatedContact = editHouseholdDescriptor.getContact().orElse(householdToEdit.getContact());
-        Set<Tag> updatedTags = editHouseholdDescriptor.getTags().orElse(householdToEdit.getTags());
+        // Create a new Household instance with the updated details.
+        Household editedHousehold = new Household(updatedName, updatedAddress, updatedContact,
+                householdToEdit.getId(), updatedTags);
 
-        return new Household(updatedName, updatedAddress, updatedContact, householdToEdit.getId(), updatedTags);
+        // Copy the existing sessions from the original household.
+        editedHousehold.getSessions().addAll(householdToEdit.getSessions());
+
+        return editedHousehold;
     }
+
     /**
      * Checks if this {@code EditHouseholdCommand} is equal to another object.
      *
