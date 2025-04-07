@@ -106,6 +106,7 @@ How the `Logic` component works:
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
+
 <puml src="diagrams/ModelClassDiagram.puml" width="800" />
 
 
@@ -120,7 +121,6 @@ The `Model` component,
 
 **API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
-<<ImageDisplayed>>
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
 The `Storage` component,
@@ -186,7 +186,6 @@ The following sequence diagram shows how an undo operation goes through the `Log
 
 Similarly, how an undo operation goes through the `Model` component is shown below:
 
-<<ImageDisplayed>>
 <puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
 
 The `redo` command does the opposite - it calls `Model#redoHouseholdBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
