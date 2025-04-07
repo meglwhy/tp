@@ -73,7 +73,7 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/se-
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `SessionListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -82,7 +82,7 @@ The `UI` component,
 * executes user commands using the `Logic` component.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-* depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+* depends on some classes in the `Model` component, as it displays `Household` object residing in the `Model`.
 
 ### Logic component
 
@@ -106,14 +106,13 @@ How the `Logic` component works:
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-
 <puml src="diagrams/ModelClassDiagram.puml" width="800" />
 
 
 The `Model` component,
 
 * stores the Em-Social data i.e., all `Household` objects and `Session` objects
-* stores the currently 'selected' `Session` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Session>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the currently 'selected' `Household` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Household>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components).
 
@@ -125,7 +124,7 @@ The `Model` component,
 
 The `Storage` component,
 * can save both Em-Social data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `HousheoldBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+* inherits from both `HouseholdBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 ### Common classes
@@ -156,7 +155,7 @@ Step 1. The user launches the application for the first time. The `VersionedHous
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete id/H000005` command to delete the 5th household in the household book. The `delete` command calls `Model#commitHouseholdBook()`, causing the modified state of the household book after the `delete id/H000005` command executes to be saved in the `HouuseholdBookStateList`, and the `currentStatePointer` is shifted to the newly inserted household book state.
+Step 2. The user executes `delete id/H000005` command to delete the 5th household in the household book. The `delete` command calls `Model#commitHouseholdBook()`, causing the modified state of the household book after the `delete id/H000005` command executes to be saved in the `HouseholdBookStateList`, and the `currentStatePointer` is shifted to the newly inserted household book state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
@@ -212,6 +211,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 * **Alternative 1 (current choice):** Saves the entire household book.
     * Pros: Easy to implement.
     * Cons: May have performance issues in terms of memory usage.
+
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
