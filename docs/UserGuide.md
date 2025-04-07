@@ -349,7 +349,7 @@ Parameters:
 
 Example of usage (with note):
 ```
-edit-s id/H000003-1 d/2025-03-16 tm/15:00 n/Follow-up required
+edit-s id/H000003-1 d/2025-06-07 tm/15:00 n/Follow-up required
 ```
 
 Similarly, you can also use the GUI:
@@ -359,7 +359,7 @@ Similarly, you can also use the GUI:
 Expected outcome:
 ```
 Edited session:
-Date: 2025-03-16
+Date: 2025-06-07
 Time: 15:00
 Note: Follow-up required
 ```
