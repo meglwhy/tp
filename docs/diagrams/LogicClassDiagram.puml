@@ -4,44 +4,94 @@ skinparam arrowThickness 1.1
 skinparam arrowColor LOGIC_COLOR_T4
 skinparam classBackgroundColor LOGIC_COLOR
 
-package Logic as LogicPackage {
+package Logic <<Rectangle>> {
+  class "<<interface>>\nLogic" as Logic
+  class LogicManager
+  class Messages
 
-package "Parser Classes" as ParserClasses{
-}
-Class "<<interface>>\nABC" as ABC
-Class CommandResult
-Class "{abstract}\nCommand" as Command
-Class XYZCommand
-
-Class "<<interface>>\nLogic" as Logic
-Class LogicManager
+  Logic <|.. LogicManager
 }
 
-package Model {
-Class HiddenModel #FFFFFF
+package "logic.commands" <<Rectangle>> {
+  class "{abstract}\nCommand" as Command
+  class AddHouseholdCommand
+  class AddSessionCommand
+  class ClearCommand
+  class CommandResult
+  class DeleteHouseholdCommand
+  class DeleteSessionCommand
+  class EditHouseholdCommand
+  class EditSessionCommand
+  class ExitCommand
+  class FindHouseholdCommand
+  class HelpCommand
+  class ListHouseholdsCommand
+  class ViewFullSessionCommand
+  class ViewHouseholdSessionsCommand
+
+  Command <|-- AddHouseholdCommand
+  Command <|-- AddSessionCommand
+  Command <|-- ClearCommand
+  Command <|-- DeleteHouseholdCommand
+  Command <|-- DeleteSessionCommand
+  Command <|-- EditHouseholdCommand
+  Command <|-- EditSessionCommand
+  Command <|-- ExitCommand
+  Command <|-- FindHouseholdCommand
+  Command <|-- HelpCommand
+  Command <|-- ListHouseholdsCommand
+  Command <|-- ViewFullSessionCommand
+  Command <|-- ViewHouseholdSessionsCommand
 }
 
-package Storage {
+package "logic.commands.exceptions" <<Rectangle>> {
+  class CommandException
+
+  CommandException --|> Exception
 }
 
-Class HiddenOutside #FFFFFF
-HiddenOutside ..> Logic
+package "logic.parser" <<Rectangle>> {
+  class "<<interface>>\nParser<T extends Command>" as Parser
+  class AddHouseholdCommandParser
+  class AddSessionCommandParser
+  class ArgumentMultimap
+  class ArgumentTokenizer
+  class CliSyntax
+  class DeleteHouseholdCommandParser
+  class DeleteSessionCommandParser
+  class EditHouseholdCommandParser
+  class EditSessionCommandParser
+  class FindHouseholdCommandParser
+  class HouseholdBookParser
+  class ParserUtil
+  class Prefix
+  class SessionIdentifier
+  class SessionParserUtil
+  class ViewFullSessionCommandParser
+  class ViewHouseholdSessionsCommandParser
 
-LogicManager .right.|> Logic
-LogicManager -right->"1" ParserClasses
-ParserClasses ..> XYZCommand : <<create>>
+  Parser <|.. AddHouseholdCommandParser
+  Parser <|.. AddSessionCommandParser
+  Parser <|.. DeleteHouseholdCommandParser
+  Parser <|.. DeleteSessionCommandParser
+  Parser <|.. EditHouseholdCommandParser
+  Parser <|.. EditSessionCommandParser
+  Parser <|.. FindHouseholdCommandParser
+  Parser <|.. ViewFullSessionCommandParser
+  Parser <|.. ViewHouseholdSessionsCommandParser
+}
 
-XYZCommand -up-|> Command
-LogicManager .left.> Command : <<call>>
+package "logic.parser.exceptions" <<Rectangle>> {
+  class ParseException
+  ParseException --|> IllegalValueException
+}
 
-LogicManager --> Model
-LogicManager --> Storage
-Storage --[hidden] Model
-Command .[hidden]up.> Storage
-Command .right.> Model
-note right of XYZCommand: XYZCommand = AddCommand, \nFindCommand, etc
+' Logical links (optional layout ordering)
+AddHouseholdCommandParser ..> AddHouseholdCommand : parses >
+ViewFullSessionCommandParser ..> ViewFullSessionCommand : parses >
 
-Logic ..> CommandResult
-LogicManager .down.> CommandResult
-Command .up.> CommandResult : <<create>>
+LogicManager --> CommandResult
+LogicManager --> Parser
+LogicManager --> Messages
+
 @enduml

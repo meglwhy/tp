@@ -1,49 +1,45 @@
 @startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor STORAGE_COLOR_T4
+skinparam classBackgroundColor STORAGE_COLOR
 
-skinparam packageTitleFontColor #FFFFFF
-skinparam packageTitleBackgroundColor #8E7F29
-skinparam packageBorderColor #C6AA46
+package storage {
 
-' Top-level interface in the middle
-interface Storage
+  ' Interfaces (with your notation)
+  class "<<interface>>\nStorage" as Storage
+  class "<<interface>>\nHouseholdBookStorage" as HouseholdBookStorage
+  class "<<interface>>\nUserPrefsStorage" as UserPrefsStorage
 
-' Middle-level class that depends on both storages
-class StorageManager
+  ' Public concrete classes
+  class "JsonSerializableHouseholdBook"
+  class "JsonAdaptedSession"
+  class "JsonAdaptedHousehold"
 
-' Left side: HouseholdBook Storage box
-package "HouseholdBook Storage" {
-    interface ABC
-    interface HouseholdBookStorage
-    class JsonHouseholdBookStorage
-    class JsonSerializableHouseholdBook
-    class JsonAdaptedHousehold
-    class JsonAdaptedSession
-    class JsonAdaptedTag
+  ' Default class
+  class "JsonAdaptedTag"
+
+  ' Implementing classes
+  class "JsonHouseholdBookStorage"
+  class "JsonUserPrefsStorage"
+  class "StorageManager"
+
+  ' Interface Inheritance
+  HouseholdBookStorage <|-- Storage
+  UserPrefsStorage <|-- Storage
+
+  ' Implementations
+  HouseholdBookStorage <|.. JsonHouseholdBookStorage
+  UserPrefsStorage <|.. JsonUserPrefsStorage
+  Storage <|.. StorageManager
+
+  ' Usage relationships (composition/dependencies)
+  JsonSerializableHouseholdBook --> JsonAdaptedHousehold
+  JsonSerializableHouseholdBook --> JsonAdaptedSession
+  JsonSerializableHouseholdBook --> JsonAdaptedTag
+
+  StorageManager --> JsonHouseholdBookStorage
+  StorageManager --> JsonUserPrefsStorage
 }
-
-' Right side: UserPrefs Storage box
-package "UserPrefs Storage" {
-    interface UserPrefsStorage
-    class JsonUserPrefsStorage
-}
-
-' Show that Storage extends both HouseholdBookStorage and UserPrefsStorage
-HouseholdBookStorage -up-|> Storage
-UserPrefsStorage -up-|> Storage
-
-' StorageManager implements/uses the Storage interface
-Storage <|-- StorageManager
-
-' Show usage and dependency from StorageManager to the actual implementations
-StorageManager --> JsonHouseholdBookStorage
-StorageManager --> JsonUserPrefsStorage
-
-' Show that JsonHouseholdBookStorage uses JsonSerializableHouseholdBook
-JsonHouseholdBookStorage --> JsonSerializableHouseholdBook
-
-' Inside JsonSerializableHouseholdBook, we have references to adapted classes
-JsonSerializableHouseholdBook --> JsonAdaptedHousehold
-JsonSerializableHouseholdBook --> JsonAdaptedSession
-JsonAdaptedHousehold --> JsonAdaptedTag
 
 @enduml
