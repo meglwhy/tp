@@ -473,7 +473,6 @@ The following confirmation dialog box will appear:
 ![clear-command confirmation](images/clear-confirmation.png)
 *Figure 11: Confirmation box to ensure you want to clear all data*
 
-> **Warning**: This action will delete ALL households and sessions. It cannot be undone.
 <div style="background-color: #fff3cd; padding: 10px; border-left: 5px solid #ff9900; margin-bottom: 10px;">
 ⚠️ <strong>Warning:</strong><br>
 Clearing will delete <strong>all</strong> households and sessions. This action <strong>cannot</strong> be undone.
