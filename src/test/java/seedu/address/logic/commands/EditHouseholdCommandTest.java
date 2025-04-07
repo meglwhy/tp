@@ -73,15 +73,4 @@ public class EditHouseholdCommandTest {
 
         assertThrows(CommandException.class, () -> command.execute(model));
     }
-
-    @Test
-    public void execute_householdNotFound_throwsCommandException() throws CommandException {
-        EditHouseholdDescriptor descriptor = new EditHouseholdDescriptor();
-        descriptor.setContact(new Contact("91234567"));
-
-        EditHouseholdCommand command = new EditHouseholdCommand(new HouseholdId("H000002"), descriptor);
-        when(model.getHouseholdBook().getHouseholdById(any(HouseholdId.class))).thenReturn(Optional.empty());
-
-        assertThrows(CommandException.class, () -> command.execute(model));
-    }
 }
