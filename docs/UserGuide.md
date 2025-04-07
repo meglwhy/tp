@@ -204,7 +204,7 @@ edit id/H000001 n/Tan Family p/98765432 t/Urgent
     - Phone number: 98765432 <br>
     - Tag: Urgent
 
-<div style="background-color: #FF6666; padding: 10px; border-left: 5px solid #ff9900; margin-bottom: 10px;">
+<div style="background-color: #fff3cd; padding: 10px; border-left: 5px solid #ff9900; margin-bottom: 10px;">
 ⚠️ <strong>Warnings:</strong><br>
 - If you edit a household to match an existing household, it will be rejected to prevent duplicate households.<br>
 - When you edit a household, existing values will be <strong>overwritten</strong> by the input values.
@@ -236,7 +236,7 @@ The following confirmation dialog box will appear:
 
 
 
-<div style="background-color: #FF6666; padding: 10px; border-left: 5px solid #ff9900; margin-bottom: 10px;">
+<div style="background-color: #fff3cd; padding: 10px; border-left: 5px solid #ff9900; margin-bottom: 10px;">
 ⚠️ <strong>Warning:</strong> Deleting a household will also delete <strong>all</strong> associated sessions. This action <strong>cannot</strong> be undone.
 </div>
 
@@ -337,7 +337,7 @@ You can also use the **GUI**:
 *Figure 6: Using the GUI "Add Session" button*
 
 
-<div style="background-color: #FF6666; padding: 10px; border-left: 5px solid #ff9900; margin-bottom: 10px;">
+<div style="background-color: #fff3cd; padding: 10px; border-left: 5px solid #ff9900; margin-bottom: 10px;">
 ⚠️ <strong>Warning:</strong> The system will prevent double-booking if you already have another session scheduled at the <strong>same</strong> time.</div>
 
 <div style="background-color: #e6ffed; padding: 10px; border-left: 5px solid #2ecc71; margin-bottom: 10px;">
@@ -379,7 +379,7 @@ You can also use the **GUI**:
 ![edit-session success message](images/edit-session.png)
 *Figure 8: Confirmation message ensuring that the session has been added successfully*
 
-<div style="background-color: #FF6666; padding: 10px; border-left: 5px solid #ff9900; margin-bottom: 10px;">
+<div style="background-color: #fff3cd; padding: 10px; border-left: 5px solid #ff9900; margin-bottom: 10px;">
 ⚠️ <strong>Warning:</strong> When you edit a session, the existing values will be <strong>overwritten</strong> by the input values.
 </div>
 
@@ -472,7 +472,7 @@ The following confirmation dialog box will appear:
 *Figure 11: Confirmation box to ensure you want to clear all data*
 
 > **Warning**: This action will delete ALL households and sessions. It cannot be undone.
-<div style="background-color: #FF6666; padding: 10px; border-left: 5px solid #ff9900; margin-bottom: 10px;">
+<div style="background-color: #fff3cd; padding: 10px; border-left: 5px solid #ff9900; margin-bottom: 10px;">
 ⚠️ <strong>Warning:</strong><br>
 Clearing will delete <strong>all</strong> households and sessions. This action <strong>cannot</strong> be undone.
 </div>
