@@ -128,7 +128,7 @@ The Em-Social interface consists of five main sections:
   <em>e.g.</em> <code>edit edit id/H000001 n/Johnson</code> will be processed as <code>edit id/H000001 n/Johnson</code><br>
   <em>e.g.</em> <code>add edit n/Robertson a/Robinson Quay p/91283844</code> will be processed as <code>add n/Robertson a/Robinson Quay p/91283844</code></li>
 
-  <li>  If a specific <a href="#-command-summary">parameter</a> is erroneous, the rest of the command will be ignored and the initial error will be displayed to you.<br>
+  <li>  If a specific parameter is erroneous, the rest of the command will be ignored and the initial error will be displayed to you.<br>
   <em>e.g.</em> <code>add n/bert$ a/ p/</code> will return the error <code>Names may only contain alphanumeric characters or spaces, slashes (/), apostrophes ('), and dashes (-).</code> even though the empty <code>a/</code> and <code>p/</code> fields are also invalid.</li>
 </ul>
 
@@ -198,7 +198,7 @@ Edited Household: Household H000001: Tan Family at Blk 30 Geylang Street 29, #06
 ```
 <div style="background-color: #fff3cd; padding: 10px; border-left: 5px solid #ff9900; margin-bottom: 10px;">
 ⚠️ <strong>Warnings:</strong><br>
-Editing a household to match an existing household will be rejected to prevent <a href="#-glossary">duplicate households</a>.<br>
+Editing a household to match an existing household will be rejected to prevent duplicate households.<br>
 Existing values will be <strong>overwritten</strong> by the input values.
 </div>
 
