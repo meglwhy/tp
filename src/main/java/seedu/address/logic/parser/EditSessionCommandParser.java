@@ -58,9 +58,18 @@ public class EditSessionCommandParser implements Parser<EditSessionCommand> {
         }
 
 
-        // Validate optional fields
-        String datePart = getValidatedField(argMultimap.getValue(PREFIX_DATE), "Date provided is empty.");
-        String timePart = getValidatedField(argMultimap.getValue(PREFIX_TIME), "Time provided is empty.");
+        String datePart = null;
+        if (argMultimap.getValue(PREFIX_DATE).isPresent()) {
+            String rawDate = getValidatedField(argMultimap.getValue(PREFIX_DATE), "Date provided is empty.");
+            datePart = ParserUtil.parseDate(rawDate).toString();
+        }
+
+        String timePart = null;
+        if (argMultimap.getValue(PREFIX_TIME).isPresent()) {
+            String rawTime = getValidatedField(argMultimap.getValue(PREFIX_TIME), "Time provided is empty.");
+            timePart = ParserUtil.parseTime(rawTime).toString();
+        }
+
         String notePart = getValidatedField(argMultimap.getValue(PREFIX_NOTE), "Note provided is empty.");
 
         return new EditSessionCommand(householdId, sessionIndex, datePart, timePart, notePart);
