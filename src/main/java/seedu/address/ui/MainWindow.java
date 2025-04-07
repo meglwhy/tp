@@ -3,6 +3,7 @@ package seedu.address.ui;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -164,6 +165,9 @@ public class MainWindow extends UiPart<Stage> {
         logic.setGuiSettings(guiSettings);
 
         helpWindow.hide();
+
+        Platform.exit();
+        System.exit(0);
     }
 
     /**
