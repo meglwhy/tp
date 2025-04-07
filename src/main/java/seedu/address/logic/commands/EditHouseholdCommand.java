@@ -74,10 +74,7 @@ public class EditHouseholdCommand extends Command {
     public CommandResult execute(Model householdBook) throws CommandException {
         requireNonNull(householdBook);
 
-        Household householdToEdit = householdBook.getHouseholdBook().getHouseholdById(householdId)
-                .orElseThrow(() -> new CommandException(
-                        String.format(MESSAGE_HOUSEHOLD_NOT_FOUND, householdId)));
-
+        Household householdToEdit = householdBook.getHouseholdBook().getHouseholdById(householdId).get();
         Household editedHousehold = createEditedHousehold(householdToEdit, editHouseholdDescriptor);
 
         // Check if edited household would result in a duplicate
