@@ -175,7 +175,7 @@ add n/Viknesh s/o Balakrishnan a/24 Nassim Hill p/62930129
 ```
 
 <div style="background-color: #e6ffed; padding: 10px; border-left: 5px solid #2ecc71; margin-bottom: 10px;">
-💡<strong>Tip:</strong> You should the edit command <strong>below</strong> to categorize households added with tags.
+💡<strong>Tip:</strong> You should use the edit command <strong>below</strong> to categorize households added with tags.
 </div>
 
 <br>
