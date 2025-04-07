@@ -43,7 +43,7 @@ Em-Social thereby frees you up to focus on what matters most: **supporting the c
       - [Clear data](#clear-data): `clear`
       - [Help](#help): `help`
       - [Exiting the program](#exiting-the-program): `exit`
-   - [Tips for Effective Use](#-tips-for-effective-use)
+   - [Make the Most out of Em-Social](#-make-the-most-out-of-em-social)
    - [Frequently Asked Questions](#-frequently-asked-questions)
    - [Glossary](#-glossary)
    - [Command Summary](#-command-summary)
@@ -91,7 +91,7 @@ Em-Social thereby frees you up to focus on what matters most: **supporting the c
    Within a few seconds, a graphical user interface (GUI) should appear. The application will start with sample data to help you get familiar with its features.
 
 7. **Running Your First Commands**  
-   Once the application is running, type `help` in the command box and press `Enter` to see a list of available commands.Some command examples:
+   Once the application is running, type `help` in the command box and press `Enter` to see a list of available commands. Some command examples:
     - **`list`**: Lists all households.
     - **`add`**: Adds a new household.
     - **`edit`**: Edits an existing household.
@@ -139,6 +139,8 @@ The Em-Social interface consists of five main sections:
 </ul>
 
 </div>
+
+<br>
   
 
 ## 🏠 Household Management
@@ -189,7 +191,7 @@ edit id/HOUSEHOLD_ID [n/HOUSEHOLD_NAME] [a/ADDRESS] [p/PHONE_NUMBER] [t/TAG]...
 ```
 
 **Parameters:**
-- `id/HOUSEHOLD_ID`: The household ID (e.g., H000001)
+- `id/HOUSEHOLD_ID`: The Household ID (e.g., H000001)
 - `[n/HOUSEHOLD_NAME]`: Optional new name for the household
 - `[a/ADDRESS]`: Optional new address
 - `[p/PHONE_NUMBER]`: Optional new contact number
@@ -247,7 +249,7 @@ The following confirmation dialog box will appear:
 ### Find households
 You can search for households with the `find` command.
 Use double quotes to search for a key phrase.
-> **Note**: You **cannot** search for session content (including notes) or household IDs using this command.
+> **Note**: You **cannot** search for session content (including notes) or Household IDs using this command.
 
 
 ```
@@ -318,7 +320,7 @@ add-s id/HOUSEHOLD_ID d/DATE tm/TIME
 ```
 
 **Parameters:**
-- `id/HOUSEHOLD_ID`: The household ID (e.g., H000001)
+- `id/HOUSEHOLD_ID`: The Household ID (e.g., H000001)
 - `d/DATE`: Date in YYYY-MM-DD format
 - `tm/TIME`: Time in 24-hour format (HH:MM)
 
@@ -443,7 +445,7 @@ view-s id/HOUSEHOLD_ID
 ```
 
 Parameters:
-- `id/HOUSEHOLD_ID`: The household ID (e.g., H000001)
+- `id/HOUSEHOLD_ID`: The Household ID (e.g., H000001)
 
 Example of usage:
 ```
@@ -508,6 +510,8 @@ You can also use the **GUI button**:
 
 ![exit-button](images/exit.png)
 *Figure 13: The Exit Button for Em-Social*
+
+<br>
 
 --------------------------------------------------------------------------------------------------------------------
 
