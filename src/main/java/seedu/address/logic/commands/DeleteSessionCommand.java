@@ -19,7 +19,8 @@ public class DeleteSessionCommand extends Command {
     public static final String COMMAND_WORD = "delete-s";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes the session identified by "
             + "HOUSEHOLD_ID-SESSION_INDEX.\n"
-            + "Example: " + COMMAND_WORD + " H000002-2";
+            + "Parameters: id/HOUSEHOLD_ID-SESSION_INDEX\n"
+            + "Example: " + COMMAND_WORD + " H000001-2";
     public static final String MESSAGE_DELETE_SESSION_SUCCESS = "Deleted session %d from household %s: %s";
     public static final String MESSAGE_HOUSEHOLD_NOT_FOUND = "No household found with ID %s.";
     public static final String MESSAGE_INVALID_SESSION_INDEX = "Session index %d is invalid for household %s.";

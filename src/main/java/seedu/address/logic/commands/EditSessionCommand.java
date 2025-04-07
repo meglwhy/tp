@@ -25,9 +25,9 @@ public class EditSessionCommand extends Command {
     public static final String MESSAGE_USAGE =
             COMMAND_WORD + ": Edits the session identified by the household ID and session index "
                     + "by updating any of the following: date, time, and/or note.\n"
-                    + "Parameters: <HOUSEHOLD_ID-SESSION_INDEX> [d/DATE] [tm/TIME] [n/NOTE]\n"
-                    + "Example: " + COMMAND_WORD + " H000006-2 d/2025-03-16 tm/15:00\n"
-                    + "Example with note: " + COMMAND_WORD + " H000006-2 d/2025-03-16 tm/15:00 "
+                    + "Parameters: <HOUSEHOLD_ID-SESSION_INDEX> [d/DATE(in YYYY-MM-DD)] [tm/TIME (in HH:mm)] [n/NOTE]\n"
+                    + "Example: " + COMMAND_WORD + " H000001-2 d/2025-03-16 tm/15:00\n"
+                    + "Example with note: " + COMMAND_WORD + " H000001-2 d/2025-03-16 tm/15:00 "
                     + "n/Follow-up on medical assistance application";
 
     public static final String MESSAGE_EDIT_SESSION_SUCCESS = "Edited session:\nDate: %s\nTime: %s";

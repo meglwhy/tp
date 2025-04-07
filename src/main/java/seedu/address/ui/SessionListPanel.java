@@ -185,7 +185,15 @@ public class SessionListPanel extends UiPart<Region> {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText("Session Addition Failed");
-        alert.setContentText(message);
+        Label label = new Label(message);
+        label.setWrapText(true);
+        label.setMaxWidth(Double.MAX_VALUE);
+
+        alert.getDialogPane().setContent(label);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE); // auto-grow
+        alert.getDialogPane().setPrefWidth(400); // optional: give a default width
+        alert.getDialogPane().setPrefHeight(Region.USE_COMPUTED_SIZE);
+
         alert.showAndWait();
     }
 
