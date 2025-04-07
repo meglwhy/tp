@@ -9,7 +9,7 @@ pageNav: 3
 Welcome to **Em-Social**, a desktop application designed to streamline **scheduling** and **household management** for **social service workers**!
 Through a Command Line Interface (CLI), Em-Social lets you seamlessly **organise, categorise, and access your schedules and household records**.  
 
-### Key Benefits
+### Why Em-Social?
 Em-Social is designed specifically for social workers in **Singapore** who:
 1. 📂 Manage **multiple** household cases simultaneously
 2. 📆 Need to schedule and track **regular** home visits
@@ -20,6 +20,7 @@ Em-Social is designed specifically for social workers in **Singapore** who:
 Em-Social thereby frees you up to focus on what matters most: **supporting the communities you serve!** ❤️
 
 👉 If you're already familiar with similar applications, skip ahead to 🚀 [Quick Start](#-quick-start) for setup instructions.  
+👉 If you're a new user, we suggest you read the Em-Social User Guide sequentially to make the most of it!
 
 ## Table of Contents
 - [Em-Social User Guide](#em-social-user-guide)
@@ -121,6 +122,10 @@ The Em-Social interface consists of five main sections:
 <ul>
   <li>For commands that do not take in parameters (<code>help</code>, <code>list</code>, <code>clear</code>, <code>exit</code>), additional text after the command will be <strong>ignored</strong>.<br>
   <em>e.g.</em> <code>help 123</code> will be processed as <code>help</code></li>
+
+ <li>
+    Command parameters can be provided in any order. For example, <code>add-s id/H0000002-2 d/2025-02-02 tm/18:18</code> is equivalent to <code>add-s id/H0000002-2 tm/18:18 d/2025-02-02</code>.
+  </li>
 
   <li>For commands that do take in parameters, multiple instances of the same parameter are allowed. Except for tags, Em-Social will only process the <strong>last instance</strong> of the parameter. Multiple tags are allowed.<br>
   <em>e.g.</em> <code>add n/johnson n/robinson a/Tanglin Road p/91283882</code> will result in <code>robinson</code> being added as the household name, not <code>johnson</code></li>
@@ -267,7 +272,7 @@ find Tan Lee
 *Figure 4: Result of find command using the keyword "Tan Lee"*
 
 <div style="background-color: #e6ffed; padding: 10px; border-left: 5px solid #2ecc71; margin-bottom: 10px;">
-💡<strong>Tip:</strong><br>Use double quotes for exact phrase matching: `"Tan Family"`
+💡<strong>Tip:</strong><br>Use double quotes for exact phrase matching: "Tan Family"
 </div>
 
 <br>
@@ -297,12 +302,8 @@ You can view all households with the `list` command.
 ```
 list
 ```
+- This will bring you back to the Em-Social page with all the Households listed.
 
-**Expected outcome (System Message):**
-```
-Listed all households.
-Total households: 4
-```
 <br>
 
 --------------------------------------------------------------------------------------------------------------------
@@ -357,7 +358,7 @@ edit-s id/HOUSEHOLD_ID-SESSION_INDEX d/DATE tm/TIME [n/NOTE]
 - `id/HOUSEHOLD_ID-SESSION_INDEX`: Household ID and session index (e.g., H000001-1)
 - `d/DATE`: New date in YYYY-MM-DD format
 - `tm/TIME`: New time in 24-hour format (HH:MM)
-- `[n/NOTE]`: For adding an optional note about the session
+- `[n/NOTE]`: For adding an optional note about the session, all previous notes will be overwritten
 
 **Example of usage (with note):**
 ```
@@ -371,12 +372,12 @@ edit-s id/H000003-1 d/2025-03-16 tm/15:00 n/Follow-up required
 You can also use the **GUI**:
 
 ![edit-session-gui](images/edit-session-gui.png)
-*Figure 6: Using the GUI "Edit Session" button*
+*Figure 7: Using the GUI "Edit Session" button*
 
 <br>
 
 ![edit-session success message](images/edit-session.png)
-*Figure 7: Confirmation message ensuring that the session has been added successfully*
+*Figure 8: Confirmation message ensuring that the session has been added successfully*
 
 <div style="background-color: #FF6666; padding: 10px; border-left: 5px solid #ff9900; margin-bottom: 10px;">
 ⚠️ <strong>Warning:</strong> When you edit a session, the existing values will be <strong>overwritten</strong> by the input values.
@@ -425,7 +426,7 @@ view-full-s id/H000003-1
 - This will generate the full session details for the 1st Session of Household ID: H000003
 
 ![view-full-session_outcome](images/view-full-session.png)
-*Figure 8: View the full session details for Session 1 of the Household with id/H000003*
+*Figure 9: View the full session details for Session 1 of the Household with id/H000003*
 
 <div style="background-color: #e6ffed; padding: 10px; border-left: 5px solid #2ecc71; margin-bottom: 10px;">
 💡<strong>Tip:</strong> Use this command to view your session notes elaborately.
@@ -448,10 +449,10 @@ Example of usage:
 ```
 view-s id/H000001
 ```
-- This will display all the Sessions of Household ID: H000001
+- This will display all the existing Sessions of Household ID: H000001
 
 ![view-household-sessions outcome](images/view-household-sessions.png)
-*Figure 8: View  all the Sessions of Household ID: H000001*
+*Figure 10: View  all the existing Sessions of Household ID: H000001*
 
 <br>
 
@@ -468,7 +469,7 @@ clear
 
 The following confirmation dialog box will appear:  
 ![clear-command confirmation](images/clear-confirmation.png)
-*Figure 9: Confirmation box to ensure you want to clear all data*
+*Figure 11: Confirmation box to ensure you want to clear all data*
 
 > **Warning**: This action will delete ALL households and sessions. It cannot be undone.
 <div style="background-color: #FF6666; padding: 10px; border-left: 5px solid #ff9900; margin-bottom: 10px;">
@@ -490,7 +491,7 @@ help
 You can also use the **GUI button**:
 
 ![help-button](images/help.png)
-*Figure 10: The Help Button for Em-Social*
+*Figure 12: The Help Button for Em-Social*
 
 <br>
 
@@ -506,11 +507,11 @@ exit
 You can also use the **GUI button**:
 
 ![exit-button](images/exit.png)
-*Figure 11: The Exit Button for Em-Social*
+*Figure 13: The Exit Button for Em-Social*
 
 --------------------------------------------------------------------------------------------------------------------
 
-## 💡 Tips for Effective Use
+## 💡 Make the Most out of Em-Social
 
 1. **Tagging Strategy**
    - Consider tags for case type (e.g. `financial`, `medical`, `housing`)
@@ -584,20 +585,22 @@ You can also use the **GUI button**:
 
 <div class="wide-table">  <!-- Added container for better table control -->
 
-| Action               | Command Format                                                 | Examples                                                 |
-|----------------------|----------------------------------------------------------------|----------------------------------------------------------|
-| **Add Household**    | `add n/NAME a/ADDRESS p/PHONE`                                 | `add n/Tan Family a/Blk 30 Geylang p/91234567`           |
-| **Edit Household**   | `edit id/ID [n/NAME] [a/ADDRESS] [p/PHONE] [t/TAG]...`         | `edit id/H000001 n/Lim Family p/87654321`                |
-| **Delete Household** | `delete id/ID`                                                 | `delete id/H000001`                                      |
-| **List Households**  | `list`                                                         | `list`                                                   |
-| **Find Households**  | `find KEYWORD [MORE_KEYWORDS]...`                              | `find "Tan Lee"`                                         |
-| **Add Session**      | `add-s id/ID d/DATE tm/TIME`                                   | `add-s id/H000001 d/2025-05-15 tm/14:30`                 |
-| **Edit Session**     | `edit-s id/HOUSEHOLD_ID-SESSION_INDEX d/DATE tm/TIME [n/NOTE]` | `edit-s id/H000001-1 d/2025-03-16 tm/15:00 n/Follow-up`  |
-| **Delete Session**   | `delete-s id/HOUSEHOLD_ID-SESSION_INDEX`                       | `delete-s id/H000001-1`                                  |
-| **View Sessions**    | `view-s id/ID`                                                 | `view-s id/H000001`                                      |
-| **Clear Data**       | `clear`                                                        | `clear`                                                  |
-| **Help**             | `help`                                                         | `help`                                                   |
-| **Exit**             | `exit`                                                         | `exit`                                                   |
+| Action                | Command word  | Command Format                                                 | Examples                                                |
+|-----------------------|---------------|----------------------------------------------------------------|---------------------------------------------------------|
+| **Add Household**     | `add`         | `add n/NAME a/ADDRESS p/PHONE`                                 | `add n/Tan Family a/Blk 30 Geylang p/91234567`          |
+| **Edit Household**    | `edit`        | `edit id/ID [n/NAME] [a/ADDRESS] [p/PHONE] [t/TAG]...`         | `edit id/H000001 n/Lim Family p/87654321`               |
+| **Delete Household**  | `delete`      | `delete id/ID`                                                 | `delete id/H000001`                                     |
+| **List Households**   | `list`        | `list`                                                         | `list`                                                  |
+| **Find Households**   | `find`        | `find KEYWORD [MORE_KEYWORDS]...`                              | `find "Tan Lee"`                                        |
+| **Add Session**       | `add-s`       | `add-s id/ID d/DATE tm/TIME`                                   | `add-s id/H000001 d/2025-05-15 tm/14:30`                |
+| **Edit Session**      | `edit-s`      | `edit-s id/HOUSEHOLD_ID-SESSION_INDEX d/DATE tm/TIME [n/NOTE]` | `edit-s id/H000001-1 d/2025-03-16 tm/15:00 n/Follow-up` |
+| **Delete Session**    | `delete-s`    | `delete-s id/HOUSEHOLD_ID-SESSION_INDEX`                       | `delete-s id/H000001-1`                                 |
+| **View Sessions**     | `view-s`      | `view-s id/ID`                                                 | `view-s id/H000001`                                     |
+| **View Full Session** | `view-full-s` | `view-full-s id/HOUSEHOLD_ID-SESSION_INDEX`                    | `view-full-s id/H000003-1`                              |
+| **Clear Data**        | `clear`       | `clear`                                                        | `clear`                                                 |
+| **Help**              | `help`        | `help`                                                         | `help`                                                  |
+| **Exit**              | `exit`        | `exit`                                                         | `exit`                                                  |
+
 <div style="
     background: rgba(231, 245, 255, 0.4);
     border-left: 4px solid #4dabf7;
