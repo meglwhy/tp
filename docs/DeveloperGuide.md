@@ -436,4 +436,6 @@ Team size: 4
 
 1. Make the error messages for `edit-s` more specific to the user. The current error message for an invalid householdId does not appear until the user has already added a valid parameter to be edited. We plan for the error message to alert to the user about the invalid householdId as soon as possible.
 2. Make the error messages for `edit-s` more specific to the user. An error message for an date/time does not appear when the user is editing a session with an incorrectly formatted date/time although the application correctly does not edit the incorrectly formatted date/time. Adding this alert will inform the user about the changes to be made.
-3. Corrupted `addressbook.log.0` file will detect the corrupted logs and **inform** the user about the corrupted logs.
+3. Currently, the selected household above the sessions window does not automatically update as soon as the household's name is updated. We intend to make the selected household automatically update to reflect these real-time changes to reduce possible user-confusion.
+4. Currently, the selected household above the sessions window is unable to display the full household name if it is too long. While the household panel displays the full name, we intend to fix this flaw in future for additional clarity for the user.
+5. Corrupted `addressbook.log.0` file will detect the corrupted logs and **inform** the user about the corrupted logs.
