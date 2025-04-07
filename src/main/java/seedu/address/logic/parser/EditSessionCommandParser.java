@@ -58,8 +58,6 @@ public class EditSessionCommandParser implements Parser<EditSessionCommand> {
         }
 
 
-        // Validate optional fields
-        // Validate optional fields
         String datePart = null;
         if (argMultimap.getValue(PREFIX_DATE).isPresent()) {
             String rawDate = getValidatedField(argMultimap.getValue(PREFIX_DATE), "Date provided is empty.");
