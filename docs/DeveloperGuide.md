@@ -1,14 +1,4 @@
-# Em-Social Developer Guide
-
---------------------------------------------------------------------------------------------------------------------
-## **Documentation, logging, testing, configuration, dev-ops**
-
-* [Documentation guide](Documentation.md)
-* [Testing guide](Testing.md)
-* [Logging guide](Logging.md)
-* [Configuration guide](Configuration.md)
-* [DevOps guide](DevOps.md)
-
+#Em-Social Developer Guide
 --------------------------------------------------------------------------------------------------------------------
 ## Product Scope
 
@@ -322,11 +312,36 @@ Use case resumes from step 2 or ends if the issue persists.
 13. The application must be self-contained with minimal dependencies, avoiding unnecessary external libraries.
 14. The system must run on machines with at least 2GB RAM, 1GHz CPU, and 200MB disk space.
 
+---------------------------------------------------------------------------------------------------------------------
+
+## Glossary
+
+* Household Record: A digital record containing information about a household, including its address, members, and relevant notes.
+* Engagement Session: A scheduled appointment between a social service worker and a household for follow-up, assistance, or other social services.
+* CLI (Command Line Interface): A text-based interface that allows users to interact with the system using commands rather than a graphical interface.
+* GUI (Graphical User Interface): A visual interface that allows users to interact with the system using graphical elements such as buttons, icons, and windows, as opposed to a text-based interface like a CLI
+* RAM (Random Access Memory): A type of computer memory that temporarily stores data and instructions while a program is running, allowing for quick access and processing.
+* Tag: A keyword or label assigned to a household record to categorize or identify it easily.
+* Double-Booking: A scheduling conflict where two sessions are assigned to the same time slot, which the system should prevent.
+* Session History: A chronological log of all past engagement sessions associated with a household.
+* Filter: A feature that allows users to refine search results based on specific criteria like name, address, or tags.
+* High Contrast Mode: A visual accessibility feature that increases the contrast between text and background to improve readability for users with visual impairments.
+* Crash: A case of an unexpected shutdown.
+* Automatic save: A feature that saves user data with the last command entered to prevent loss in case of system failure.
+* Workflows: A defined sequence of steps or processes that users follow to complete a task efficiently within the system, such as adding a household record or scheduling an engagement session.
+* Bulk Operation: A command or function that processes multiple records at once, such as clearing all entries.
+* Session Notification: An alert or reminder about an upcoming engagement session, which can be displayed in-app or sent via email.
+* Session Data: Information related to a user's current interaction with the system, including active records, scheduled sessions, and temporary changes before they are saved.
+* Structured List: A formatted way of displaying household records, showing key details like name, address, and contact information.
+* Last Committed State: The most recent version of stored data that was successfully saved, ensuring that no progress is lost in case of an unexpected system crash.
+* Dependencies: External software libraries or components required for the application to function properly, such as Java Runtime Environment (JRE) or specific third-party tools.
+
 --------------------------------------------------------------------------------------------------------------------
-## Manual Testing Instructions for Em Social
+
+## Appendix: Manual Testing Instructions for Em Social
 
 ### Download Em Social:
-Download the latest `em-social.jar` from the Em Social Releases Page.
+Download the latest `em-social.jar` from the [Em Social Releases Page](https://github.com/AY2425S2-CS2103T-F10-2/tp/releases).
 
 ### Setup:
 Save the downloaded `em-social.jar` file in your preferred home folder.
@@ -361,47 +376,64 @@ Replace [YOUR_FOLDER_LOCATION] with the actual path where the jar file is locate
 
 **Saving window preferences**
 
-1. Resize the window to an optimum size. 
+1. Resize the window to an optimum size.
 2. Resize ratio of household panel and session panel.
 
-    
+
 #### Try out a command - Deleting a session
 
 1. Deleting a session while all household sessions are being shown
 
-    a. Prerequisites: List all sessions for a household using the `view-s` command. It will show all the sessions of that household
+   a. Prerequisites: List all sessions for a household using the `view-s` command. It will show all the sessions of that household
 
-    b. Test case: `delete-s id/H000001-1`<br>
-       Expected: The first session from the household with Household ID 1 is deleted. Details of the deleted contact shown in the output box. 
+   b. Test case: `delete-s id/H000001-1`<br>
+   Expected: The first session from the household with Household ID 1 is deleted. Details of the deleted contact shown in the output box.
 
-    c. Test case: `delete-s id/H000001-0`<br>
-       Expected: No session is deleted. An error message saying “Session index 0 is invalid for household H000001” is shown.
+   c. Test case: `delete-s id/H000001-0`<br>
+   Expected: No session is deleted. An error message saying “Session index 0 is invalid for household H000001” is shown.
 
-    d. Other incorrect delete session commands to try: `delete-s`, `delete-s id/Hxxxxxx-m`, `...` (where m is larger than the session list size of that particular household)<br>
-       Expected: Error similar to 1.c
+   d. Other incorrect delete session commands to try: `delete-s`, `delete-s id/Hxxxxxx-m`, `...` (where m is larger than the session list size of that particular household)<br>
+   Expected: Error similar to 1.c
 
+### Simulating Missing/Corrupted Data Files in Em-Social
 
----------------------------------------------------------------------------------------------------------------------
+To simulate missing or corrupted data files and observe how Em-Social handles these situations, follow the steps below.
+#### 1. Simulating Missing Files
 
+To simulate the case where a data file is missing, simply delete the file before starting the application.
 
-## Glossary
+##### Example:
+- **Missing `addressbook.log.0`, `config.json`, or `preferences.json` file:**
+    - Delete the file from the directory.
+    - **Expected Behavior:**
+        - The application should handle the missing file gracefully, new logs will be created.
 
-* Household Record: A digital record containing information about a household, including its address, members, and relevant notes.
-* Engagement Session: A scheduled appointment between a social service worker and a household for follow-up, assistance, or other social services.
-* CLI (Command Line Interface): A text-based interface that allows users to interact with the system using commands rather than a graphical interface.
-* GUI (Graphical User Interface): A visual interface that allows users to interact with the system using graphical elements such as buttons, icons, and windows, as opposed to a text-based interface like a CLI
-* RAM (Random Access Memory): A type of computer memory that temporarily stores data and instructions while a program is running, allowing for quick access and processing.
-* Tag: A keyword or label assigned to a household record to categorize or identify it easily.
-* Double-Booking: A scheduling conflict where two sessions are assigned to the same time slot, which the system should prevent.
-* Session History: A chronological log of all past engagement sessions associated with a household.
-* Filter: A feature that allows users to refine search results based on specific criteria like name, address, or tags.
-* High Contrast Mode: A visual accessibility feature that increases the contrast between text and background to improve readability for users with visual impairments.
-* Crash: A case of an unexpected shutdown.
-* Automatic save: A feature that saves user data with the last command entered to prevent loss in case of system failure.
-* Workflows: A defined sequence of steps or processes that users follow to complete a task efficiently within the system, such as adding a household record or scheduling an engagement session.
-* Bulk Operation: A command or function that processes multiple records at once, such as clearing all entries.
-* Session Notification: An alert or reminder about an upcoming engagement session, which can be displayed in-app or sent via email.
-* Session Data: Information related to a user's current interaction with the system, including active records, scheduled sessions, and temporary changes before they are saved.
-* Structured List: A formatted way of displaying household records, showing key details like name, address, and contact information.
-* Last Committed State: The most recent version of stored data that was successfully saved, ensuring that no progress is lost in case of an unexpected system crash.
-* Dependencies: External software libraries or components required for the application to function properly, such as Java Runtime Environment (JRE) or specific third-party tools.
+#### 2. Simulating Corrupted Files
+
+To simulate file corruption, open any of the data files (e.g., `householdbook.json`, `addressbook.log.0`, `config.json`, or `preferences.json`) and modify their contents (e.g., change some characters, truncate the file, etc.).
+
+##### Example:
+- **Corrupted `addressbook.log.0` file:**
+    - Open the file `addressbook.log.0` and introduce some random characters or truncate the file.
+    - **Expected Behavior:**
+        - The application will not be able to detect a corrupted log file but new logs will be appended without error.
+
+- **Corrupted `config.json`, `preferences.json` file:**
+    - Open the file and change some of its values to invalid data.
+    - **Expected Behavior:**
+        - The application will reset to the preferences when the user next starts up Em-Social.
+
+- **Corrupted `householdbook.json` file:**
+    - Open the file and change some of its values to invalid data.
+    - **Expected Behavior:**
+        - The application will reset to a fresh state when the user next starts up Em-Social.
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Appendix: Planned Enhancements
+
+Team size: 4
+
+1. Make the error messages for `edit-s` more specific to the user. The current error message for an invalid householdId does not appear until the user has already added a valid parameter to be edited. We plan for the error message to alert to the user about the invalid householdId as soon as possible.
+2. Make the error messages for `edit-s` more specific to the user. An error message for an date/time does not appear when the user is editing a session with an incorrectly formatted date/time although the application correctly does not edit the incorrectly formatted date/time. Adding this alert will inform the user about the changes to be made.
+3Corrupted `addressbook.log.0` file will detect the corrupted logs and **inform** the user about the corrupted logs.
