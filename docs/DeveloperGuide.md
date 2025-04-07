@@ -106,6 +106,7 @@ How the `Logic` component works:
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
+
 <puml src="diagrams/ModelClassDiagram.puml" width="800" />
 
 
@@ -120,7 +121,6 @@ The `Model` component,
 
 **API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
-<<ImageDisplayed>>
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
 The `Storage` component,
@@ -146,21 +146,21 @@ The proposed undo/redo mechanism is facilitated by `VersionedHouseholdBook`. It 
 
 * `VersionedHouseholdBook#commit()`- Saves the current household book state in its history.
 * `VersionedHouseholdBook#undo()`- Restores the previous household book state from its history.
-* `VersionedHouseholdBook#redo()`- Restores a previously household address book state from its history.
+* `VersionedHouseholdBook#redo()`- Restores a previously household book state from its history.
 
 These operations are exposed in the `Model` interface as `Model#commitHouseholdBook()`, `Model#undoHouseholdBook()` and `Model#redoHouseholdBook()` respectively.
 
 Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-Step 1. The user launches the application for the first time. The `VersionedHouseholdBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+Step 1. The user launches the application for the first time. The `VersionedHouseholdBook` will be initialized with the initial household book state, and the `currentStatePointer` pointing to that single household book state.
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete id/H000005` command to delete the 5th household in the household book. The `delete` command calls `Model#commitHouseholdBook()`, causing the modified state of the household book after the `delete id/H000005` command executes to be saved in the `HouuseholdBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete id/H000005` command to delete the 5th household in the household book. The `delete` command calls `Model#commitHouseholdBook()`, causing the modified state of the household book after the `delete id/H000005` command executes to be saved in the `HouuseholdBookStateList`, and the `currentStatePointer` is shifted to the newly inserted household book state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David Family a/Blk 30 Geylang Street 29, #06-40 p/97751978` to add a new household. The `add` command also calls `Model#commitHouseholdBook()`, causing another modified address book state to be saved into the `HouseholdBookStateList`.
+Step 3. The user executes `add n/David Family a/Blk 30 Geylang Street 29, #06-40 p/97751978` to add a new household. The `add` command also calls `Model#commitHouseholdBook()`, causing another modified household book state to be saved into the `HouseholdBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
@@ -168,7 +168,7 @@ Step 3. The user executes `add n/David Family a/Blk 30 Geylang Street 29, #06-40
 **Note:** If a command fails its execution, it will not call `Model#commitHouseholdBook()`, so the household book state will not be saved into the `HouseholdBookStateList`.
 
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoHouseholdBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous household book state, and restores the household book to that state.
 
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
 
@@ -186,12 +186,11 @@ The following sequence diagram shows how an undo operation goes through the `Log
 
 Similarly, how an undo operation goes through the `Model` component is shown below:
 
-<<ImageDisplayed>>
 <puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
 
-The `redo` command does the opposite - it calls `Model#redoHouseholdBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
+The `redo` command does the opposite - it calls `Model#redoHouseholdBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the household book to that state.
 
-**Note:** If the `currentStatePointer` is at index `HouseholdBookStateList.size() - 1`, pointing to the latest household book state, then there are no undone HouseholdBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+**Note:** If the `currentStatePointer` is at index `HouseholdBookStateList.size() - 1`, pointing to the latest household book state, then there are no undone HouseholdBook states to restore. The `redo` command uses `Model#canRedoHouseholdBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 
 
 Step 5. The user then decides to execute the command `list`. Commands that do not modify the household book, such as `list`, will usually not call `Model#commitHouseholdBook()`, `Model#undoHouseholdBook()` or `Model#redoHouseholdBook()`. Thus, the `HouseholdBookStateList` remains unchanged.
