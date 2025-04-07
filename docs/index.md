@@ -13,5 +13,5 @@ title: ""
 **Em-Social is a desktop application designed to streamline scheduling and household management for social service workers!** While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).
 
 * If you are interested in using Em-Social, head over to the [_Quick Start_ section of the **User Guide**](UserGuide.md#-quick-start).
-* If you are interested about developing AddressBook, the [**Developer Guide**](DeveloperGuide.md) is a good place to start.
+* If you are interested about developing Em-Social, the [**Developer Guide**](DeveloperGuide.md) is a good place to start.
 
