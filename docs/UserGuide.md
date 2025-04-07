@@ -363,11 +363,11 @@ edit-s id/HOUSEHOLD_ID-SESSION_INDEX d/DATE tm/TIME [n/NOTE]
 
 **Example of usage (with note):**
 ```
-edit-s id/H000003-1 d/2025-03-16 tm/15:00 n/Follow-up required
+edit-s id/H000003-1 d/2025-06-07 tm/15:00 n/Follow-up required
 ```
 - This edits Session Number 1 for Household ID: H000003 with a note added:
-    - Date: 2025-03-16 (16th March, 2025)
-    - Time: 14:30 (2:30pm)
+    - Date: 2025-06-07 (7th June, 2025)
+    - Time: 15:00 (3:00pm)
     - Note: Follow-up required
 
 You can also use the **GUI**:
