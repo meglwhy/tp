@@ -5,7 +5,6 @@ import static seedu.address.commons.util.SessionUtils.isPastDateTime;
 
 import java.util.Optional;
 
-import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.household.Household;
@@ -74,16 +73,9 @@ public class EditSessionCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Household household = model.getHouseholdBook().getHouseholdById(householdId)
-                .orElseThrow(() -> new CommandException(String.format(MESSAGE_HOUSEHOLD_NOT_FOUND, householdId)));
-
-        ObservableList<Session> householdSessions = household.getSessions();
-
-        if (sessionIndex < 1 || sessionIndex > householdSessions.size()) {
-            throw new CommandException(String.format(MESSAGE_INVALID_SESSION_INDEX, sessionIndex, householdId));
-        }
-
-        Session oldSession = householdSessions.get(sessionIndex - 1);
+        // Fetch the household and the old session (guaranteed valid by parser)
+        Household household = model.getHouseholdBook().getHouseholdById(householdId).get();
+        Session oldSession = household.getSessions().get(sessionIndex - 1);
 
         // Determine candidate values: use new values if provided, otherwise retain the current ones
         SessionDate candidateDate = (newDate != null) ? new SessionDate(newDate) : oldSession.getDate();
