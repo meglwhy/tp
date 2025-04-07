@@ -59,7 +59,7 @@ public class HouseholdBookParser {
             return new EditHouseholdCommandParser(model).parse(arguments);
         }
         case EditSessionCommand.COMMAND_WORD -> {
-            return new EditSessionCommandParser(model).parse(arguments);
+            return new EditSessionCommandParser().parse(arguments);
         }
         case DeleteHouseholdCommand.COMMAND_WORD -> {
             return new DeleteHouseholdCommandParser().parse(arguments);
