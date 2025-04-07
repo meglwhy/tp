@@ -503,16 +503,16 @@ Similarly, you can use the UI button:
 
 ## 💡 Tips for Effective Use
 
-1**Tagging Strategy**
+1. **Tagging Strategy**
    - Consider tags for case type (e.g. `financial`, `medical`, `housing`)
    - Use tags for priority levels (e.g. `urgent`, `follow-up`, `completed`)
    - Consider tagging households by location to minimize travel time (e.g. `north`, `west`, `central`)
 
-2**Session Planning**
+2. **Session Planning**
    - Use the find command with tags to identify nearby cases (e.g. `find north`)
    - Use the [view-s](#view-household-sessions) command to review your upcoming schedule with a specific household
 
-3**Note Taking**
+3. **Note Taking**
    - Add detailed notes immediately after sessions while details are fresh
    - Add time estimates to session notes for better future planning
   
