@@ -327,7 +327,7 @@ add-s id/HOUSEHOLD_ID d/DATE tm/TIME
 add-s id/H000001 d/2025-05-15 tm/14:30
 ```
 - This adds a session to Tan Family at Household ID: H000001
-    - The Session ID 1 is generated at:
+    - The Session ID is generated at:
         - Date: 2025-05-15 (15th May, 2025)
         - Time: 14:30 (2:30pm)
 
