@@ -245,7 +245,7 @@ Use case ends.
 3. System validates the new date, time, or note.
 4. If valid, system updates the session details.
 5. System displays a confirmation message
-   
+
     Use case ends.
 
 **Extensions:**
@@ -436,4 +436,4 @@ Team size: 4
 
 1. Make the error messages for `edit-s` more specific to the user. The current error message for an invalid householdId does not appear until the user has already added a valid parameter to be edited. We plan for the error message to alert to the user about the invalid householdId as soon as possible.
 2. Make the error messages for `edit-s` more specific to the user. An error message for an date/time does not appear when the user is editing a session with an incorrectly formatted date/time although the application correctly does not edit the incorrectly formatted date/time. Adding this alert will inform the user about the changes to be made.
-3Corrupted `addressbook.log.0` file will detect the corrupted logs and **inform** the user about the corrupted logs.
+3. Corrupted `addressbook.log.0` file will detect the corrupted logs and **inform** the user about the corrupted logs.
