@@ -83,6 +83,7 @@ package "logic.parser" <<Rectangle>> {
 
 package "logic.parser.exceptions" <<Rectangle>> {
   class ParseException
+
   ParseException --|> IllegalValueException
 }
 
