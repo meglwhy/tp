@@ -137,11 +137,10 @@ The Em-Social interface consists of five main sections:
   <li>  If a specific parameter is erroneous, the rest of the command will be ignored and the initial error will be displayed to you.<br>
   <em>e.g.</em> <code>add n/bert$ a/ p/</code> will return the error <code>Names may only contain alphanumeric characters or spaces, slashes (/), apostrophes ('), and dashes (-).</code> even though the empty <code>a/</code> and <code>p/</code> fields are also invalid.</li>
 </ul>
-
 </div>
 
-<br>
-  
+
+<br>  
 
 ## 🏠 Household Management
 Households are the core entities in Em-Social. Each household represents a family or living unit that you work with.
