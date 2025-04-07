@@ -7,7 +7,7 @@ pageNav: 3
 
 ## 👋 Introduction
 Welcome to **Em-Social**, a desktop application designed to streamline **scheduling** and **household management** for **social service workers**!
-Through a Command Line Interface (CLI), Em-Social lets you seamlessly **organise, categorise, and access your schedules and household records**.  
+Through a Command Line Interface (CLI), Em-Social lets you seamlessly **organise, categorise, and access your schedules and household records**.
 
 ### Why Em-Social?
 Em-Social is designed specifically for social workers in **Singapore** who:
@@ -47,7 +47,7 @@ Em-Social thereby frees you up to focus on what matters most: **supporting the c
    - [Frequently Asked Questions](#-frequently-asked-questions)
    - [Glossary](#-glossary)
    - [Command Summary](#-command-summary)
-  
+
 
 --------------------------------------------------------------------------------------------------------------------
 

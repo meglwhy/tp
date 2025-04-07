@@ -74,19 +74,15 @@ public class EditSessionCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        // Get the household
         Household household = model.getHouseholdBook().getHouseholdById(householdId)
                 .orElseThrow(() -> new CommandException(String.format(MESSAGE_HOUSEHOLD_NOT_FOUND, householdId)));
 
-        // Get the sessions from the household (already sorted by date and time)
         ObservableList<Session> householdSessions = household.getSessions();
 
-        // Check if session index is valid
         if (sessionIndex < 1 || sessionIndex > householdSessions.size()) {
             throw new CommandException(String.format(MESSAGE_INVALID_SESSION_INDEX, sessionIndex, householdId));
         }
 
-        // Get the session to edit
         Session oldSession = householdSessions.get(sessionIndex - 1);
 
         // Determine candidate values: use new values if provided, otherwise retain the current ones
@@ -118,17 +114,14 @@ public class EditSessionCommand extends Command {
                     candidateTime);
         }
 
-        // Check for conflicts
         Optional<Session> conflict = model.getHouseholdBook().getConflictingSession(candidateSession, oldSession);
         if (conflict.isPresent()) {
             throw new CommandException(String.format(MESSAGE_DUPLICATE_SESSION, conflict.get()));
         }
 
-        // Update the session
         model.getHouseholdBook().removeSessionById(oldSession.getSessionId());
         model.getHouseholdBook().addSessionToHousehold(oldSession.getHouseholdId(), candidateSession);
 
-        // Generate success message
         String successMessage;
         if (noteUpdated) {
             successMessage = String.format(MESSAGE_EDIT_SESSION_WITH_NOTE_SUCCESS,
