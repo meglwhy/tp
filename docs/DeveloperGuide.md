@@ -92,11 +92,8 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 <puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete id/H000001` Command" />
 
-<<ImageDisplayed>>
-<box type="info" seamless>
-
 **Note:** The lifeline for `DeleteHouseholdCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
-</box>
+
 
 How the `Logic` component works:
 
@@ -109,7 +106,6 @@ How the `Logic` component works:
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<<ImageDisplayed>>
 <puml src="diagrams/ModelClassDiagram.puml" width="800" />
 
 
@@ -158,17 +154,14 @@ Given below is an example usage scenario and how the undo/redo mechanism behaves
 
 Step 1. The user launches the application for the first time. The `VersionedHouseholdBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
 
-<<ImageDisplayed>>
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
 Step 2. The user executes `delete id/H000005` command to delete the 5th household in the household book. The `delete` command calls `Model#commitHouseholdBook()`, causing the modified state of the household book after the `delete id/H000005` command executes to be saved in the `HouuseholdBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
-<<ImageDisplayed>>
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
 Step 3. The user executes `add n/David Family a/Blk 30 Geylang Street 29, #06-40 p/97751978` to add a new household. The `add` command also calls `Model#commitHouseholdBook()`, causing another modified address book state to be saved into the `HouseholdBookStateList`.
 
-<<ImageDisplayed>>
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
 
@@ -177,7 +170,6 @@ Step 3. The user executes `add n/David Family a/Blk 30 Geylang Street 29, #06-40
 
 Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
 
-<<ImageDisplayed>>
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
 
 
@@ -187,7 +179,6 @@ than attempting to perform the undo.
 
 The following sequence diagram shows how an undo operation goes through the `Logic` component:
 
-<<ImageDisplayed>>
 <puml src="diagrams/UndoSequenceDiagram-Logic.puml" alt="UndoSequenceDiagram-Logic" />
 
 **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
@@ -205,17 +196,14 @@ The `redo` command does the opposite - it calls `Model#redoHouseholdBook()`, whi
 
 Step 5. The user then decides to execute the command `list`. Commands that do not modify the household book, such as `list`, will usually not call `Model#commitHouseholdBook()`, `Model#undoHouseholdBook()` or `Model#redoHouseholdBook()`. Thus, the `HouseholdBookStateList` remains unchanged.
 
-<<ImageDisplayed>>
 <puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
 
 Step 6. The user executes `clear`, which calls `Model#commitHouseholdBook()`. Since the `currentStatePointer` is not pointing at the end of the `HouseholdBookStateList`, all household book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David Family a/Blk 30 Geylang Street 29, #06-40 p/97751978` command. This is the behavior that most modern desktop applications follow.
 
-<<ImageDisplayed>>
 <puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
 
 The following activity diagram summarizes what happens when a user executes a new command:
 
-<<ImageDisplayed>>
 <puml src="diagrams/CommitActivityDiagram.puml" width="250" />
 
 #### Design considerations:
