@@ -63,16 +63,6 @@ package "logic.parser" <<Rectangle>> {
   Parser <|.. EditSessionCommandParser
   Parser <|.. ViewFullSessionCommandParser
   Parser <|.. ViewHouseholdSessionsCommandParser
-
-  ' Parser to Command associations
-  AddHouseholdCommandParser ..> AddHouseholdCommand : parses >
-  AddSessionCommandParser ..> AddSessionCommand : parses >
-  DeleteHouseholdCommandParser ..> DeleteHouseholdCommand
-  DeleteSessionCommandParser ..> DeleteSessionCommand
-  EditHouseholdCommandParser ..> EditHouseholdCommand
-  EditSessionCommandParser ..> EditSessionCommand
-  ViewFullSessionCommandParser ..> ViewFullSessionCommand
-  ViewHouseholdSessionsCommandParser ..> ViewHouseholdSessionsCommand
 }
 
 package "logic.parser.exceptions" <<Rectangle>> {
@@ -80,7 +70,10 @@ package "logic.parser.exceptions" <<Rectangle>> {
   ParseException --|> IllegalValueException
 }
 
-' LogicManager uses parsers and commands indirectly
+' Generalized command-parser relationship
+Command ..> Parser : parsed by >
+
+' LogicManager dependencies
 LogicManager --> CommandResult
 LogicManager --> Parser
 
