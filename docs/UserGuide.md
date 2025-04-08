@@ -102,7 +102,7 @@ Now you're ready to start using Em-Social!
 
 ## 🖥️ User Interface Overview
 
-<img src="images/labeled-ui.png" alt="User Interface with Labels" width="85%"><br>
+<img src="images/labeled-ui.png" alt="User Interface with Labels" width="75%"><br>
 *Figure 1: The Em-Social UI, showing layout and sample data*
 
 The Em-Social interface consists of five main sections:
@@ -494,7 +494,7 @@ help
 
 You can also use the **GUI button**:
 
-<img src="images/help.png" alt="help-button" width="60%"><br>
+<img src="images/help.png" alt="help-button" width="75%"><br>
 *Figure 12: The Help Button for Em-Social*
 
 <br>
@@ -510,7 +510,7 @@ exit
 
 You can also use the **GUI button**:
 
-<img src="images/exit.png" alt="exit-button" width="60%"><br>
+<img src="images/exit.png" alt="exit-button" width="75%"><br>
 *Figure 13: The Exit Button for Em-Social*
 
 <br>
