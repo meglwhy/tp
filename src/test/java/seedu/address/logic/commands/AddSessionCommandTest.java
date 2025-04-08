@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -84,4 +85,40 @@ class AddSessionCommandTest {
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
         assertTrue(exception.getMessage().contains("This time slot is already booked"));
     }
+
+    @Test
+    void equals_sameObject_returnsTrue() {
+        AddSessionCommand command = new AddSessionCommand(householdId, futureDate, sessionTime);
+        assertEquals(command, command);
+    }
+
+    @Test
+    void equals_differentHouseholdId_returnsFalse() {
+        HouseholdId differentHouseholdId = new HouseholdId("H000002");
+        AddSessionCommand command1 = new AddSessionCommand(householdId, futureDate, sessionTime);
+        AddSessionCommand command2 = new AddSessionCommand(differentHouseholdId, futureDate, sessionTime);
+        assertNotEquals(command1, command2);
+    }
+
+    @Test
+    void equals_differentSessionParameters_returnsFalse() {
+        SessionDate differentDate = new SessionDate("2025-06-01");
+        SessionTime differentTime = new SessionTime("15:00");
+        AddSessionCommand command1 = new AddSessionCommand(householdId, futureDate, sessionTime);
+        AddSessionCommand command2 = new AddSessionCommand(householdId, differentDate, differentTime);
+        assertNotEquals(command1, command2);
+    }
+
+    @Test
+    void equals_null_returnsFalse() {
+        AddSessionCommand command = new AddSessionCommand(householdId, futureDate, sessionTime);
+        assertNotEquals(command, null);
+    }
+
+    @Test
+    void equals_differentType_returnsFalse() {
+        AddSessionCommand command = new AddSessionCommand(householdId, futureDate, sessionTime);
+        assertNotEquals(command, "some string");
+    }
 }
+
