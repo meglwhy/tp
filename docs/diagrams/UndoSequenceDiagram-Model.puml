@@ -16,8 +16,11 @@ activate VersionedAddressBook
 VersionedAddressBook -> VersionedAddressBook :resetData(ReadOnlyAddressBook)
 VersionedAddressBook --> Model :
 deactivate VersionedAddressBook
+VersionedAddressBook -[hidden]> VersionedAddressBook :
+destroy VersionedAddressBook
 
 [<-- Model
 deactivate Model
-
+Model -[hidden]> Model :
+destroy Model
 @enduml
