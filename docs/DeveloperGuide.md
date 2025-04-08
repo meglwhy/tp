@@ -613,21 +613,96 @@ Replace [YOUR_FOLDER_LOCATION] with the actual path where the jar file is locate
 1. Resize the window to an optimum size.
 2. Resize ratio of household panel and session panel.
 
+#### Deciding what to do - Help
 
-#### Try out a command - Deleting a session
+1. Provides a quick summary of the available commands and a URL to the User Guide for more detailed instructions
+
+   a. Prerequisites: None.
+
+   b. Test case: `help`<br>
+   Expected: A pop up appears with a quick help guide.
+
+   c. Test case: `HELP`<br>
+   Expected: Unreognized command as command words are case sensitive
+
+#### Adding your first household - Add
+
+1. Adds a household's details
+
+   a. Prerequisites: None.
+
+   b. Test case: `add n/Tan Family a/Tan Road p/92813822`<br>
+   Expected: A household with the above details is added. A success message is displayed to the user.
+
+   c. Test case: `add n/Benson & Yeung a/Blank  Road p/8192312`<br>
+   Expected: Error for an invalid name will be shown to the user (invalid symbol in the name field).
+
+#### Edit a household - Edit
+
+1. Edits a household's details
+
+   a. Prerequisites: The household for which you want to edit details must exist.
+
+   b. Test case: `edit id/H000001 n/Tan Family t/FA`<br>
+   Expected: A household specified by the id will have its name changed to `Tan Family`, with a tag of `FA`. A success message is displayed to the user.
+
+   c. Test case: `edit id/H000001 p/2192312`<br>
+   Expected: Error for an invalid phone number will be shown to the user (Application is for the Singapore context so only numbers with 6,8,9 are permitted).
+
+#### Remove a household - Delete
+
+1. Deleting a household and all its sessions
+
+   a. Prerequisites: A household specified by the id must exist.
+
+   b. Test case: `delete id/H000001`<br>
+   Expected: The household with Household ID H000001 is deleted. Success message appears.
+
+   c. Test case: `delete-s id/H000000`<br>
+   Expected: No household is deleted. An error message for the invalid ID is shown.
+
+#### Finding a household - Find
+
+1. Find a household based on keywords
+
+   a. Prerequisites: None.
+
+   b. Test case: `find Tan`<br>
+   Expected: If `Tan` appears in a household's name, tag or address, the matching result is shown to the user, otherwise no result is shown.
+
+#### Adding your first visit - Add a session
+
+1. Add a session to a specific household
+
+   a. Prerequisites: The household for which you want to add a session must exist.
+
+   b. Test case: `add-s id/H000001-1 d/2026-06-06 tm/12:00`<br>
+   Expected: A session at the scheduled date and time appears in the sessions box.
+
+   c. Test case: `add-s id/H000001-1 d/1999-06-06 tm/12:00`<br>
+   Expected: A session at the scheduled date and time is not added due to an invalid date (date is in the past).
+
+#### Rescheduling your visit - Edit a session
+
+1. Edits a session to a specific household
+
+   a. Prerequisites: The household for which you want to edit a session must exist.
+
+   b. Test case: `edit-s id/H000001-1 d/2026-06-06 tm/12:00`<br>
+   Expected: The session specified in the id will be rescheduled to the specified date and time. Success message appears.
+
+
+#### Removing a session from your schedule - Delete a session
 
 1. Deleting a session while all household sessions are being shown
 
-   a. Prerequisites: List all sessions for a household using the `view-s` command. It will show all the sessions of that household
+   a. Prerequisites: List all sessions for a household using the `view-s` command. It will show all the sessions of the specified household.
 
    b. Test case: `delete-s id/H000001-1`<br>
-   Expected: The first session from the household with Household ID 1 is deleted. Details of the deleted contact shown in the output box.
+   Expected: The first session from the household with Household ID H000001 is deleted. Details of the deleted contact shown in the output box.
 
    c. Test case: `delete-s id/H000001-0`<br>
-   Expected: No session is deleted. An error message saying “Session index 0 is invalid for household H000001” is shown.
-
-   d. Other incorrect delete session commands to try: `delete-s`, `delete-s id/Hxxxxxx-m`, `...` (where m is larger than the session list size of that particular household)<br>
-   Expected: Error similar to 1.c
+   Expected: No session is deleted. An error message for the invalid ID is shown.
 
 ### Simulating Missing/Corrupted Data Files in Em-Social
 
@@ -668,7 +743,7 @@ To simulate file corruption, open any of the data files (e.g., `householdbook.js
 
 Team size: 4
 
-1. Make the error messages for commands more specific as to wherein the problem lies. The current error messages throw the required parameters and example command formats but is not specific enough.
+1. Make the error messages for commands more specific as to wherein the problem lies. Some of the current error messages throw the required parameters and example command formats but is not specific enough.
 2. Currently, the selected household above the sessions window does not automatically update as soon as the household's name is updated. We intend to make the selected household automatically update to reflect these real-time changes to reduce possible user-confusion.
 3. Currently, the selected household above the sessions window is unable to display the full household name if it is too long. While the household panel displays the full name, we intend to fix this flaw in future for additional clarity for the user.
 4. Corrupted `addressbook.log.0` file will detect the corrupted logs and **inform** the user about the corrupted logs.
