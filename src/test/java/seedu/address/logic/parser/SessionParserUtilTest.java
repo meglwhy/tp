@@ -52,6 +52,7 @@ public class SessionParserUtilTest {
         assertThrows(ParseException.class, () -> SessionParserUtil.parseSessionIdentifier(input));
     }
 
+    //add parse test
     @Test
     public void parseSessionIdentifier_invalidHouseholdId_throwsParseException() {
         // An invalid household id should trigger a ParseException.
