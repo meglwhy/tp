@@ -102,7 +102,7 @@ Now you're ready to start using Em-Social!
 
 ## 🖥️ User Interface Overview
 
-<img src="images/labelled-ui.png" alt="User Interface with Labels" width="75%"><br>
+<img src="images/labeled-ui.png" alt="User Interface with Labels" width="75%"><br>
 *Figure 1: The Em-Social UI, showing layout and sample data*
 
 The Em-Social interface consists of five main sections:
