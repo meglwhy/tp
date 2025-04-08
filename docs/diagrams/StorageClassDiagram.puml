@@ -1,46 +1,45 @@
 @startuml
 !include style.puml
 skinparam arrowThickness 1.1
-skinparam arrowColor STORAGE_COLOR_T4
+skinparam arrowColor STORAGE_COLOR
 skinparam classBackgroundColor STORAGE_COLOR
 
-top to bottom direction
+package Storage as StoragePackage {
 
-package storage <<Rectangle>> {
+  package "UserPrefs Storage" #F4F6F6 {
+    Class "<<interface>>\nUserPrefsStorage" as UserPrefsStorage
+    Class JsonUserPrefsStorage
+  }
 
-  ' Interfaces
-  class "<<interface>>\nStorage" as Storage
-  class "<<interface>>\nHouseholdBookStorage" as HouseholdBookStorage
-  class "<<interface>>\nUserPrefsStorage" as UserPrefsStorage
+  Class "<<interface>>\nStorage" as Storage
+  Class StorageManager
 
-  ' Force Storage to stay at the top
-  Storage -[hidden]-> StorageManager
+  package "HouseholdBook Storage" #F4F6F6 {
+    Class "<<interface>>\nHouseholdBookStorage" as HouseholdBookStorage
+    Class JsonHouseholdBookStorage
+    Class JsonSerializableHouseholdBook
+    Class JsonAdaptedHousehold
+    Class JsonAdaptedSession
+    Class JsonAdaptedTag
+  }
 
-  ' Interface inheritance
-  HouseholdBookStorage <|-- Storage
-  UserPrefsStorage <|-- Storage
-
-  ' Implementing classes
-  class "JsonHouseholdBookStorage"
-  class "JsonUserPrefsStorage"
-  class "StorageManager"
-
-  HouseholdBookStorage <|.. JsonHouseholdBookStorage
-  UserPrefsStorage <|.. JsonUserPrefsStorage
-  Storage <|.. StorageManager
-
-  ' Serialization-related classes
-  class "JsonSerializableHouseholdBook"
-  class "JsonAdaptedHousehold"
-  class "JsonAdaptedSession"
-  class JsonAdaptedTag
-
-  JsonSerializableHouseholdBook --> JsonAdaptedHousehold
-  JsonSerializableHouseholdBook --> JsonAdaptedSession
-  JsonSerializableHouseholdBook --> JsonAdaptedTag
-
-  StorageManager --> JsonHouseholdBookStorage
-  StorageManager --> JsonUserPrefsStorage
 }
+
+Class HiddenOutside #FFFFFF
+HiddenOutside ..> Storage
+
+StorageManager .up.|> Storage
+StorageManager -up-> "1" UserPrefsStorage
+StorageManager -up-> "1" HouseholdBookStorage
+
+Storage -left-|> UserPrefsStorage
+Storage -right-|> HouseholdBookStorage
+
+JsonUserPrefsStorage .up.|> UserPrefsStorage
+JsonHouseholdBookStorage .up.|> HouseholdBookStorage
+JsonHouseholdBookStorage ..> JsonSerializableHouseholdBook
+JsonSerializableHouseholdBook --> "*" JsonAdaptedHousehold
+JsonAdaptedHousehold --> "*" JsonAdaptedSession
+JsonAdaptedHousehold --> "*" JsonAdaptedTag
 
 @enduml

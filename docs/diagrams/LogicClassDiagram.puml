@@ -3,78 +3,45 @@
 skinparam arrowThickness 1.1
 skinparam arrowColor LOGIC_COLOR_T4
 skinparam classBackgroundColor LOGIC_COLOR
-left to right direction
 
-package Logic <<Rectangle>> {
-  class "<<interface>>\nLogic" as Logic
-  class LogicManager
-  class Messages
+package Logic as LogicPackage {
 
-  Logic <|.. LogicManager
-  LogicManager --> Messages
+package "Parser Classes" as ParserClasses{
+}
+Class XYZCommand
+Class CommandResult
+Class "{abstract}\nCommand" as Command
+
+
+Class "<<interface>>\nLogic" as Logic
+Class LogicManager
 }
 
-package "logic.commands" <<Rectangle>> {
-  class "{abstract}\nCommand" as Command
-  class CommandResult
-  class AddHouseholdCommand
-  class AddSessionCommand
-  class DeleteHouseholdCommand
-  class DeleteSessionCommand
-  class EditHouseholdCommand
-  class EditSessionCommand
-  class ViewFullSessionCommand
-  class ViewHouseholdSessionsCommand
-
-  Command <|-- AddHouseholdCommand
-  Command <|-- AddSessionCommand
-  Command <|-- DeleteHouseholdCommand
-  Command <|-- DeleteSessionCommand
-  Command <|-- EditHouseholdCommand
-  Command <|-- EditSessionCommand
-  Command <|-- ViewFullSessionCommand
-  Command <|-- ViewHouseholdSessionsCommand
+package Model {
+Class HiddenModel #FFFFFF
 }
 
-package "logic.commands.exceptions" <<Rectangle>> {
-  class CommandException
-  CommandException --|> Exception
+package Storage {
 }
 
-package "logic.parser" <<Rectangle>> {
-  class "<<interface>>\nParser<T extends Command>" as Parser
-  class AddHouseholdCommandParser
-  class AddSessionCommandParser
-  class DeleteHouseholdCommandParser
-  class DeleteSessionCommandParser
-  class EditHouseholdCommandParser
-  class EditSessionCommandParser
-  class ViewFullSessionCommandParser
-  class ViewHouseholdSessionsCommandParser
-  class ParserUtil
-  class SessionIdentifier
-  class SessionParserUtil
+Class HiddenOutside #FFFFFF
+HiddenOutside ..> Logic
 
-  Parser <|.. AddHouseholdCommandParser
-  Parser <|.. AddSessionCommandParser
-  Parser <|.. DeleteHouseholdCommandParser
-  Parser <|.. DeleteSessionCommandParser
-  Parser <|.. EditHouseholdCommandParser
-  Parser <|.. EditSessionCommandParser
-  Parser <|.. ViewFullSessionCommandParser
-  Parser <|.. ViewHouseholdSessionsCommandParser
-}
+LogicManager .right.|> Logic
+LogicManager -right->"1" ParserClasses
+ParserClasses ..> XYZCommand : <<create>>
 
-package "logic.parser.exceptions" <<Rectangle>> {
-  class ParseException
-  ParseException --|> IllegalValueException
-}
+XYZCommand -up-|> Command
+LogicManager .left.> Command : <<call>>
 
-' Generalized command-parser relationship
-Command ..> Parser : parsed by >
+LogicManager --> Model
+LogicManager --> Storage
+Storage --[hidden] Model
+Command .[hidden]up.> Storage
+Command .right.> Model
+note right of XYZCommand: XYZCommand = AddHouseholdCommand, \nEditSessionCommand, etc
 
-' LogicManager dependencies
-LogicManager --> CommandResult
-LogicManager --> Parser
-
+Logic ..> CommandResult
+LogicManager .down.> CommandResult
+Command .up.> CommandResult : <<create>>
 @enduml
