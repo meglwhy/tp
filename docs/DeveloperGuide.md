@@ -21,7 +21,7 @@ This project is based on the AddressBook-Level3 project created by the [SE-EDU i
 
 ## **Setting up, getting started**
 
-Refer to the guide [_Setting up and getting started_](SettingUp.md).
+Refer to the default guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -572,7 +572,7 @@ Use case resumes from step 2 or ends if the issue persists.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Appendix: Manual Testing Instructions for Em Social
+## Appendix: Instructions for Manual Testing
 
 ### Download Em Social:
 Download the latest `em-social.jar` from the [Em Social Releases Page](https://github.com/AY2425S2-CS2103T-F10-2/tp/releases).
