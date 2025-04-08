@@ -37,7 +37,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2425S2-CS2103T-F10-2/tp/blob/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2425S2-CS2103T-F10-2/tp/blob/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -69,13 +69,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2425S2-CS2103T-F10-2/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `SessionListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2425S2-CS2103T-F10-2/tp/blob/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2425S2-CS2103T-F10-2/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -86,7 +86,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2425S2-CS2103T-F10-2/tp/blob/master/src/main/java/seedu/address/logic/Logic.java)
 
 The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete id/H000001")` API call as an example.
 
@@ -104,7 +104,7 @@ How the `Logic` component works:
 4. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2425S2-CS2103T-F10-2/tp/blob/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="800" />
 
@@ -118,7 +118,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2425S2-CS2103T-F10-2/tp/blob/master/src/main/java/seedu/address/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
@@ -550,29 +550,29 @@ Use case resumes from step 2 or ends if the issue persists.
 
 ## Glossary
 
-* Household Record: A digital record containing information about a household, including its address, members, and relevant notes.
-* Engagement Session: A scheduled appointment between a social service worker and a household for follow-up, assistance, or other social services.
-* CLI (Command Line Interface): A text-based interface that allows users to interact with the system using commands rather than a graphical interface.
-* GUI (Graphical User Interface): A visual interface that allows users to interact with the system using graphical elements such as buttons, icons, and windows, as opposed to a text-based interface like a CLI
-* RAM (Random Access Memory): A type of computer memory that temporarily stores data and instructions while a program is running, allowing for quick access and processing.
-* Tag: A keyword or label assigned to a household record to categorize or identify it easily.
-* Double-Booking: A scheduling conflict where two sessions are assigned to the same time slot, which the system should prevent.
-* Session History: A chronological log of all past engagement sessions associated with a household.
-* Filter: A feature that allows users to refine search results based on specific criteria like name, address, or tags.
-* High Contrast Mode: A visual accessibility feature that increases the contrast between text and background to improve readability for users with visual impairments.
-* Crash: A case of an unexpected shutdown.
-* Automatic save: A feature that saves user data with the last command entered to prevent loss in case of system failure.
-* Workflows: A defined sequence of steps or processes that users follow to complete a task efficiently within the system, such as adding a household record or scheduling an engagement session.
-* Bulk Operation: A command or function that processes multiple records at once, such as clearing all entries.
-* Session Notification: An alert or reminder about an upcoming engagement session, which can be displayed in-app or sent via email.
-* Session Data: Information related to a user's current interaction with the system, including active records, scheduled sessions, and temporary changes before they are saved.
-* Structured List: A formatted way of displaying household records, showing key details like name, address, and contact information.
-* Last Committed State: The most recent version of stored data that was successfully saved, ensuring that no progress is lost in case of an unexpected system crash.
-* Dependencies: External software libraries or components required for the application to function properly, such as Java Runtime Environment (JRE) or specific third-party tools.
+* **Household Record:** A digital record containing information about a household, including its address, members, and relevant notes.
+* **Engagement Session:** A scheduled appointment between a social service worker and a household for follow-up, assistance, or other social services.
+* **CLI (Command Line Interface):** A text-based interface that allows users to interact with the system using commands rather than a graphical interface.
+* **GUI (Graphical User Interface):** A visual interface that allows users to interact with the system using graphical elements such as buttons, icons, and windows, as opposed to a text-based interface like a CLI
+* **RAM (Random Access Memory):** A type of computer memory that temporarily stores data and instructions while a program is running, allowing for quick access and processing.
+* **Tag:** A keyword or label assigned to a household record to categorize or identify it easily.
+* **Double-Booking:** A scheduling conflict where two sessions are assigned to the same time slot, which the system should prevent.
+* **Session History:** A chronological log of all past engagement sessions associated with a household.
+* **Filter:** A feature that allows users to refine search results based on specific criteria like name, address, or tags.
+* **High Contrast Mode:** A visual accessibility feature that increases the contrast between text and background to improve readability for users with visual impairments.
+* **Crash:** A case of an unexpected shutdown.
+* **Automatic save:** A feature that saves user data with the last command entered to prevent loss in case of system failure.
+* **Workflows:** A defined sequence of steps or processes that users follow to complete a task efficiently within the system, such as adding a household record or scheduling an engagement session.
+* **Bulk Operation:** A command or function that processes multiple records at once, such as clearing all entries.
+* **Session Notification:** An alert or reminder about an upcoming engagement session, which can be displayed in-app or sent via email.
+* **Session Data:** Information related to a user's current interaction with the system, including active records, scheduled sessions, and temporary changes before they are saved.
+* **Structured List:** A formatted way of displaying household records, showing key details like name, address, and contact information.
+* **Last Committed State:** The most recent version of stored data that was successfully saved, ensuring that no progress is lost in case of an unexpected system crash.
+* **Dependencies:** External software libraries or components required for the application to function properly, such as Java Runtime Environment (JRE) or specific third-party tools.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## APPENDIX Manual Testing Instructions for Em Social
+## Appendix: Manual Testing Instructions for Em Social
 
 ### Download Em Social:
 Download the latest `em-social.jar` from the [Em Social Releases Page](https://github.com/AY2425S2-CS2103T-F10-2/tp/releases).
@@ -739,7 +739,7 @@ To simulate file corruption, open any of the data files (e.g., `householdbook.js
 
 --------------------------------------------------------------------------------------------------------------------
 
-## APPENDIX Planned Enhancements
+## Appendix: Planned Enhancements
 
 Team size: 4
 
