@@ -26,6 +26,8 @@ deactivate UndoCommand
 
 HouseholdBookParser --> LogicManager : u
 deactivate HouseholdBookParser
+HouseholdBookParser -[hidden]> HouseholdBookParser :
+destroy HouseholdBookParser
 
 LogicManager -> UndoCommand : execute()
 activate UndoCommand
@@ -35,6 +37,8 @@ activate Model
 
 Model --> UndoCommand
 deactivate Model
+Model -[hidden]> Model :
+destroy Model
 
 UndoCommand --> LogicManager : result
 deactivate UndoCommand
@@ -43,4 +47,6 @@ destroy UndoCommand
 
 [<--LogicManager
 deactivate LogicManager
+LogicManager -[hidden]> LogicManager :
+destroy LogicManager
 @enduml

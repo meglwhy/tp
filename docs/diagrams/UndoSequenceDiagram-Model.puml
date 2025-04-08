@@ -13,11 +13,14 @@ activate Model
 Model -> VersionedHouseholdBook : undo()
 activate VersionedHouseholdBook
 
-VersionedHousehold -> VersionedHouseholdBook :resetData(ReadOnlyHouseholdBook)
+VersionedHouseholdBook -> VersionedHouseholdBook :resetData(ReadOnlyHouseholdBook)
 VersionedHouseholdBook --> Model :
 deactivate VersionedHouseholdBook
+VersionedHouseholdBook -[hidden]> VersionedHouseholdBook :
+destroy VersionedHouseholdBook
 
 [<-- Model
 deactivate Model
-
+Model -[hidden]> Model :
+destroy Model
 @enduml
