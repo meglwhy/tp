@@ -102,16 +102,15 @@ Now you're ready to start using Em-Social!
 
 ## 🖥️ User Interface Overview
 
-![User Interface with Labels](images/labeled-ui.png)
+<img src="images/labeled-ui.png" alt="User Interface with Labels" width="85%"><br>
 *Figure 1: The Em-Social UI, showing layout and sample data*
 
 The Em-Social interface consists of five main sections:
 
-1. **Household Panel** - Displays all households in your database
-2. **Session Panel** - Shows sessions for the selected household
-3. **Command Box** - Where you type commands
-4. **Result Display** - Shows feedback from your commands  
-  
+1. **Command Box** - Where you type commands
+2. **Result Display** - Shows feedback from your commands
+3. **Household Panel** - Displays all households in your database
+4. **Session Panel** - Shows sessions for the selected household
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -166,7 +165,7 @@ add n/Ng Family a/Blk 44 Bedok North Street, #13-03 p/95553737
    - Address: Blk 44 Bedok North Street, #13-03 <br>
    - Phone number: 95553737 <br>
 
-![add-household success message](images/add-household.png)
+<img src="images/add-household.png" alt="add-household success message" width="75%"><br>
 *Figure 2: Result of adding the "Ng Family" Household*
 
 You can also include unique names and different phone number formats!
@@ -232,7 +231,7 @@ delete id/H000004
 - This deletes the Household with ID/H000004
 
 The following confirmation dialog box will appear:  
-![delete-household warning message](images/delete-confirmation.png) <br>
+<img src="images/delete-confirmation.png" alt="delete-household warning message" width="35%"><br>
 *Figure 3: Warning message to delete the "Ng Family" household at Household ID: H000004*
 
 
@@ -269,7 +268,7 @@ find Tan Lee
 - This finds the Households that include the keywords "Tan" and "Lee".
 
 
-![find-without-quotes](images/find-without-quotes.png)
+<img src="images/find-without-quotes.png" alt="find-without-quotes" width="75%"><br>
 *Figure 4: Result of find command using the keyword "Tan Lee"*
 
 <div style="background-color: #e6ffed; padding: 10px; border-left: 5px solid #2ecc71; margin-bottom: 10px;">
@@ -285,7 +284,7 @@ find "Tan Family"
 - This finds the Household/s that *exactly* match the keyword "Tan Family".
 
 
-![find-with-quotes](images/find-with-quotes.png)
+<img src="images/find-with-quotes.png" alt="find-with-quotes" width="75%"><br>
 *Figure 5: Result of find command using the keyword "Tan Family" to find an **exact** match*
 
 <div style="background-color: #e6ffed; padding: 10px; border-left: 5px solid #2ecc71; margin-bottom: 10px;">
@@ -334,7 +333,7 @@ add-s id/H000001 d/2025-05-15 tm/14:30
 
 You can also use the **GUI**:
 
-![add-session-gui](images/add-session-gui.png)
+<img src="images/add-session-gui.png" alt="add-session-gui" width="75%"><br>
 *Figure 6: Using the GUI "Add Session" button*
 
 
@@ -372,12 +371,12 @@ edit-s id/H000003-1 d/2025-06-07 tm/15:00 n/Follow-up required
 
 You can also use the **GUI**:
 
-![edit-session-gui](images/edit-session-gui.png)
+<img src="images/edit-session-gui.png" alt="edit-session-gui" width="75%"><br>
 *Figure 7: Using the GUI "Edit Session" button*
 
 <br>
 
-![edit-session success message](images/edit-session.png)
+<img src="images/edit-session.png" alt="edit-session success message" width="75%"><br>
 *Figure 8: Confirmation message ensuring that the session has been added successfully*
 
 <div style="background-color: #fff3cd; padding: 10px; border-left: 5px solid #ff9900; margin-bottom: 10px;">
@@ -426,7 +425,7 @@ view-full-s id/H000003-1
 ```
 - This will generate the full session details for the 1st Session of Household ID: H000003
 
-![view-full-session_outcome](images/view-full-session.png)
+<img src="images/view-full-session.png" alt="view-full-session outcome" width="35%"><br>
 *Figure 9: View the full session details for Session 1 of the Household with id/H000003*
 
 <div style="background-color: #e6ffed; padding: 10px; border-left: 5px solid #2ecc71; margin-bottom: 10px;">
@@ -452,8 +451,12 @@ view-s id/H000001
 ```
 - This will display all the existing Sessions of Household ID: H000001
 
-![view-household-sessions outcome](images/view-household-sessions.png)
+<img src="images/view-household-sessions.png" alt="view-household-sessions outcome" width="75%"><br>
 *Figure 10: View  all the existing Sessions of Household ID: H000001*
+
+<div style="background-color: rgba(231, 245, 255, 0.4); padding: 10px; border-left: 5px solid #4dabf7; margin-bottom: 10px;">
+⚠️ <strong>Note:</strong> If the household name is too long, the Session Panel will <strong>automatically truncate</strong> the name for display.
+</div>
 
 <br>
 
@@ -469,7 +472,8 @@ clear
 - This will clear all Household and Session data in Em-Social.
 
 The following confirmation dialog box will appear:  
-![clear-command confirmation](images/clear-confirmation.png)
+<img src="images/clear-confirmation.png" alt="clear-command confirmation" width="35%">
+<br>
 *Figure 11: Confirmation box to ensure you want to clear all data*
 
 <div style="background-color: #fff3cd; padding: 10px; border-left: 5px solid #ff9900; margin-bottom: 10px;">
@@ -490,7 +494,7 @@ help
 
 You can also use the **GUI button**:
 
-![help-button](images/help.png)
+<img src="images/help.png" alt="help-button" width="60%"><br>
 *Figure 12: The Help Button for Em-Social*
 
 <br>
@@ -506,7 +510,7 @@ exit
 
 You can also use the **GUI button**:
 
-![exit-button](images/exit.png)
+<img src="images/exit.png" alt="exit-button" width="60%"><br>
 *Figure 13: The Exit Button for Em-Social*
 
 <br>
@@ -603,24 +607,14 @@ You can also use the **GUI button**:
 | **Help**              | `help`        | `help`                                                         | `help`                                                  |
 | **Exit**              | `exit`        | `exit`                                                         | `exit`                                                  |
 
+</div>
+<div style="background-color: rgba(231, 245, 255, 0.4); padding: 10px; border-left: 5px solid #4dabf7; margin-bottom: 10px;">
+⚠️ <strong>Note:</strong> All command names and prefixes must be entered in lower case.
+</div>
 <div style="
     background: rgba(231, 245, 255, 0.4);
     border-left: 4px solid #4dabf7;
-    padding: 1px 12px;
-    margin: 8px 0;
-    border-radius: 0 4px 4px 0;
-">
-
-**ℹ️ Note:** 
-All command names and prefixes must be entered in lower case.
-
-</div>
-</div>
-
-<div style="
-    background: rgba(231, 245, 255, 0.4);
-    border-left: 4px solid #4dabf7;
-    padding: 1px 12px;
+    padding: 10px;
     margin: 8px 0;
     border-radius: 0 4px 4px 0;
 ">
