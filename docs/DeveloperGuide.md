@@ -7,8 +7,8 @@
 - [Implementation](#implementation)
 - [Documentation, logging, testing, configurations, dev-ops](#documentation-logging-testing-configuration-dev-ops)
 - [Appendix: Requirements](#appendix-requirements)
-- [Appendix: Instructions for Manual Testing](#appendix--manual-testing-instructions-for-em-social)
-- [Appendix: Planned Enhancements](#appendix--planned-enhancements)
+- [APPENDIX Instructions for Manual Testing](#appendix--manual-testing-instructions-for-em-social)
+- [APPENDIX Planned Enhancements](#appendix--planned-enhancements)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -572,7 +572,7 @@ Use case resumes from step 2 or ends if the issue persists.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Appendix: Manual Testing Instructions for Em Social
+## APPENDIX Manual Testing Instructions for Em Social
 
 ### Download Em Social:
 Download the latest `em-social.jar` from the [Em Social Releases Page](https://github.com/AY2425S2-CS2103T-F10-2/tp/releases).
@@ -664,7 +664,7 @@ To simulate file corruption, open any of the data files (e.g., `householdbook.js
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Appendix: Planned Enhancements
+## APPENDIX Planned Enhancements
 
 Team size: 4
 
