@@ -102,7 +102,7 @@ Now you're ready to start using Em-Social!
 
 ## 🖥️ User Interface Overview
 
-<img src="images/labeled-ui.png" alt="User Interface with Labels" width="75%"><br>
+<img src="images/labelled-ui.png" alt="User Interface with Labels" width="75%"><br>
 *Figure 1: The Em-Social UI, showing layout and sample data*
 
 The Em-Social interface consists of five main sections:
@@ -193,7 +193,7 @@ edit id/HOUSEHOLD_ID [n/HOUSEHOLD_NAME] [a/ADDRESS] [p/PHONE_NUMBER] [t/TAG]...
 - `[n/HOUSEHOLD_NAME]`: Optional new name for the household
 - `[a/ADDRESS]`: Optional new address
 - `[p/PHONE_NUMBER]`: Optional new contact number
-- `[t/TAG]...`: Optional tags (will replace all existing tags)
+- `[t/TAG]...`: Optional tags, **must be a single word** and cannot be blank (will replace all existing tags)
 
 **Example of usage:**
 ```
