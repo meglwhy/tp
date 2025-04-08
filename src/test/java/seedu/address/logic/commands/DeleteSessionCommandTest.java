@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -74,5 +75,45 @@ class DeleteSessionCommandTest {
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
         assertEquals(String.format(DeleteSessionCommand.MESSAGE_INVALID_SESSION_INDEX, invalidIndex, householdId),
                 exception.getMessage());
+    }
+
+    @Test
+    void equals_sameValues_returnsTrue() {
+        DeleteSessionCommand command1 = new DeleteSessionCommand(householdId, 1);
+        DeleteSessionCommand command2 = new DeleteSessionCommand(householdId, 1);
+        assertEquals(command1, command2);
+    }
+
+    @Test
+    void equals_sameObject_returnsTrue() {
+        DeleteSessionCommand command = new DeleteSessionCommand(householdId, 1);
+        assertEquals(command, command);
+    }
+
+    @Test
+    void equals_differentHouseholdId_returnsFalse() {
+        HouseholdId differentHouseholdId = new HouseholdId("H000003");
+        DeleteSessionCommand command1 = new DeleteSessionCommand(householdId, 1);
+        DeleteSessionCommand command2 = new DeleteSessionCommand(differentHouseholdId, 1);
+        assertNotEquals(command1, command2);
+    }
+
+    @Test
+    void equals_differentSessionIndex_returnsFalse() {
+        DeleteSessionCommand command1 = new DeleteSessionCommand(householdId, 1);
+        DeleteSessionCommand command2 = new DeleteSessionCommand(householdId, 2);
+        assertNotEquals(command1, command2);
+    }
+
+    @Test
+    void equals_null_returnsFalse() {
+        DeleteSessionCommand command = new DeleteSessionCommand(householdId, 1);
+        assertNotEquals(command, null);
+    }
+
+    @Test
+    void equals_differentType_returnsFalse() {
+        DeleteSessionCommand command = new DeleteSessionCommand(householdId, 1);
+        assertNotEquals(command, "some string");
     }
 }
