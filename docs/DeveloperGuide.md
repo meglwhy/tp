@@ -747,4 +747,5 @@ Team size: 4
 2. Currently, the selected household above the sessions window does not automatically update as soon as the household's name is updated. We intend to make the selected household automatically update to reflect these real-time changes to reduce possible user-confusion.
 3. Currently, the selected household above the sessions window is unable to display the full household name if it is too long. While the household panel displays the full name, we intend to fix this flaw in future for additional clarity for the user.
 4. Corrupted `addressbook.log.0` file will detect the corrupted logs and **inform** the user about the corrupted logs.
+5. Currently, there is no option to remove **all** tags from a household. We intend to modify the tagging parameter such that "t/ " will clear all existing tags from a household.
 
