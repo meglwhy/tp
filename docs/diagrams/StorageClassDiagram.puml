@@ -4,40 +4,39 @@ skinparam arrowThickness 1.1
 skinparam arrowColor STORAGE_COLOR_T4
 skinparam classBackgroundColor STORAGE_COLOR
 
-package storage {
+package storage <<Rectangle>> {
 
-  ' Interfaces (with your notation)
+  ' Interfaces
   class "<<interface>>\nStorage" as Storage
   class "<<interface>>\nHouseholdBookStorage" as HouseholdBookStorage
   class "<<interface>>\nUserPrefsStorage" as UserPrefsStorage
 
-  ' Public concrete classes
+  ' Concrete public classes
   class "JsonSerializableHouseholdBook"
   class "JsonAdaptedSession"
   class "JsonAdaptedHousehold"
-
-  ' Default class
-  class "JsonAdaptedTag"
-
-  ' Implementing classes
   class "JsonHouseholdBookStorage"
   class "JsonUserPrefsStorage"
   class "StorageManager"
 
-  ' Interface Inheritance
+  ' Default/package-private class
+  class JsonAdaptedTag
+
+  ' Interface inheritance
   HouseholdBookStorage <|-- Storage
   UserPrefsStorage <|-- Storage
 
-  ' Implementations
+  ' Class implementations
   HouseholdBookStorage <|.. JsonHouseholdBookStorage
   UserPrefsStorage <|.. JsonUserPrefsStorage
   Storage <|.. StorageManager
 
-  ' Usage relationships (composition/dependencies)
+  ' Usage relationships (serialization structure)
   JsonSerializableHouseholdBook --> JsonAdaptedHousehold
   JsonSerializableHouseholdBook --> JsonAdaptedSession
   JsonSerializableHouseholdBook --> JsonAdaptedTag
 
+  ' Composition/dependency links
   StorageManager --> JsonHouseholdBookStorage
   StorageManager --> JsonUserPrefsStorage
 }

@@ -3,6 +3,7 @@
 skinparam arrowThickness 1.1
 skinparam arrowColor LOGIC_COLOR_T4
 skinparam classBackgroundColor LOGIC_COLOR
+left to right direction
 
 package Logic <<Rectangle>> {
   class "<<interface>>\nLogic" as Logic
@@ -10,43 +11,33 @@ package Logic <<Rectangle>> {
   class Messages
 
   Logic <|.. LogicManager
+  LogicManager --> Messages
 }
 
 package "logic.commands" <<Rectangle>> {
   class "{abstract}\nCommand" as Command
+  class CommandResult
   class AddHouseholdCommand
   class AddSessionCommand
-  class ClearCommand
-  class CommandResult
   class DeleteHouseholdCommand
   class DeleteSessionCommand
   class EditHouseholdCommand
   class EditSessionCommand
-  class ExitCommand
-  class FindHouseholdCommand
-  class HelpCommand
-  class ListHouseholdsCommand
   class ViewFullSessionCommand
   class ViewHouseholdSessionsCommand
 
   Command <|-- AddHouseholdCommand
   Command <|-- AddSessionCommand
-  Command <|-- ClearCommand
   Command <|-- DeleteHouseholdCommand
   Command <|-- DeleteSessionCommand
   Command <|-- EditHouseholdCommand
   Command <|-- EditSessionCommand
-  Command <|-- ExitCommand
-  Command <|-- FindHouseholdCommand
-  Command <|-- HelpCommand
-  Command <|-- ListHouseholdsCommand
   Command <|-- ViewFullSessionCommand
   Command <|-- ViewHouseholdSessionsCommand
 }
 
 package "logic.commands.exceptions" <<Rectangle>> {
   class CommandException
-
   CommandException --|> Exception
 }
 
@@ -54,21 +45,15 @@ package "logic.parser" <<Rectangle>> {
   class "<<interface>>\nParser<T extends Command>" as Parser
   class AddHouseholdCommandParser
   class AddSessionCommandParser
-  class ArgumentMultimap
-  class ArgumentTokenizer
-  class CliSyntax
   class DeleteHouseholdCommandParser
   class DeleteSessionCommandParser
   class EditHouseholdCommandParser
   class EditSessionCommandParser
-  class FindHouseholdCommandParser
-  class HouseholdBookParser
-  class ParserUtil
-  class Prefix
-  class SessionIdentifier
-  class SessionParserUtil
   class ViewFullSessionCommandParser
   class ViewHouseholdSessionsCommandParser
+  class ParserUtil
+  class SessionIdentifier
+  class SessionParserUtil
 
   Parser <|.. AddHouseholdCommandParser
   Parser <|.. AddSessionCommandParser
@@ -76,23 +61,27 @@ package "logic.parser" <<Rectangle>> {
   Parser <|.. DeleteSessionCommandParser
   Parser <|.. EditHouseholdCommandParser
   Parser <|.. EditSessionCommandParser
-  Parser <|.. FindHouseholdCommandParser
   Parser <|.. ViewFullSessionCommandParser
   Parser <|.. ViewHouseholdSessionsCommandParser
+
+  ' Parser to Command associations
+  AddHouseholdCommandParser ..> AddHouseholdCommand : parses >
+  AddSessionCommandParser ..> AddSessionCommand : parses >
+  DeleteHouseholdCommandParser ..> DeleteHouseholdCommand
+  DeleteSessionCommandParser ..> DeleteSessionCommand
+  EditHouseholdCommandParser ..> EditHouseholdCommand
+  EditSessionCommandParser ..> EditSessionCommand
+  ViewFullSessionCommandParser ..> ViewFullSessionCommand
+  ViewHouseholdSessionsCommandParser ..> ViewHouseholdSessionsCommand
 }
 
 package "logic.parser.exceptions" <<Rectangle>> {
   class ParseException
-
   ParseException --|> IllegalValueException
 }
 
-' Logical links (optional layout ordering)
-AddHouseholdCommandParser ..> AddHouseholdCommand : parses >
-ViewFullSessionCommandParser ..> ViewFullSessionCommand : parses >
-
+' LogicManager uses parsers and commands indirectly
 LogicManager --> CommandResult
 LogicManager --> Parser
-LogicManager --> Messages
 
 @enduml
